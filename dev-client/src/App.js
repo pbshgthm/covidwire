@@ -52,6 +52,8 @@ class AppSetBar extends React.Component {
 	}
 
 	stateNames=Object.entries(metaData);
+	stateNames=this.stateNames.filter(state=>state[1].status=='Live')
+
 	stateList=(<div className="StateItemList">{this.stateNames.map(x=>(
 		<div className="StateItem" onClick={()=>this.selState(x[1].name)} key={'sl-'+x[1].name}>{x[1].name}</div>
 	))}</div>)
@@ -450,6 +452,6 @@ let initData=[
     }
 ]
 
-let metaData={"andhra-pradesh":{"lang":["English","Telugu"],"name":"Andhra Pradesh","type":"Native"},"delhi":{"lang":["English","Hindi"],"name":"Delhi","type":"Hindi"},"haryana":{"lang":["English","Hindi"],"name":"Haryana","type":"Hindi"},"karnataka":{"lang":["English","Kannada"],"name":"Karnataka","type":"Native"},"maharashtra":{"lang":["English","Marathi"],"name":"Maharashtra","type":"Native"},"tamil-nadu":{"lang":["English","Tamil"],"name":"Tamil Nadu","type":"Native"},"telangana":{"lang":["English","Telugu"],"name":"Telangana","type":"Native"},"uttar-pradesh":{"lang":["English","Hindi"],"name":"Uttar Pradesh","type":"Hindi"}}
+let metaData={"andhra-pradesh":{"lang":["English","Telugu"],"name":"Andhra Pradesh","status":"Empty","type":"Native"},"delhi":{"lang":["English","Hindi"],"name":"Delhi","status":"Live","type":"Hindi"},"haryana":{"lang":["English","Hindi"],"name":"Haryana","status":"Live","type":"Hindi"},"karnataka":{"lang":["English","Kannada"],"name":"Karnataka","status":"Empty","type":"Native"},"maharashtra":{"lang":["English","Marathi"],"name":"Maharashtra","status":"Empty","type":"Native"},"tamil-nadu":{"lang":["English","Tamil"],"name":"Tamil Nadu","status":"Live","type":"Native"},"telangana":{"lang":["English","Telugu"],"name":"Telangana","status":"Live","type":"Native"},"uttar-pradesh":{"lang":["English","Hindi"],"name":"Uttar Pradesh","status":"Live","type":"Hindi"}}
 
 export default App;

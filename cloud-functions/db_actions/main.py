@@ -36,6 +36,7 @@ def update_meta_data():
 		state_data={
 			'name':state['State Name'],
 			'type':state["Type"],
+			'status':state['Status']
 		}
 		lang=["English"]
 		for i in range(3):

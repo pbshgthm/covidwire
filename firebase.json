@@ -1,0 +1,30 @@
+{
+	"hosting": [
+		{	"appAssociation": "AUTO",
+			"target":"prod",
+			"public": "react-client/build",
+			"ignore": [
+				"firebase.json",
+				"**/.*",
+				"**/node_modules/**"
+			],
+			"rewrites": [
+				{
+					"source": "/s/**",
+					"dynamicLinks": true
+			}]
+		},
+		{	"target":"dev",
+			"public": "dev-client/build",
+			"ignore": [
+				"firebase.json",
+				"**/.*",
+				"**/node_modules/**"
+			],
+			"rewrites": [{
+				"source": "**",
+				"destination": "/index.html"
+			}]
+		}
+	]
+}
