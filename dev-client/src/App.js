@@ -51,6 +51,7 @@ class AppSetBar extends React.Component {
 		)
 	}
 
+
 	stateNames=Object.entries(metaData);
 	stateNames=this.stateNames.filter(state=>state[1].status=='Live')
 
