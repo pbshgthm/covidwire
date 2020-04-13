@@ -17,30 +17,33 @@ api_keys=json.load(open('./apis_config.json'))
 db_root = db.reference('/')
 
 #Get table from Airtable
-def fetch_table(table_name):
-	url="https://api.airtable.com/v0/appSzFJlDswAolc3K/"+table_name
+def fetch_table(table_name,meta=False):
+	url="https://api.airtable.com/v0/"+api_keys["airtable_base_b"]+"/"+table_name
+	if(meta):
+		url="https://api.airtable.com/v0/"+api_keys["airtable_base_m"]+"/State%20Info"
+
 	x = requests.get(url,headers = {"Authorization": "Bearer "+api_keys["airtable_key"]})
 	return x.json()["records"]
 
 
 #Get meta table from airtable and update DB
 def update_meta_data():
-	meta=fetch_table("meta")
+	meta=fetch_table("State Info",meta=True)
 
 	meta_data={}
 	for i in meta:
 		state=i["fields"]
 		state_data={
-			'name':state['Name'],
+			'name':state['State Name'],
 			'type':state["Type"],
 		}
 		lang=["English"]
 		for i in range(3):
-			if "Language_"+str((i+1)) in state:
-				lang.append(state["Language_"+str((i+1))])
+			if "Lang_"+str((i+1)) in state:
+				lang.append(state["Lang_"+str((i+1))])
 
 		state_data["lang"]=lang
-		state_ind=state["Name"].replace(" & ",'-').replace(" ",'-').lower()
+		state_ind=state["State Name"].replace(" & ",'-').replace(" ",'-').lower()
 		meta_data[state_ind]=state_data
 
 	db_root.child('meta').set(meta_data)
@@ -50,13 +53,13 @@ def update_meta_data():
 def format_digest(raw,lang):
 	digest={}
 	digest['region']=raw['Region']
-	digest['time']=raw['Timestamp'][:-5]
+	digest['time']=raw['Published Time'][:-5]
 	digest['src_name']=raw['Source Name']
 	digest['src_link']=raw['Source']
 	digest['lang']=lang
 
 	dynlink_param={
-    	"longDynamicLink": "https://cwire.page.link/?link="+digest["src_link"],
+    	"longDynamicLink": "https://covidwire.in/s?link="+digest["src_link"],
     	"suffix": {
         	"option": "SHORT"
     	}
@@ -68,7 +71,8 @@ def format_digest(raw,lang):
 	digest_content=[]
 	for i in range(len(lang)):
 		lang_digest={}
-		lang_digest['topic']=raw['Hashtags_'+str(i+1)]
+		#lang_digest['topic']=raw['Hashtags_'+str(i+1)]
+		lang_digest['topic']=['topic_1','topic_2']
 		lang_digest['body']=raw['Digest_'+str(i+1)]
 		digest_content.append(lang_digest)
 
@@ -82,7 +86,7 @@ def fetch_general():
 
 	for record in general_data:
 		try:
-			digest=format_digest(record['fields'],['ENG','HIN'])
+			digest=format_digest(record['fields'],['English','Hindi'])
 		except Exception as e:
 			print("Incomplete",e)
 			return

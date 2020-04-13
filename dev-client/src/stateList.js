@@ -1,12 +1,7 @@
 let stateData=[
 	{
 		'name':'Kerala',
-		'lang':[
-			{
-				'name':'Malayalam',
-				'glyph':'അ'
-			}
-		]
+		'lang':['English','Malayalam']
 	},
 	{
 		'name':'Maharashtra',
@@ -59,6 +54,10 @@ let stateData=[
 	{
 		'name':'Tamil Nadu',
 		'lang':[
+			{
+				'name':'English',
+				'glyph':'A'
+			},
 			{
 				'name':'Tamil',
 				'glyph':'அ'
@@ -204,9 +203,11 @@ let glyphDict={
 	'Kannada':'ಅ',
 	'Telugu':'ఆ',
 	'Gujarati':'અ',
-	'Odia':'ଆ'
+	'Odia':'ଆ',
+	'English':'A',
+	'Hindi':'अ'
 }
 
 export {
-	stateData,defaultLang
+	stateData,defaultLang,glyphDict
 };

@@ -1,8 +1,9 @@
 import React from 'react';
-import {stateData,defaultLang} from './stateList'
+import {stateData,defaultLang,glyphDict} from './stateList'
 
 
 class AppSetBar extends React.Component {
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -13,13 +14,15 @@ class AppSetBar extends React.Component {
 		this.viewStates = this.viewStates.bind(this);
 		this.selState = this.selState.bind(this)
 	}
+
 	changeLang(langVal) {
 		var stateSet = {...this.state.stateSet}
 		stateSet.selLang = langVal;
 		this.setState({stateSet},()=>{
-				this.props.callbackSet(this.state.stateSet);
+				this.props.callbackSet(this.state.stateSet,true);
 		});
 	}
+
 	viewStates() {
 		if (this.state.stateView) {
 			this.setState({'stateView': false})
@@ -27,15 +30,19 @@ class AppSetBar extends React.Component {
 			this.setState({'stateView': true})
 		}
 	}
-	selState(stateVal){
+
+	selState(stateVal) {
 		let stateSet = {...this.state.stateSet}
 		stateSet.state = stateVal;
-		stateSet.lang=stateData.find(x => x.name === stateVal).lang;
+
+		stateVal=stateVal.toLowerCase().replace(/ /g,'-')
+		stateVal=metaData[stateVal]['lang'];
+		stateSet.lang=stateVal.map(x=>({'name':x,'glyph':glyphDict[x]}));
+
 		stateSet.selLang=0;
 		this.setState({stateSet,stateView:false},()=>{
 				this.props.callbackSet(this.state.stateSet);
 		});
-
 	}
 
 	fillLang(x,i){
@@ -44,16 +51,17 @@ class AppSetBar extends React.Component {
 		)
 	}
 
-	stateList=(<div className="StateItemList">{stateData.map(x=>(
-		<div className="StateItem" onClick={()=>this.selState(x.name)} key={'sl-'+x.name}>{x.name}</div>
+	stateNames=Object.entries(metaData);
+	stateList=(<div className="StateItemList">{this.stateNames.map(x=>(
+		<div className="StateItem" onClick={()=>this.selState(x[1].name)} key={'sl-'+x[1].name}>{x[1].name}</div>
 	))}</div>)
 
 
 	render() {
-		let langList=(<div>{this.state.stateSet.lang.concat(defaultLang).map((x,i)=>this.fillLang(x,i))}</div>)
+		let langList=(<div>{this.state.stateSet.lang.map((x,i)=>this.fillLang(x,i))}</div>)
 		return (
 		<div className="AppSetBar">
-			<div className="StateName" onClick={this.viewStates}>{this.state.stateSet.state} </div >
+			<div className="StateName" onClick={this.viewStates}>{this.state.stateSet.state} </div>
 
 			<div className="LangBar" style={{opacity:(this.state.stateView)?0:1}}>
 				{langList}
@@ -63,7 +71,8 @@ class AppSetBar extends React.Component {
 				{this.stateList}
 			</div>
 		</div>)
-}
+	}
+
 }
 
 function SidePane(props){
@@ -166,22 +175,25 @@ function StateInfoCard() {
 
 class NewsCard extends React.Component {
 	render() {
+		let wa_share='*'+this.props.digest['hashtag'].join(' ').replace(/#/g,'%23')+'* %0A%0A'
+		+this.props.digest['body']+'%0A%0ARead more at '+this.props.digest['link'];
+
 		return (
 			<div className="NewsCard">
 				<div className="NewsCard-header">
-					<div className="NewsCard-recent">43 MIN</div>
-					<div className="NewsCard-time">4:20 pm MAR 7</div>
+					<div className="NewsCard-recent">{this.props.digest['recent']}</div>
+					<div className="NewsCard-time">{this.props.digest['time']}</div>
 				</div>
 				<div className="NewsCard-hastag-bar">
-					<div className="NewsCard-hashtag">#LOCKDOWN</div>
-					<div className="NewsCard-hashtag">#SEC144</div>
+					<div className="NewsCard-hashtag">{this.props.digest['hashtag'][0]}</div>
+					<div className="NewsCard-hashtag">{this.props.digest['hashtag'][1]}</div>
 				</div>
-				<div className="NewsCard-body">உலகின் இரண்டாவது அதிக மக்கள் தொகை கொண்ட நாட்டின் பெரும்பகுதியை பூட்டுவதற்கு இந்தியாவின் நடவடிக்கை போதுமானதாக இருக்காது, ஏனெனில் ஆயிரக்கணக்கான முக்கிய ரயில் நிலையங்கள் தங்கள் கிராமங்களுக்குச் செல்வதற்கு முன்பாக ஆயிரக்கணக்கான முக்கிய ரயில் நிலையங்களுக்கு வந்து, நாட்டின் பரந்த எல்லைக்கு தொற்றுநோயைக் கொண்டு செல்லும் அபாயத்தைக் கொண்டுள்ளன.</div>
+				<div className="NewsCard-body">{this.props.digest['body']}</div>
 				<div className="NewsCard-footer">
-					<div className="NewsCard-source">Economic Times</div>
+					<div className="NewsCard-source">{this.props.digest['src_name']}</div>
 					<div className="NewsCard-share">
 						<img alt="" className="NewsCard-share-icon" src={require('./assets/share.png')}/>
-						<a href="whatsapp://send?text=Hieeee" data-action="share/whatsapp/share">
+						<a href={"whatsapp://send?text="+wa_share} data-action="share/whatsapp/share">
 							<img alt="" className="NewsCard-whatsapp-icon" src={require('./assets/whatsapp.png')}/>
 						</a>
 					</div>
@@ -205,28 +217,46 @@ class CardsPane extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			langVal: this.props.langVal
+			lang: this.props.lang[0],
+			selLang : this.props.lang[1],
+			stateNews:this.props.stateNews
 		}
 	}
 	render() {
+		let month=['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC']
+		let langWiseNews=Array(this.state.lang.length).fill(0).map(x=>[])
+		this.props.stateNews.forEach((item,i) => {
+			let comm_digest={}
+
+			let [d,t]=item['time'].split('T');
+			d=d.split('-')[2]+' '+month[parseInt(d.split('-')[1])-1]
+
+			var H = +t.substr(0, 2);
+			var h = (H % 12) || 12;
+			var ampm = H < 12 ? " AM" : " PM";
+			t = h + t.substr(2, 3) + ampm;
+
+			comm_digest['time']=t+' | '+d;
+			comm_digest['recent']='43 MIN';
+			comm_digest['link']=item['src_dynlink'];
+			comm_digest['src_name']=item['src_name'].toUpperCase();
+
+			item["content"].forEach((item, j) => {
+				let digest={...comm_digest}
+				digest['body']=item['body']
+				digest['hashtag']=item['topic'].map(x=>'#'+x.replace(/ /g,"_"))
+				langWiseNews[j].push(<NewsCard digest={digest} key={'card-'+i+'-'+j}/>)
+			});
+		});
+
+		let AllCards=[]
+		langWiseNews.forEach((item, i) => {
+			AllCards.push(<div className="CardsLang" key={'pane-'+i}>{item}</div>)
+		});
+
 		return (<div className="CardsPaneHolder">
-			<div className="CardsPane" style={{
-					marginLeft: this.props.langVal * -100 + 'vw'
-				}}>
-				<div className="CardsLang">
-					<StateHelp/>
-					<StateInfoCard/>
-					<NewsCard/>
-					<NewsCard/>
-					<NewsCard/>
-				</div>
-				<div className="CardsLang">
-					<StateHelp/>
-					<StateInfoCard/>
-					<NewsCard/>
-					<NewsCard/>
-					<NewsCard/>
-				</div>
+			<div className="CardsPane">
+				{langWiseNews[this.props.lang[1]]}
 			</div>
 		</div>)
 	}
@@ -238,32 +268,188 @@ class App extends React.Component {
 		super(props)
 		this.state = {
 			stateSet:{
-				state:'Tamil Nadu',
+				state:'Delhi',
 				lang:[
 					{
-						name:'tamil',
-						glyph:'அ'
+						name:'English',
+						glyph:'A'
+					},
+					{
+						name:'Hindi',
+						glyph:'अ'
 					}
 				],
 				selLang:0
-			}
+			},
+			stateNews:initData
 		}
 		this.updateSet = this.updateSet.bind(this);
+		this.getStateNews = this.getStateNews.bind(this);
 	}
 
-	updateSet(stateSet) {
-		console.log(stateSet)
-		//var estate = stateSet.state;
-		//this.setState({stateSet: s});
+	getStateNews(state){
+		var url="https://covidwire.firebaseio.com/states/"+state.toLowerCase().replace(/ /g,'-')+".json";
+		var xmlHttp = new XMLHttpRequest();
+	    xmlHttp.open( "GET", url, false );
+	    xmlHttp.send( null );
+	    var data=JSON.parse(xmlHttp.responseText);
+		this.setState({stateNews:data})
+	}
+
+	updateSet(stateSet,langChange=false) {
+		this.setState({stateSet: stateSet});
+		if(!langChange)this.getStateNews(stateSet['state'])
 	}
 
 	render() {
 		return (<div className="App">
 			<AppTitleBar/>
 			<AppSetBar callbackSet={this.updateSet} stateSet={this.state.stateSet}/>
-			<CardsPane langVal={this.state.stateSet.selLang}/>
+			<CardsPane stateNews={this.state.stateNews} lang={[["Hindi", "English"],this.state.stateSet.selLang]}/>
 		</div>);
 	}
 }
+
+
+
+let initData=[
+    {
+        "content": [
+            {
+                "body": "Prime Minister Narendra Modi is holding a virtual meeting with Chief Ministers on the ninth day of the lockdown. India has reported 2315 COVID-19 cases till date. Most of the cases reported on Thursday were linked to the Nizamuddin cluster.",
+                "topic": [
+                    "LOCKDOWN",
+                    "STAY AT HOME"
+                ]
+            },
+            {
+                "body": "प्रधानमंत्री नरेंद्र मोदी तालाबंदी के नौवें दिन मुख्यमंत्रियों के साथ आभासी बैठक कर रहे हैं। भारत ने अब तक 2315 COVID-19 मामलों की सूचना दी है। गुरुवार को रिपोर्ट किए गए अधिकांश मामले निजामुद्दीन क्लस्टर से जुड़े थे।",
+                "topic": [
+                    "लॉकडाउन",
+                    "घर पर रहो"
+                ]
+            }
+        ],
+        "lang": [
+            "ENG",
+            "HIN"
+        ],
+        "region": "Global",
+        "src_dynlink": "https://cwire.page.link/iPUX",
+        "src_link": "https://www.thehindu.com/news/national/india-coronavirus-lockdown-april-2-2020-live-updates/article31233014.ece",
+        "src_name": "The Hindu",
+        "time": "2020-04-04T00:44:00"
+    },
+    {
+        "content": [
+            {
+                "body": "Adversity makes strange bedfellows and the current global Covid-19 pandemic has proved to be no exception. Big tobacco companies have joined pharma companies in the race for a vaccine — one that can potentially contain the deadly disease that has affected almost a million people worldwide and killed tens of thousands",
+                "topic": [
+                    "VACCINE",
+                    "TEST KITS"
+                ]
+            },
+            {
+                "body": "प्रतिकूलता अजीब बेडफ़्लो बनाती है और मौजूदा वैश्विक कोविद -19 महामारी कोई अपवाद नहीं है। बड़ी तंबाकू कंपनियों ने वैक्सीन की दौड़ में फार्मा कंपनियों को शामिल कर लिया है - एक ऐसी बीमारी जिसमें संभावित रूप से जानलेवा बीमारी हो सकती है जिसने दुनिया भर में लगभग दस लाख लोगों को प्रभावित किया है और हजारों लोगों को मार डाला है",
+                "topic": [
+                    "टीका",
+                    "टेस्ट किट"
+                ]
+            }
+        ],
+        "lang": [
+            "ENG",
+            "HIN"
+        ],
+        "region": "National",
+        "src_dynlink": "https://cwire.page.link/qLo3",
+        "src_link": "https://economictimes.indiatimes.com/news/international/business/big-tobacco-companies-join-race-for-covid-vaccine/articleshow/74942648.cms",
+        "src_name": "Economic Times",
+        "time": "2020-04-01T19:30:00"
+    },
+    {
+        "content": [
+            {
+                "body": "Maharashtra, which has reported the highest number of confirmed cases of the pandemic, saw three new cases on Thursday, taking the state tally to 338. At 265, Kerala has the second highest number of cases in India. As many as 21 cases were reported in Andhra Pradesh on Thursday. The state count now stands at 132. Twelve more coronavirus patients were found in Madhya Pradesh’s Indore, taking the total number of such cases in the state to 98.",
+                "topic": [
+                    "NEW CASES",
+                    "STAY AT HOME"
+                ]
+            },
+            {
+                "body": "महाराष्ट्र, जिसने महामारी के सबसे अधिक पुष्टि मामलों की रिपोर्ट की है, ने गुरुवार को तीन नए मामले देखे, जो राज्य को 338 तक ले गए। 265 पर, केरल में भारत में मामलों की दूसरी सबसे अधिक संख्या है। आंध्र प्रदेश में गुरुवार को 21 मामले सामने आए। राज्य की गिनती अब 132 पर है। मध्य प्रदेश के इंदौर में बारह और कोरोनोवायरस रोगी पाए गए, जो राज्य में ऐसे मामलों की कुल संख्या 98 तक ले गए।",
+                "topic": [
+                    "नए मामले",
+                    "घर पर रहो"
+                ]
+            }
+        ],
+        "lang": [
+            "ENG",
+            "HIN"
+        ],
+        "region": "National",
+        "src_dynlink": "https://cwire.page.link/L6JA",
+        "src_link": "https://www.indiatoday.in/india/story/coronavirus-india-covid-19-tally-total-number-cases-news-update-1662442-2020-04-02",
+        "src_name": "India Today",
+        "time": "2020-04-01T19:00:00"
+    },
+    {
+        "content": [
+            {
+                "body": "We have received 830 calls on an average in the last 11 days with maximum calls related to movement passes. We received 1,053 emergency calls between March 31 and April 1 till 2 pm and 696 cases were registered related to movement passes. At least 160 outside calls were made from the adjoining cities, 29 calls were related to no food and no money.",
+                "topic": [
+                    "NEW SPREAD",
+                    "ISOLATION"
+                ]
+            },
+            {
+                "body": "हमें पिछले 11 दिनों में औसतन 830 कॉल प्राप्त हुए हैं, जिसमें आंदोलन पास से संबंधित अधिकतम कॉल हैं। हमें 31 मार्च से 1 अप्रैल के बीच दोपहर 2 बजे तक 1,053 आपातकालीन कॉल प्राप्त हुए और 696 मामले आंदोलन पास से संबंधित दर्ज किए गए। निकटवर्ती शहरों से कम से कम 160 बाहर कॉल किए गए, 29 कॉल न भोजन और न पैसे से संबंधित थे।",
+                "topic": [
+                    "नया प्रसार",
+                    "अलगाव"
+                ]
+            }
+        ],
+        "lang": [
+            "English",
+            "Hindi"
+        ],
+        "region": "Regional",
+        "src_dynlink": "https://cwire.page.link/uy1b",
+        "src_link": "https://www.indiatoday.in/mail-today/story/covid-19-lockdown-petty-crimes-decline-delhi-1662725-2020-04-03",
+        "src_name": "India Today",
+        "time": "2020-03-26T09:35:00"
+    },
+    {
+        "content": [
+            {
+                "body": "These cases included 259 who were evacuated from the Markaz or religious centre of Islamic missionary group Tabhlighi Jamaat which violated rules and held a massive congregation in Delhi's Nizamuddin area last month with attendees from countries like Malaysia and Kyrgyzstan.",
+                "topic": [
+                    "NEW CASE",
+                    "CAPITAL"
+                ]
+            },
+            {
+                "body": "इन मामलों में 259 शामिल थे जिन्हें इस्लामी मिशनरी समूह तब्लीगी जमात के मार्काज़ या धार्मिक केंद्र से निकाला गया था, जिन्होंने नियमों का उल्लंघन किया था और पिछले महीने दिल्ली के निज़ामुद्दीन क्षेत्र में एक विशाल मण्डली का आयोजन किया था जिसमें मलेशिया और किर्गिस्तान जैसे देशों के उपस्थित थे।",
+                "topic": [
+                    "नया केस",
+                    "राजधानी"
+                ]
+            }
+        ],
+        "lang": [
+            "English",
+            "Hindi"
+        ],
+        "region": "Regional",
+        "src_dynlink": "https://cwire.page.link/AvmB",
+        "src_link": "https://www.ndtv.com/delhi-news/coronavirus-covid-19-delhi-prepared-if-it-spreads-says-arvind-kejriwal-as-cases-near-400-2205755",
+        "src_name": "NDTV",
+        "time": "2020-03-12T05:04:00"
+    }
+]
+
+let metaData={"andhra-pradesh":{"lang":["English","Telugu"],"name":"Andhra Pradesh","type":"Native"},"delhi":{"lang":["English","Hindi"],"name":"Delhi","type":"Hindi"},"haryana":{"lang":["English","Hindi"],"name":"Haryana","type":"Hindi"},"karnataka":{"lang":["English","Kannada"],"name":"Karnataka","type":"Native"},"maharashtra":{"lang":["English","Marathi"],"name":"Maharashtra","type":"Native"},"tamil-nadu":{"lang":["English","Tamil"],"name":"Tamil Nadu","type":"Native"},"telangana":{"lang":["English","Telugu"],"name":"Telangana","type":"Native"},"uttar-pradesh":{"lang":["English","Hindi"],"name":"Uttar Pradesh","type":"Hindi"}}
 
 export default App;

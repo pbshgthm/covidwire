@@ -67,11 +67,13 @@ body {
 }
 .AppSetBar {
 	width: 100vw;
-	margin-top: 17vw;
+	margin-top: 16vw;
 	padding-top: 5vw;
 	z-index: 2;
-	padding-bottom: 3vw;
+	padding-bottom: 0vw;
 	border-bottom: 1px #EEEEEE solid;
+	position: absolute;
+	background-color: white;
 }
 .StateStatsLabels{
 	margin-bottom: 3vw;
@@ -125,7 +127,7 @@ body {
 .StateName::after {
 	display: inline-block;
 	content: url('./assets/caret.png');
-	padding-left: 2vw;
+	padding-left: 1vw;
 }
 
 .StateItemList{
@@ -152,7 +154,7 @@ body {
 	opacity: 1;
 	margin-top: 0vw;
 	padding-top: 1vw;
-	background-color: #FAFAFA;
+	background-color: #F0F0F0;
 	border-radius: 4.5vw;
 	position: absolute;
 	right: 5vw;
@@ -197,20 +199,19 @@ body {
 }
 
 
-
-
-
-
 .CardsPaneHolder{
-	overflow-x: hidden;
 	width: 100vw;
 }
+
 .CardsPane{
 	transition: 0.4s;
 	margin-left: 0vw;
-	width: 200vw;
+	width: 100vw;
 	display: block;
 	z-index: 1;
+	position: absolute;
+	vertical-align: top;
+	top: 35vw;
 }
 
 .CardsLang{
@@ -219,8 +220,9 @@ body {
 	padding-bottom: 20vw;
 	display: inline-block;
 	z-index: 1;
+	height: 100vh;
+	overflow-y: scroll;
 }
-
 
 
 
@@ -228,12 +230,13 @@ body {
 	background-color: white;
 	padding: 4vw;
 	padding-top: 1vw;
-	border: rgba(0, 0, 0, 0.15) solid 1px;
+	padding-bottom: 2.5vw;
+	border: rgba(0, 0, 0, 0) solid 0px;
 	width: 82vw;
 	margin: auto;
 	margin-top: 5vw;
-	margin-bottom: 10vw;
-	box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.15);
+	margin-bottom: 12vw;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
 }
 
@@ -250,6 +253,7 @@ body {
 	vertical-align: top;
 }
 
+/*
 .NewsCard-recent::before {
 	background-image: url('./assets/time.png');
 	background-size: 3.466vw 4vw;
@@ -260,6 +264,7 @@ body {
 	content: "";
 	margin-right: 5px;
 }
+*/
 
 .NewsCard-recent::after {
 	content: 'ago';
@@ -303,20 +308,23 @@ body {
 	color: #818181;
 	padding-top: 3vw;
 	padding-bottom: 3vw;
-	line-height: 6vw;
+	line-height: 7vw;
 }
 
 
 .NewsCard-source {
-	color: #0A77B4;
+	color: #0084E3;
 	display: inline-block;
-	padding-top: 4vw;
-	font-size: 3.5vw;
+	margin-top: 2vw;
+	font-size: 3vw;
+	height: 8vw;
+	line-height: 8vw;
 }
 
 .NewsCard-source::before {
-	content: "Source : ";
+	content: "SOURCE : ";
 	color: #9F9F9F;
+	font-weight: normal;
 }
 
 .NewsCard-share {
@@ -334,5 +342,6 @@ body {
 .NewsCard-whatsapp-icon {
 	display: inline-block;
 	width: 8vw;
+	opacity: 0.8;
 	float: right;
 }
