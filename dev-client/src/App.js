@@ -39,7 +39,7 @@ class AppSetBar extends React.Component {
 		stateVal=metaData[stateVal]['lang'];
 		stateSet.lang=stateVal.map(x=>({'name':x,'glyph':glyphDict[x]}));
 
-		stateSet.selLang=0;
+		stateSet.selLang=1;
 		this.setState({stateSet,stateView:false},()=>{
 				this.props.callbackSet(this.state.stateSet);
 		});
@@ -56,21 +56,25 @@ class AppSetBar extends React.Component {
 	stateNames=this.stateNames.filter(state=>state[1].status=='Live')
 
 	stateList=(<div className="StateItemList">{this.stateNames.map(x=>(
-		<div className="StateItem" onClick={()=>this.selState(x[1].name)} key={'sl-'+x[1].name}>{x[1].name}</div>
+		<div className="StateItem" onClick={()=>this.selState(x[1].name)} key={'sl-'+x[1].name}>
+			<div className="StateItem-name">{x[1].name}</div>
+			<div className="StateItem-lang">{x[1].lang.reverse().join(" | ")}</div>
+		</div>
 	))}</div>)
 
 
 	render() {
-		let langList=(<div>{this.state.stateSet.lang.map((x,i)=>this.fillLang(x,i))}</div>)
+		let langList=(<div>{this.state.stateSet.lang.map((x,i)=>this.fillLang(x,i?0:1))}</div>)
 		return (
 		<div className="AppSetBar">
-			<div className="StateName" onClick={this.viewStates}>{this.state.stateSet.state} </div>
-
-			<div className="LangBar" style={{opacity:(this.state.stateView)?0:1}}>
-				{langList}
+			<div className="StateDetails">
+				<div className="StateName" onClick={this.viewStates}>{this.state.stateSet.state}</div>
+				<div className="LangBar">{langList}</div>
 			</div>
 			<div className="StateSelPane" style={{
-				height: this.state.stateView * 90 + 'vh'}}>
+					display: this.state.stateView?'block':'none',
+					height: this.state.stateView?'inherit':'0vh'
+			}}>
 				{this.stateList}
 			</div>
 		</div>)
@@ -112,8 +116,10 @@ class AppTitleBar extends React.Component {
 			<div>
 				<SidePane showPane={this.state.showPane} togglePane={this.togglePane}/>
 				<div className="AppTitleBar">
-					<img className="AppMenuBtn" onClick={()=>{this.togglePane()}} src={require("./assets/menu.png")}  alt="Menu"/>
-					<div className="AppTitle">CovidWire</div>
+					<img className="AppMenuBtn" onClick={()=>{this.togglePane()}} src={require("./assets/menu-btn.svg")}  alt="Menu"/>
+					<div className="AppTitle">CovidWire
+						<img src={require("./assets/cw-logo.svg")} className="AppLogo"/>
+					</div>
 				</div>
 			</div>)
 	}
@@ -282,7 +288,7 @@ class App extends React.Component {
 						glyph:'अ'
 					}
 				],
-				selLang:0
+				selLang:1
 			},
 			stateNews:initData
 		}
@@ -297,6 +303,7 @@ class App extends React.Component {
 	    xmlHttp.send( null );
 	    var data=JSON.parse(xmlHttp.responseText);
 		this.setState({stateNews:data})
+		console.log(data)
 	}
 
 	updateSet(stateSet,langChange=false) {
