@@ -130,7 +130,6 @@ class SettingsBar extends React.Component {
 }
 
 function NewsCard(props){
-	console.log(props.cardData.hashtags)
 	let hashtags=props.cardData.hashtags.map((x,i)=>(<div key={'hashtag-'+i} className="CardHashtags">{x}</div>))
 
 	return(
@@ -159,6 +158,7 @@ function NewsCard(props){
 
 
 function NewsFeed(props){
+	//NEED BETTER STATE MANAGEMENT
 	let newsCards='';
 	try {
 		newsCards=props.feedData.map((x,i)=>(<NewsCard key={'card-'+i} cardData={x}/>));
@@ -299,7 +299,6 @@ class App extends React.Component{
 	    );
 	}
 }
-
 
 
 let metaRawX={'stateDict': {'Telangana': ['Telugu'], 'Andhra Pradesh': ['Telugu'], 'Maharashtra': ['Marathi'], 'Haryana': ['Hindi'], 'Tamil Nadu': ['Tamil'], 'Delhi': ['Hindi'], 'Uttar Pradesh': ['Hindi']}, 'langDict': {'Telugu': ['Telangana', 'Andhra Pradesh'], 'Marathi': ['Maharashtra'], 'Hindi': ['Haryana', 'Delhi', 'Uttar Pradesh'], 'Tamil': ['Tamil Nadu']}}
