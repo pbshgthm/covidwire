@@ -93,10 +93,14 @@ def pull_curation():
 		if not all(field in curation_fields for field in mandate_fields):
 			continue
 
-		hash=link_hash(curation_fields['Source Link'])
+		try:
+			hash=link_hash(curation_fields['Source Link'])
+		except Exception as e:
+			continue
+
 		mark_export.append({
 			"id":record['id'],
-			"fields":{"Exported":True,'ID-val':hash}
+			"fields":{"Exported":True,"ID-val":hash}
 		})
 
 		if 'Remarks' in curation_fields:
@@ -131,6 +135,7 @@ def pull_curation():
 		else: state_list=[curation_fields['Region']]
 
 		for state in state_list:
+			state=state.replace(' ','-').lower()
 			db_root.child(state+'/'+db_fields['hash']).update(db_fields)
 			db_time.child(get_time()).set(['curation',state,db_fields['hash']])
 
@@ -197,7 +202,8 @@ def pull_digestion():
 		else: state_list=[region]
 
 		for state in state_list:
-			db_root.child(state+'/'+digestion_fields['ID']+'/digests').update({"english":db_fields})
+			state=state.replace(' ','-').lower()
+			db_root.child(state+'/'+digestion_fields['ID']+'/digests').update({"English":db_fields})
 			db_time.child(get_time()).set(['digestion',state,digestion_fields['ID']])
 
 
@@ -244,6 +250,7 @@ def pull_translation():
 				state_list=[region]
 			print(state_list)
 			for state in state_list:
+				state=state.replace(' ','-').lower()
 				db_root.child(state+'/'+translation_fields['ID']+'/digests').update({lang.lower():db_fields})
 				db_time.child(get_time()).set(['translation-'+lang,state,translation_fields['ID']])
 
@@ -260,6 +267,6 @@ def pull_data(request):
 	pull_translation()
 	return
 
-
 # URL VALIDATION
 # OTHER FIELDS VALIDATION
+# URL SAFE VALUE FOR STATE NAMES

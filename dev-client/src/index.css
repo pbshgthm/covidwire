@@ -3,37 +3,42 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size:16px;
-	font-family: 'Lato','Baloo Thambi 2','Baloo 2','Baloo Bhai 2','Baloo Bhaina 2','Baloo Chettan 2','Baloo Da 2','Baloo Tamma 2','Baloo Tammudu 2';
-	background-color: #FFFCF8;
+	background-color: #FFF8F0;
+	font-family: 'Lato', 'Baloo Thambi 2', 'Baloo 2', 'Baloo Bhai 2', 'Baloo Bhaina 2', 'Baloo Chettan 2', 'Baloo Da 2', 'Baloo Tamma 2', 'Baloo Tammudu 2';
 }
 
+:root {
 
-.AppTitleBar {
-	background-color: #2D373F;
-	height: 16vw;
-	position: fixed;
+  --app-blue-black: #2D373F;
+
+}
+
+.AppTitleBar{
 	width: 100vw;
+	height: 35vw;
+	background-color: var(--app-blue-black);
+	position: fixed;
 	top: 0vw;
+	height: 15vw;
 	z-index: 4;
-	box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+	box-shadow: 0px 5px 10px rgba(50, 50, 50, 0.3);
 }
-
 
 .AppMenuBtn {
 	position: absolute;
 	width: 5vw;
-	margin-top: 4vw;
+	margin-top: 3vw;
 	margin-left: 2vw;
 	padding: 3vw;
-	z-index: 5;
+	z-index: 3;
 }
 
-.AppTitle {
+.AppTitle{
 	font-size: 6vw;
 	margin: auto;
 	text-align: center;
 	color: #EFA54E;
-	padding-top: 5vw;
+	padding-top: 4vw;
 	width: 30vw;
 	font-family: 'EB Garamond', serif;
 	position: absolute;
@@ -44,314 +49,284 @@ body {
 .AppLogo{
 	fill: red;
 	position: absolute;
-	width: 5vw;
-	margin-left: 1vw;
-	margin-top: 1vw;
+	width: 4.5vw;
+	margin-left: 1.5vw;
+	margin-top: 1.5vw;
+}
 
-}
 .SidePane{
-	width: 75vw;
-	height: 100vh;
+	width: 80vw;
+	position: absolute;
 	background-color: white;
-	z-index: 6;
-	position: fixed;
-	top:0vh;
-	left:0vw;
-	box-shadow: 7px 0px 7px rgba(0, 0, 0, 0.1);
-	transition: 0.25s left;
+	height: 100vh;
+	z-index: 5;
+	top: 0vw;
+	left:-85vw;
+	transition: 0.3s left;
+	box-shadow: 7px 0px 7px rgba(50, 50, 50, 0.3);
 }
-.bgBlock{
+
+.SidePane-sel{
+	left: 0vw;
+}
+
+.BgBlock{
+	position: absolute;
 	width: 100vw;
 	height: 100vh;
-	position: fixed;
-	top: 0;
-	background-color: rgba(0, 0, 0, 0.2);
-	z-index: 6;
-	left: -100vw;
+	background-color: black;
 	opacity: 1;
-	transition: 0.5s opacity;
+	z-index: 4;
+	left: -100vw;
+	opacity: 0;
+	top: 0vh;
+	transition: 0.3s opacity;
 }
-.sidepane-back{
-	position: absolute;
-	width: 7vw;
-	top: 6vw;
-	left: 5vw;
+
+.BgBlock-sel{
+	left:0vw;
 	opacity: 0.5;
 }
-.AppSetBar {
-	margin-left: 5vw;
-	width: 90vw;
-	margin-top: 20vw;
-	border-radius: 5px;
-	padding-top: 3vw;
-	z-index: 2;
-	padding-bottom: 0vw;
+
+.SidepaneBack{
 	position: absolute;
-}
-
-
-
-.StateName {
-	font-family: 'EB Garamond', serif;
-	font-size: 5vw;
-	line-height: 9vw;
-	text-align: left;
-	color: #858585;
-	z-index: 2;
-	position: absolute;
+	width: 3vw;
+	top: 5vw;
 	left: 5vw;
 }
 
-.StateName::after {
+
+.SettingsBar{
+	position: absolute;
+	top: 15vw;
+	width: 100vw;
+	padding-top: 4vw;
+	padding-bottom: 4vw;
+	z-index: 3;
+}
+
+.CurrentBox{
+	width: 84vw;
+	background-color: white;
+	margin: auto;
+	border-radius: 5px;
+	border: 1.5px #D8D8D8 solid;
+	padding: 3vw;
+	transition: box-shadow 0.5s;
+}
+
+.CurrentBox-sel{
+	box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.1);
+	border: 1px #9C9C9C solid;
+}
+
+.CurrStateName{
+	font-family: 'EB Garamond', serif;
+	font-size: 5vw;
+	color: #707070;
+	display: inline;
+}
+
+.CurrStateName::after{
+	background-image: url('./assets/down.png');
+	background-size: 4vw 2vw;
+	background-repeat: no-repeat;
+    display: inline-block;
+    width: 6vw;
+    height: 2.3vw;
+	background-position: 2vw 0vw;
+	content:"";
+}
+.CurrLangBox{
 	display: inline-block;
-	content: url('./assets/caret.png');
+	float: right;
+	background-color: #EFEFEF;
+	padding: 1vw;
+	margin-top: -0.5vw;
+	border-radius:4vw;
 	padding-left: 2vw;
 }
 
-.StateDetails{
-	height: 10vw;
-	padding-top: 2vw;
-	background-color: white;
-	border: 1.5px #D8D8D8 solid;
-	border-radius: 5px;
+.LangOpt{
+	font-size: 3.5vw;
+	display: inline-block;
+	width: 5vw;
+	height: 6vw;
+	line-height: 6vw;
+	padding-left: 2vw;
+	padding-right: 2vw;
+	color: #898989;
+	border-radius: 3vw;
+	margin-left: -1vw;
+	text-align: center;
 }
 
-.StateItemList{
-	margin-top: 5vw;
+.LangOpt-sel{
+	color: white;
+	background-color: #EFA54E;
 }
-.StateSelPane{
-	margin-top: 3vw;
-	overflow: hidden;
-	height: 0vh;
-	background-color: white;
-	transition: 5s height;
-	border-radius: 5px;
-	border: 1.5px #D8D8D8 solid;
-	box-shadow: 0px 2px 2px 1px rgba(0, 0, 0, 0.1);
-}
-.StateItem{
+
+.StateListBox{
+	width: 90vw;
 	margin: auto;
-	width: 80vw;
-	color: #959595;
-	margin-bottom: 3vw;
+	background-color: white;
+	border: 1px #9C9C9C solid;
+	border-radius: 5px;
+	margin-top: 2vw;
+	box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.2);
+	opacity: 0;
+	max-height: 0vh;
+	overflow: hidden;
+	transition: max-height 0.5s, opacity 0.2s;
+}
+
+.StateListBox-sel{
+	opacity: 1;
+	max-height: 100vh;
+	transition-delay: opacity 0.3s;
+}
+
+.StateListItem{
 	padding-bottom: 3vw;
-	border-bottom: 1px solid #EDEDED;
+	padding-top: 3vw;
+	color: #898989;
+	padding-left: 3vw;
+	padding-right: 3vw;
 }
-.StateItem:last-of-type{
-    border-bottom:none;
-	margin-bottom: 1vw;
+
+.StateListItem:last-child{
+	padding-bottom: 4vw;
 }
-.StateItem-name{
+
+.StateListItem-sel{
+	color: #E07900;
+	background-color: #FFF1E0;
+}
+
+.StateListName{
+	font-family: 'EB Garamond', serif;
 	font-size: 5vw;
 	display: inline-block;
-	font-family: 'EB Garamond', serif;
 }
 
-.StateItem-lang{
+.StateListLang{
+	display: inline-block;
 	float: right;
-	font-size: 4vw;
-	line-height: 8vw;
-	display: inline-block;
-	color: #D5D5D5;
-}
-
-.LangBar {
-	transition: 0.5s opacity;
-	opacity: 1;
-	margin-top: 0vw;
+	font-size: 3.5vw;
 	padding-top: 1vw;
-	background-color: #F0F0F0;
-	border-radius: 4.5vw;
-	position: absolute;
-	right: 5vw;
-	height: 7vw;
-	padding-left: 1vw;
-	padding-right: 1vw;
+	padding-right: 1.2vw;
+	letter-spacing: 2.7vw;
 }
 
-.LangBtn {
-	overflow-y: hidden;
-	height: 6vw;
-	line-height: 6vw;
-	width: 8vw;
-	font-size: 4vw;
-	text-align: center;
-	color: #858585;
-	cursor: pointer;
-	border-radius: 3.5vw;
-	z-index: 5;
-	display: inline-block;
-	-webkit-tap-highlight-color: transparent;
-	text-align: middle;
-
-}
-.LangBtn-sel {
-	overflow-y: hidden;
-	background-color: #F0A244;
-	transition: 0.5s background-color;
-	height: 6vw;
-	line-height: 6vw;
-	width: 8vw;
-	font-size: 4vw;
-	text-align: center;
-	color: white;
-	cursor: pointer;
-	border-radius: 3.5vw;
-	z-index: 5;
-	display: inline-block;
-	-webkit-tap-highlight-color: transparent;
-	text-align: middle;
-
+.NewsFeed{
+	width: 90vw;
+	margin-left: 5vw;
+	margin-top: 37vw;
+	border-top: 1px solid #E2E2E2;
+	padding-top: 5vw;
+	transition: 0.2s;
 }
 
-
-.CardsPaneHolder{
-	width: 100vw;
-	-webkit-filter: blur(0px);
-	-moz-filter: blur(0px);
-	-ms-filter: blur(0px);
-	-o-filter: blur(0px);
-	filter: blur(0px);
+.NewsFeed-blur{
+	-webkit-filter: blur(5px);
+	-moz-filter: blur(5px);
+	-ms-filter: blur(5px);
+	-o-filter: blur(5px);
+	filter: blur(5px);
 }
 
-.CardsPane{
-	transition: 0.4s;
-	margin-left: 0vw;
-	width: 100vw;
-	display: block;
-	z-index: 1;
-	position: absolute;
-	vertical-align: top;
-	top: 40vw;
-}
-
-.CardsLang{
-	width: 100vw;
-	padding-top: 1vw;
-	padding-bottom: 20vw;
-	display: inline-block;
-	z-index: 1;
-	height: 100vh;
-	overflow-y: scroll;
-}
-
-
-
-.NewsCard {
+.NewsCard{
+	width: 90vw;
 	background-color: white;
-	padding: 4vw;
-	padding-top: 1vw;
-	padding-bottom: 2.5vw;
-	border: rgba(0, 0, 0, 0) solid 0px;
-	width: 82vw;
-	margin: auto;
-	margin-top: 5vw;
-	margin-bottom: 12vw;
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.2);
 	border-radius: 5px;
+	box-shadow: 0px 0px 7px 5px rgba(150, 150, 150, 0.2);
+	margin-bottom: 7vw;
 }
 
-.NewsCard-header {
-	margin-top: 2vw;
-	margin-bottom: 3vw;
+.NewsCardHeader{
+	width: 83vw;
+	margin: auto;
+	border-bottom: 1px solid #E2E2E2;
+	padding-top: 4vw;
+	padding-bottom: 2.5vw;
+	height: 8vw;
 }
 
-.NewsCard-recent {
-	color: #EF8100;
+.CardRegionIcon{
+	width: 6vw;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.CardHashtagsHolder{
+	display: inline-block;
+	vertical-align: middle;
+}
+.CardHashtags{
+	display: inline-block;
 	font-size: 4vw;
-	display: inline-block;
-	width: 30vw;
-	vertical-align: top;
-}
-
-/*
-.NewsCard-recent::before {
-	background-image: url('./assets/time.png');
-	background-size: 3.466vw 4vw;
-	background-repeat: no-repeat;
-	display: inline-block;
-	width: 3.466vw;
-	height: 4vw;
-	content: "";
-	margin-right: 5px;
-}
-*/
-
-.NewsCard-recent::after {
-	content: 'ago';
-	font-size: 3.5vw;
-	color: #B9B9B9;
-	margin-left: 2vw;
-}
-
-.NewsCard-time{
-	display: inline;
-	font-size: 3.5vw;
-	float: right;
-	color: #BFBFBF;
-
-}
-
-.NewsCard-hastag-bar {
-	margin-bottom: 3vw;
-}
-
-.NewsCard-hashtag {
-	display: inline-block;
 	background-color: #FFF2E3;
-	font-size: 4vw;
+	color: #EF8100;
 	padding: 1vw;
 	padding-left: 2vw;
 	padding-right: 2vw;
-	border-radius: 1vw;
-	margin-right: 2.5vw;
-	color: #EF8100;
-	margin-left: -0.5vw;
+	border-radius: 5px;
+	margin-left: 2vw;
+	height: 5vw;
+	line-height: 5vw;
 }
-
-.NewsCard-body {
-	width: 82vw;
-	font-size: 4vw;
-	margin-left: -4vw;
-	padding-left: 4vw;
-	padding-right: 4vw;
-	color: #818181;
-	padding-top: 3vw;
-	padding-bottom: 3vw;
+.CardHashtags::before{
+	content:"#";
+}
+.CardTimeAgo{
+	display: inline-block;
+	float: right;
+	color: #EFA54E;
+	font-weight: bold;
+	vertical-align: middle;
+	height: 7vw;
 	line-height: 7vw;
 }
 
+.NewsCardBody{
+	margin-left: 3.5vw;
+	width: 83vw;
+	padding-top:3vw;
+	padding-bottom:3vw;
+	font-size:4vw;
+	color: #707070;
+	line-height: 7vw;
 
-.NewsCard-source {
-	color: #0084E3;
-	display: inline-block;
-	margin-top: 2vw;
-	font-size: 3vw;
-	height: 8vw;
-	line-height: 8vw;
 }
 
-.NewsCard-source::before {
-	content: "SOURCE : ";
-	color: #9F9F9F;
-	font-weight: normal;
+.NewsCardFooter{
+	padding-left: 3.5vw;
+	padding-right: 3.5vw;
+	height: 10vw;
+	padding-bottom: 1vw;
 }
 
-.NewsCard-share {
+.NewsCardSource{
+	font-size: 3.5vw;
 	display: inline-block;
-	margin-top: 2vw;
+	text-decoration: none;
+	color: #276EAF;
+	height:8vw;
+	line-height: 9vw;
+	vertical-align: middle;
+}
+.NewsCardSource::before{
+	content:"SOURCE : ";
+	color: #979797;
+}
+
+.NewsShareBox{
+	display: inline-block;
 	float: right;
+	vertical-align: middle;
 }
 
-.NewsCard-share-icon {
-	display: inline-block;
+.CardShareIcons{
 	width: 8vw;
-	margin-right: 3vw;
-}
-
-.NewsCard-whatsapp-icon {
-	display: inline-block;
-	width: 8vw;
-	opacity: 0.8;
-	float: right;
+	margin-left: 3vw;
 }

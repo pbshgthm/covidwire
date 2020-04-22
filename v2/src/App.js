@@ -130,7 +130,6 @@ class SettingsBar extends React.Component {
 }
 
 function NewsCard(props){
-	console.log(props.cardData.hashtags)
 	let hashtags=props.cardData.hashtags.map((x,i)=>(<div key={'hashtag-'+i} className="CardHashtags">{x}</div>))
 
 	return(
@@ -159,6 +158,7 @@ function NewsCard(props){
 
 
 function NewsFeed(props){
+	//NEED BETTER STATE MANAGEMENT
 	let newsCards='';
 	try {
 		newsCards=props.feedData.map((x,i)=>(<NewsCard key={'card-'+i} cardData={x}/>));

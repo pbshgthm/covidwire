@@ -1,6 +1,6 @@
 {
-  "short_name": "Covid Wire",
-  "name": "Covid Wire",
+  "short_name": "React App",
+  "name": "Create React App Sample",
   "icons": [
     {
       "src": "favicon.ico",
