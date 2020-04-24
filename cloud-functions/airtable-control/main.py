@@ -17,7 +17,7 @@ firebase_admin.initialize_app(cred, {
 
 api_keys=json.load(open('./apis_config.json'))
 db_root = db.reference('/beta2')
-db_time = db.reference('/timestamp')
+db_time = db.reference('/')
 
 #GET TABLE FROM AIRTABLE
 def get_table(base,table_name):
@@ -49,13 +49,19 @@ def link_hash(url):
 	hash=short_link["shortLink"].split('/')[-1]
 	return hash
 
-def get_time():
+def get_time(format="iso"):
 	utc=datetime.now()
 	itc=utc.astimezone(tz.gettz('ITC'))
-	return itc.isoformat().split('.')[0].replace('T',' ')
+	if not format=="iso":
+		return itc.isoformat().replace('.',':').replace('T',' ').split('+')[0]
+	return itc.isoformat()
+
+def shorten_url(url,hash):
+	return 'https://covidwire.in/s/'+hash
+
 
 def get_meta():
-	meta=get_table('meta','State Info')
+	meta=get_table('master','State Info')
 	state_dict={}
 	lang_dict={}
 	for i in meta:
@@ -74,22 +80,35 @@ def get_meta():
 			else:
 				lang_dict[j]=[state]
 
-	return {'state_dict':state_dict,'lang_dict':lang_dict}
+
+	state_list=[i[0] for i in state_dict.items()]
+	lang_list=[i[0] for i in lang_dict.items()]
+
+	return {
+		'state_dict':state_dict,
+		'lang_dict':lang_dict,
+		'state_list':state_list,
+		'lang_list':lang_list
+	}
 
 
 
 def pull_curation():
+	print('pulling curation...')
+	activity={}
 	records=get_table('a','Curation')
 
 	digest_records=[]
 	mark_export=[]
+	master_tables={k:[] for k in meta['state_list']}
+
 
 	for record in records:
 		curation_fields=record['fields']
 
 		if 'Exported' in curation_fields:continue
 
-		mandate_fields=['Region','Domain','Published Time','Source Link','Source Name','Curated By','Validated By','RecID']
+		mandate_fields=['Region','Domain','Published Time','Source Link','Source Name','Curated By']
 		if not all(field in curation_fields for field in mandate_fields):
 			continue
 
@@ -97,47 +116,66 @@ def pull_curation():
 			hash=link_hash(curation_fields['Source Link'])
 		except Exception as e:
 			continue
-
-		mark_export.append({
-			"id":record['id'],
-			"fields":{"Exported":True,"ID-val":hash}
-		})
+			#URL INVALIDATE RESPONSE ??
 
 		if 'Remarks' in curation_fields:
 			remarks=curation_fields["Remarks"]
 		else: remarks=""
 
+		#UPDATE MASTER BASE
+		master_fields={
+			'ID':hash,
+			'Published Time':curation_fields['Published Time'],
+			'Source Name':curation_fields['Source Name'],
+			'Source Link':curation_fields['Source Link'].split('?')[0],
+			'Short Link':shorten_url(curation_fields['Source Link'].split('?')[0],hash),
+			'Domain':curation_fields['Domain'],
+			'Region':curation_fields['Region'],
+			'Curated By':curation_fields['Curated By'],
+			'Status':'Digestion Pending'
+		}
+
+		if curation_fields['Region'] in ['Global','National']:
+			state_list=meta['state_list'][:]
+		else: state_list=[curation_fields['Region']]
+
+		for state in state_list:
+			master_tables[state].append({"fields":master_fields})
+
+		activity[get_time("formated")]={
+				'activity' :'curation',
+				'timestamp':get_time(),
+				'author'   :curation_fields['Curated By'],
+				'region'   :curation_fields['Region'],
+				'domain'   :curation_fields['Domain'],
+				'id'	   :hash
+		}
+
+
+		# ADD TO DIGESTION UPDATE LIST
 		digest_fields={
 			'ID-val':hash,
 			'Region-val':curation_fields['Region'],
 			'Domain-val':curation_fields['Domain'],
 			'Source Link-val':curation_fields['Source Link'].split('?')[0],
-			'RecID':curation_fields['RecID'],
 			'Remarks-val': remarks
 		}
-
-		db_fields={
-			'hash':hash,
-			'rec_id':curation_fields['RecID'],
-			'published_time':curation_fields['Published Time'],
-			'src_name':curation_fields['Source Name'],
-			'src_link':curation_fields['Source Link'].split('?')[0],
-			'domain':curation_fields['Domain'],
-			'region':curation_fields['Region'],
-			'curated_by':curation_fields['Curated By'],
-			'validated_by':curation_fields['Validated By']
-		}
-
 		digest_records.append({"fields":digest_fields})
 
-		if curation_fields['Region'] in ['Global','National']:
-			state_list=[i[0] for i in meta['state_dict'].items()]
-		else: state_list=[curation_fields['Region']]
+		# UPDATE CURATION TABLE
+		mark_export.append({
+			"id":record['id'],
+			"fields":{"Exported":True,"ID-val":hash}
+		})
 
-		for state in state_list:
-			state=state.replace(' ','-').lower()
-			db_root.child(state+'/'+db_fields['hash']).update(db_fields)
-			db_time.child(get_time()).set(['curation',state,db_fields['hash']])
+
+	for state in master_tables:
+		if not len(master_tables[state])==0:
+			print('Adding curation - '+state+' ('+str(len(master_tables[state]))+')')
+			add_to_table("master",state,{
+				"records":master_tables[state],
+				"typecast": True
+			})
 
 	if not len(digest_records)==0:
 		add_to_table('a','Digestion',{"records":digest_records})
@@ -145,81 +183,112 @@ def pull_curation():
 	if not len(mark_export)==0:
 		update_table('a','Curation',{"records":mark_export})
 
+	if not activity=={}:
+		db_time.child('activity').update(activity)
 
 def pull_digestion():
+	global hash_dict
+	activity={}
+	print('pulling digestion...')
 	records=get_table('a','Digestion')
 
 	mark_export=[]
 	mark_status=[]
 
-	lang_tables={k:[] for k in [i[0] for i in meta['lang_dict'].items()]}
+	lang_tables={k:[] for k in meta['lang_list']}
+	master_tables={k:[] for k in meta['state_list']}
 
 	for record in records:
 		digestion_fields=record['fields']
 
 		if 'Exported' in digestion_fields:continue
 
-		mandate_fields=['ID','Region','Hashtags','Digest','Source Link','Digested By','RecID']
+		mandate_fields=['ID','Region','Hashtags','Digest','Source Link','Digested By','Validated By']
 		if not all(field in digestion_fields for field in mandate_fields):
 			continue
 
+		if digestion_fields['Validated By']=="FLAG RED":continue
+
 		region=digestion_fields['Region']
 
+		# UDPATE MASTER BASE
+		master_fields={
+			'Digest':digestion_fields['Digest'],
+			'Hashtags':digestion_fields['Hashtags'],
+			'Digested By':digestion_fields['Digested By'],
+			'Validated By':digestion_fields['Validated By'],
+			'Status':'Translation Pending'
+		}
+
+		if region in ['Global','National']:
+			state_list=meta['state_list'][:]
+		else: state_list=[region]
+
+		for state in state_list:
+			master_tables[state].append({
+				"id":hash_dict[state][digestion_fields["ID"]],
+				"fields":master_fields
+			})
+
+		activity[get_time("formated")]={
+				'activity'  :'digestion',
+				'timestamp' :get_time(),
+				'author'    :digestion_fields['Digested By'],
+				'region'    :digestion_fields['Region'],
+				'validation':digestion_fields['Validated By'],
+				'id'	    :digestion_fields['ID']
+		}
+
+
+		# MARK DIGESTION BASE
 		mark_export.append({
 			"id":record['id'],
 			"fields":{"Exported":True}
 		})
 
-		mark_status.append({
-			'id':digestion_fields['RecID'],
-			"fields":{"Status-val":"Completed"}
-		})
+
+		#TO TRANSLATION
+		translation_fields={
+			'ID-val':digestion_fields['ID'],
+			'Region-val':digestion_fields['Region'],
+			'Source Link-val':digestion_fields['Source Link'],
+			'Digest-val':digestion_fields['Digest'],
+		}
 
 		if region in ['Global','National']:
 			lang=[i[0] for i in meta['lang_dict'].items()]
 		else:
 			lang=meta['state_dict'][region]
 
-		translation_fields={
-			'ID-val':digestion_fields['ID'],
-			'Region-val':digestion_fields['Region'],
-			'Source Link-val':digestion_fields['Source Link'],
-			'Digest-val':digestion_fields['Digest'],
-			'RecID':digestion_fields['RecID']
-		}
-
-		db_fields={
-			'digest':digestion_fields['Digest'],
-			'hashtags':digestion_fields['Hashtags'],
-			'author':digestion_fields['Digested By']
-		}
-
 		for i in lang:
 			lang_tables[i].append({"fields":translation_fields})
 
-		if region in ['Global','National']:
-			state_list=[i[0] for i in meta['state_dict'].items()]
-		else: state_list=[region]
 
-		for state in state_list:
-			state=state.replace(' ','-').lower()
-			db_root.child(state+'/'+digestion_fields['ID']+'/digests').update({"English":db_fields})
-			db_time.child(get_time()).set(['digestion',state,digestion_fields['ID']])
-
+	for state in master_tables:
+		if not len(master_tables[state])==0:
+			print('Updating Digestion - '+state+' ('+str(len(master_tables[state]))+')')
+			update_table("master",state,{
+				"records":master_tables[state],
+				"typecast": True
+			})
 
 	for i in lang_tables:
-		add_to_table('b',i,{'records':lang_tables[i]})
+		if not len(lang_tables[i])==0:
+			add_to_table('b',i,{'records':lang_tables[i]})
 
 	if not len(mark_export)==0:
 		update_table('a','Digestion',{"records":mark_export})
 
-	if not len(mark_status)==0:
-		update_table('a','Curation',{"records":mark_status})
-
+	if not activity=={}:
+		db_time.child('activity').update(activity)
 
 def pull_translation():
+	global hash_dict
+	activity={}
+	print("pulling translation...")
+	lang_list=meta['lang_list'][:]
+	master_tables={k:[] for k in meta['state_list']}
 
-	lang_list=[i[0] for i in meta['lang_dict'].items()]
 	for lang in lang_list:
 		records=get_table('b',lang)
 		mark_export=[]
@@ -229,43 +298,92 @@ def pull_translation():
 
 			if 'Exported' in translation_fields:continue
 
-			mandate_fields=['ID','Translation','Translated By','RecID','Region']
+			mandate_fields=['ID','Translation','Translated By','Region']
 			if not all(field in translation_fields for field in mandate_fields):
 				continue
 
 			region=translation_fields["Region"]
+
+			master_fields={
+				lang+' Translation':translation_fields['Translation'],
+				lang+' Translation By':translation_fields['Translated By'],
+				'Status':'Completed'
+			}
+
+			if region in ['Global','National']:
+				state_list=meta['lang_dict'][lang]
+			else:state_list=[region]
+			for state in state_list:
+				master_tables[state].append({
+					"id":hash_dict[state][translation_fields["ID"]],
+					"fields":master_fields
+				})
+			activity[get_time("formated")]={
+					'activity'  :'translation',
+					'timestamp' :get_time(),
+					'author'    :translation_fields['Translated By'],
+					'region'    :translation_fields['Region'],
+					'language'  :lang,
+					'id'	    :translation_fields['ID']
+			}
+
+			#MARK EXPORT ON TRANSLATION
 			mark_export.append({
 				"id":record['id'],
 				"fields":{"Exported":True}
 			})
 
-			db_fields={
-				'digest':translation_fields['Translation'],
-				'author':translation_fields['Translated By']
-			}
 
-			if region in ['Global','National']:
-				state_list=meta['lang_dict'][lang]
-			else:
-				state_list=[region]
-			print(state_list)
-			for state in state_list:
-				state=state.replace(' ','-').lower()
-				db_root.child(state+'/'+translation_fields['ID']+'/digests').update({lang.lower():db_fields})
-				db_time.child(get_time()).set(['translation-'+lang,state,translation_fields['ID']])
+		for state in master_tables:
+			if not len(master_tables[state])==0:
+				print('Updating Translation - '+state+' ('+str(len(master_tables[state]))+')')
+				update_table("master",state,{
+					"records":master_tables[state],
+					"typecast": True
+				})
 
 		if not len(mark_export)==0:
 			update_table('b',lang,{"records":mark_export})
 
+	if not activity=={}:
+		db_time.child('activity').update(activity)
+
+
+def get_hash_table():
+	hash_table={}
+	for state in meta['state_list']:
+		table=get_table('master',state)
+		hash_table[state]={}
+		for record in table:
+			hash_table[state][record['fields']['ID']]=record['id']
+	return hash_table
+
+
+
 
 
 meta=get_meta()
+hash_dict={}
 
 def pull_data(request):
+	global hash_dict
+	hash_dict=get_hash_table()
+
 	pull_curation()
 	pull_digestion()
 	pull_translation()
 	return
+
+##############################
+##							##
+##	  META DICT FROM DB     ##
+##    HASH DICT FROM DB     ##
+##		TIME STAMP DB   	##
+##							##
+##############################
+
+
+#pull_curation()
 
 # URL VALIDATION
 # OTHER FIELDS VALIDATION

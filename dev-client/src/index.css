@@ -44,6 +44,7 @@ body {
 	position: absolute;
 	width: 40vw;
 	left: 27vw;
+	text-decoration: none;
 }
 
 .AppLogo{
@@ -56,7 +57,7 @@ body {
 
 .SidePane{
 	width: 80vw;
-	position: absolute;
+	position: fixed;
 	background-color: white;
 	height: 100vh;
 	z-index: 5;
@@ -71,7 +72,7 @@ body {
 }
 
 .BgBlock{
-	position: absolute;
+	position: fixed;
 	width: 100vw;
 	height: 100vh;
 	background-color: black;
@@ -92,7 +93,79 @@ body {
 	position: absolute;
 	width: 3vw;
 	top: 5vw;
-	left: 5vw;
+	right: 5vw;
+	opacity: 0.4;
+}
+
+
+.SidePaneName{
+	font-size: 10vw;
+	font-family: 'EB Garamond', serif;
+	color: #D8802F;
+	position: absolute;
+	top: 12vw;
+	left: 6vw;
+}
+.SidePaneLogo{
+	width: 9vw;
+	position: absolute;
+	top: 1.5vw;
+	right: -10.5vw;
+}
+.SidePaneNav{
+	left: 7vw;
+	top: 40vw;
+	position: absolute;
+	font-size: 6vw;
+	color: #D8802F;
+	opacity: 0.8;
+}
+.SidePaneLinks{
+	margin-bottom: 6vw;
+}
+
+.SidePaneLinks a{
+	color: #D8802F;
+	text-decoration: none;
+}
+
+.SidePaneLinks-sel{
+	font-weight: bolder;
+	padding-bottom: 1vw;
+	border-bottom: 1.5px solid #D8802F;
+}
+
+.SidePaneHi{
+	left: 7vw;
+	color: #D8802F;
+	position: absolute;
+	bottom: 17vw;
+}
+.SidePaneHiText{
+	font-size: 6vw;
+	margin-bottom: 5vw;
+}
+.SidePaneContactIcon{
+	width: 4.5vw;
+	margin-right: 2vw;
+	vertical-align: middle;
+	padding-bottom: 0.5vw;
+}
+.SidePaneContact{
+	color: black;
+	opacity: 0.5;
+	font-size: 5vw;
+	margin-bottom: 2.5vw;
+}
+.SidePaneContact a, .SidePaneContact-ph a{
+	text-decoration: none;
+	color: black;
+}
+.SidePaneContact-ph{
+	color: black;
+	opacity: 0.5;
+	font-size: 4.5vw;
+	margin-bottom: 2vw;
 }
 
 
@@ -126,7 +199,9 @@ body {
 	color: #707070;
 	display: inline;
 }
-
+.CurrStateLabel{
+	display: none;
+}
 .CurrStateName::after{
 	background-image: url('./assets/down.png');
 	background-size: 4vw 2vw;
@@ -226,6 +301,15 @@ body {
 	padding-top: 5vw;
 	transition: 0.2s;
 }
+.FeedMsg{
+	color: #E07900;
+	margin: auto;
+	width: 60vw;
+	padding-top: 10vw;
+	text-align: center;
+	font-family: 'EB Garamond', serif;
+	font-size: 5vw;
+}
 
 .NewsFeed-blur{
 	-webkit-filter: blur(5px);
@@ -233,6 +317,59 @@ body {
 	-ms-filter: blur(5px);
 	-o-filter: blur(5px);
 	filter: blur(5px);
+}
+.FeedFilter{
+	width: 80vw;
+	margin: auto;
+	margin-bottom: 7vw;
+	margin-top: 2vw;
+}
+.FeedFilterOpt{
+	text-align: center;
+	font-family: 'EB Garamond', serif;
+	font-size: 4.5vw;
+	display: inline-block;
+	height: 6.5vw;
+	background-color: white;
+	margin-left: 1.5vw;
+	margin-right: 1.5vw;
+	line-height: 6.5vw;
+	padding-left: 3vw;
+	padding-right: 3vw;
+	border-radius: 4vw;
+}
+
+.FFOpt-1{
+	border: 1px solid #EF8100;
+	color: #EF8100;
+}
+.FFOpt-1-sel{
+	background-color: #EF8100;
+	color:white;
+}
+.FFOpt-2{
+	border: 1px solid #E78888;
+	color: #E78888;
+}
+.FFOpt-2-sel{
+	background-color: #E78888;
+	color:white;
+}
+.FFOpt-3{
+	border: 1px solid #7FBF95;
+	color: #7FBF95;
+}
+.FFOpt-3-sel{
+	background-color: #7FBF95;
+	color:white;
+}
+.FFOpt-4{
+	border: 1px solid #7CBBCF;
+	color: #7CBBCF;
+}
+.FFOpt-4-sel{
+	background-color: #7CBBCF;
+	color:white;
 }
 
 .NewsCard{
@@ -281,11 +418,11 @@ body {
 .CardTimeAgo{
 	display: inline-block;
 	float: right;
-	color: #EFA54E;
-	font-weight: bold;
+	color: #B8B8B8;
 	vertical-align: middle;
 	height: 7vw;
 	line-height: 7vw;
+	font-size: 4vw;
 }
 
 .NewsCardBody{
@@ -329,4 +466,563 @@ body {
 .CardShareIcons{
 	width: 8vw;
 	margin-left: 3vw;
+}
+
+.CSCB:hover{
+	opacity: 0.5;
+}
+
+.DesktopDesc{
+	display: none;
+}
+
+.aboutTitle{
+	font-family: 'EB Garamond', serif;
+	color: #EF8100;
+	font-size: 6vw;
+	width: 80vw;
+	margin: auto;
+	margin-top: 10vw;
+	margin-bottom: 10vw;
+}
+.aboutText{
+	font-size: 4vw;
+	color: #878787;
+	width: 80vw;
+	margin: auto;
+	padding-bottom: 40vw;
+	line-height: 6vw;
+}
+.aboutDesc{
+	font-size: 4vw;
+	color: #EF8100;
+}
+.aboutMoto{
+	margin-top: 10vw;
+	font-size: 6vw;
+	text-align: center;
+	font-family: 'EB Garamond', serif;
+}
+
+.PageHeading{
+	color: #878787;
+	font-size: 8vw;
+	margin: auto;
+	width: 80vw;
+	margin-top: 25vw;
+	text-align: center;
+}
+
+.TeamName{
+	width: 80vw;
+	margin: auto;
+	margin-top: 9vw;
+	font-family: 'EB Garamond', serif;
+	color: #EF8100;
+	font-size: 5vw;
+	font-weight: bold;
+	text-align: center;
+	margin-bottom: 3vw;
+}
+.TeamHolder{
+	padding-left: 15vw;
+	margin: auto;
+}
+.TeamMembers{
+	display: inline-block;
+	width: 40vw;
+	color: #848484;
+	font-size: 4vw;
+	line-height: 6vw;
+}
+/*-------------------------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-------------------------------*/
+
+
+@media only screen and (min-width: 600px) {
+	body {
+    	margin: 0;
+    	-webkit-font-smoothing: antialiased;
+    	-moz-osx-font-smoothing: grayscale;
+    	font-size:16px;
+    	background-color: #FFF8F0;
+    	font-family: 'Lato', 'Baloo Thambi 2', 'Baloo 2', 'Baloo Bhai 2', 'Baloo Bhaina 2', 'Baloo Chettan 2', 'Baloo Da 2', 'Baloo Tamma 2', 'Baloo Tammudu 2';
+    }
+
+    :root {
+
+      --app-blue-black: #2D373F;
+
+    }
+
+    .AppTitleBar{
+    	width: 100vw;
+    	height: 75px;
+    	background-color: var(--app-blue-black);
+    	position: fixed;
+    	top: 0vw;
+    	z-index: 4;
+    	box-shadow: 0px 5px 10px rgba(50, 50, 50, 0.3);
+    }
+
+    .AppMenuBtn {
+		display: none;
+    	position: absolute;
+    	width: 5vw;
+    	margin-top: 3vw;
+    	margin-left: 2vw;
+    	padding: 3vw;
+    	z-index: 3;
+    }
+
+    .AppTitle{
+    	font-size: 35px;
+    	color: #EFA54E;
+    	padding-top: 12px;
+    	font-family: 'EB Garamond', serif;
+    	position: absolute;
+		left: 50px;
+		text-align: left;
+    }
+
+    .AppLogo{
+    	fill: red;
+    	position: absolute;
+    	width: 27px;
+    	margin-left: 5px;
+    	margin-top: 9px;
+    }
+
+
+    .SettingsBar{
+    	position: fixed;
+    	top: 160px;
+    	width: 200px;
+		left: 150px;
+    	z-index: 3;
+    }
+
+    .CurrentBox{
+		width: 370px;
+    	background-color: white;
+    	margin: auto;
+    	border-radius: 5px;
+    	border: 1.5px #D8D8D8 solid;
+    	padding: 10px;
+    	transition: box-shadow 0.5s;
+		cursor: pointer;
+    }
+	.CurrStateLabel{
+		display: block;
+		font-size: 20px;
+		font-weight: bold;
+		font-family: 'EB Garamond', serif;
+		color: #E07900;
+		margin-bottom: 12px;
+	}
+    .CurrentBox-sel{
+    	box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.1);
+    	border: 1px #9C9C9C solid;
+    }
+
+    .CurrStateName{
+    	font-family: 'EB Garamond', serif;
+    	font-size: 25px;
+		padding-left: 10px;
+    	color: #707070;
+    	display: inline-block;
+    }
+
+    .CurrStateName::after{
+    	display: none;
+		background-image: url('./assets/down.png');
+		background-size: 20px 10px;
+		background-repeat: no-repeat;
+	    display: inline-block;
+	    width: 30px;
+	    height: 11.5px;
+		background-position: 10px 0px;
+		content:"";
+    }
+    .CurrLangBox{
+		margin-top: 0px;
+		float: right;
+    	display: inline-block;
+    	background-color: #EFEFEF;
+		padding: 5px;
+    	border-radius:20px;
+    	padding-left: 5px;
+    }
+
+    .LangOpt{
+		cursor: pointer;
+    	font-size: 15px;
+    	display: inline-block;
+    	width: 25px;
+    	height: 25px;
+    	line-height: 25px;
+    	padding-left: 5px;
+    	padding-right: 5px;
+    	color: #898989;
+    	border-radius: 15px;
+    	margin-left: 1px;
+    	text-align: center;
+    }
+
+    .LangOpt-sel{
+    	color: white;
+    	background-color: #EFA54E;
+    }
+
+    .StateListBox{
+    	width: 390px;
+    	margin: auto;
+    	background-color: white;
+    	border: 1px #9C9C9C solid;
+    	border-radius: 5px;
+    	margin-top: 10px;
+    	box-shadow: 2px 2px 5px rgba(50, 50, 50, 0.2);
+    	opacity: 0;
+    	max-height: 0px;
+    	overflow: hidden;
+    	transition: max-height 0.5s, opacity 0.2s;
+		cursor: pointer;
+    }
+
+    .StateListBox-sel{
+    	opacity: 1;
+    	max-height: 100vh;
+    	transition-delay: opacity 0.3s;
+    }
+
+    .StateListItem{
+    	padding-bottom: 15px;
+    	padding-top: 15px;
+    	color: #898989;
+    	padding-left: 15px;
+    	padding-right: 15px;
+    }
+
+	.StateListItem:hover{
+		background-color: #FFF1E0;
+	}
+
+    .StateListItem:last-child{
+    	padding-bottom: 20px;
+    }
+
+    .StateListItem-sel{
+    	color: #E07900;
+    	background-color: #FFF1E0;
+    }
+
+    .StateListName{
+    	font-family: 'EB Garamond', serif;
+    	font-size: 25px;
+    	display: inline-block;
+    }
+
+    .StateListLang{
+    	display: inline-block;
+    	float: right;
+    	font-size: 15px;
+    	padding-top: 5px;
+    	padding-right: 2px;
+    	letter-spacing: 11px;
+    }
+
+    .NewsFeed{
+		border-top: none;
+		position: absolute;
+		right: 270px;
+    	width: 450px;
+    	margin-left: 10px;
+    	margin-top: 200px;
+    	padding-top: 20px;
+    	transition: 0.2s;
+    }
+
+	.DesktopBlock{
+		width: 600px;
+		background-color: #FFF8F0;
+		height: 140px;
+		position:fixed;
+		top: 50px;
+		margin-left: -70px;
+		box-shadow: 0 0 5px 10px #FFF8F0;
+	}
+    .NewsFeed-blur{
+    	-webkit-filter: blur(0px);
+    	-moz-filter: blur(0px);
+    	-ms-filter: blur(0px);
+    	-o-filter: blur(0px);
+    	filter: blur(0px);
+    }
+
+	.FeedFilter{
+		width: 350px;
+		margin-left:  50px;
+		margin-bottom: 35px;
+		margin-top: -80px;
+		position: fixed;
+	}
+
+	.FeedFilterOpt{
+		text-align: center;
+		font-family: 'EB Garamond', serif;
+		font-size: 20px;
+		display: inline-block;
+		height: 30px;
+		background-color: white;
+		margin-left: 5px;
+		margin-right: 4px;
+		line-height: 30px;
+		padding-left: 15px;
+		padding-right: 15px;
+		border-radius: 15px;
+		cursor: pointer;
+	}
+
+	.FFOpt-1{
+		border: 1px solid #EF8100;
+		color: #EF8100;
+	}
+	.FFOpt-1:hover{
+		background-color: #EF8100;
+		color:white;
+	}
+	.FFOpt-1-sel{
+		background-color: #EF8100;
+		color:white;
+	}
+
+	.FFOpt-2{
+		border: 1px solid #E78888;
+		color: #E78888;
+	}
+	.FFOpt-2:hover{
+		background-color: #E78888;
+		color:white;
+	}
+	.FFOpt-2-sel{
+		background-color: #E78888;
+		color:white;
+	}
+	.FFOpt-3{
+		border: 1px solid #7FBF95;
+		color: #7FBF95;
+	}
+	.FFOpt-3:hover{
+		background-color: #7FBF95;
+		color:white;
+	}
+	.FFOpt-3-sel{
+		background-color: #7FBF95;
+		color:white;
+	}
+	.FFOpt-4{
+		border: 1px solid #7CBBCF;
+		color: #7CBBCF;
+	}
+	.FFOpt-4:hover{
+		background-color: #7CBBCF;
+		color:white;
+	}
+	.FFOpt-4-sel{
+		background-color: #7CBBCF;
+		color:white;
+	}
+
+    .NewsCard{
+    	width: 450px;
+    	background-color: white;
+    	border-radius: 5px;
+    	box-shadow: 0px 0px 7px 5px rgba(150, 150, 150, 0.2);
+    	margin-bottom: 40px;
+    }
+
+    .NewsCardHeader{
+    	width: 420px;
+		margin: auto;
+    	border-bottom: 1px solid #E2E2E2;
+    	padding-top: 15px;
+    	padding-bottom: 8px;
+    	height: 40px;
+    }
+
+    .CardRegionIcon{
+    	width: 30px;
+    	display: inline-block;
+    	vertical-align: middle;
+    }
+
+    .CardHashtagsHolder{
+    	display: inline-block;
+    	vertical-align: middle;
+    }
+    .CardHashtags{
+    	display: inline-block;
+    	font-size: 20px;
+    	background-color: #FFF2E3;
+    	color: #EF8100;
+    	padding: 12px;
+    	padding-left: 10px;
+    	padding-right: 10px;
+    	border-radius: 5px;
+    	margin-left: 10px;
+    	height: 10px;
+    	line-height: 10px;
+    }
+    .CardHashtags::before{
+    	content:"#";
+    }
+    .CardTimeAgo{
+    	display: inline-block;
+    	float: right;
+    	color: #B8B8B8;
+    	vertical-align: middle;
+    	height: 35px;
+    	line-height: 35px;
+    	font-size: 20px;
+		padding-right: 4px;
+    }
+
+    .NewsCardBody{
+    	margin-left: 20px;
+    	width: 420px;
+    	padding-top:15px;
+    	padding-bottom:15px;
+    	font-size:17px;
+    	color: #707070;
+    	line-height: 35px;
+
+    }
+
+    .NewsCardFooter{
+    	padding-left: 17.5px;
+    	padding-right: 17.5px;
+    	height: 40px;
+    	padding-bottom: 5px;
+    }
+
+    .NewsCardSource{
+    	font-size: 15px;
+    	display: inline-block;
+    	text-decoration: none;
+    	color: #276EAF;
+    	height: 40px;
+    	line-height: 45px;
+    	vertical-align: middle;
+    }
+    .NewsCardSource::before{
+    	content:"SOURCE : ";
+    	color: #979797;
+    }
+
+    .NewsShareBox{
+    	display: inline-block;
+    	float: right;
+    	vertical-align: middle;
+    }
+
+    .CardShareIcons{
+    	width: 30px;
+    	margin-left: 15px;
+    }
+	.DesktopDesc{
+		display: block;
+		font-size: 27px;
+		position: fixed;
+		left: 150px;
+		width: 400px;
+		top: 500px;
+		font-family: 'EB Garamond', serif;
+		color: #EF8100;
+	}
+
+	.aboutTitle{
+		font-family: 'EB Garamond', serif;
+		color: #EF8100;
+		font-size: 30px;
+		width: 500px;
+		text-align: center;
+		margin: auto;
+		margin-top: 50px;
+		margin-bottom: 50px;
+	}
+	.aboutText{
+		width: 500px;
+		font-size: 20px;
+		color: #878787;
+		line-height: 27px;
+		margin: auto;
+		padding-bottom:200px;
+	}
+	.aboutDesc{
+		font-size: 20px;
+		color: #EF8100;
+	}
+	.aboutMoto{
+		margin-top: 50px;
+		font-size: 30px;
+		text-align: center;
+		font-family: 'EB Garamond', serif;
+	}
+	.PageHeading{
+		color: #878787;
+		font-size: 40px;
+		margin: auto;
+		width: 400px;
+		margin-top: 150px;
+		text-align: center;
+	}
+
+	.TeamName{
+		width: 300px;
+		margin: auto;
+		margin-top: 45px;
+		font-family: 'EB Garamond', serif;
+		color: #EF8100;
+		font-size: 25px;
+		font-weight: bold;
+		text-align: center;
+		margin-bottom: 15px;
+	}
+	.TeamHolder{
+		width: 600px;
+		margin: auto;
+	}
+	.TeamMembers{
+		display: inline-block;
+		width: 250px;
+		color: #848484;
+		font-size: 20px;
+		line-height: 25px;
+	}
 }
