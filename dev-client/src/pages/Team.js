@@ -29,6 +29,12 @@ class AppTitleBar extends React.Component {
 					<a href="/" className="AppTitle">CovidWire
 						<img alt="CovidWire Logo" src={require("./../assets/logo.png")} className="AppLogo"/>
 					</a>
+					<div className="DesktopNavBar">
+						<div className="DesktopNavLinks"><a href="/">Home</a></div>
+						<div className="DesktopNavLinks"><a href="/about">About Us</a></div>
+						<div className="DesktopNavLinks"><a href="/team">Our Team</a></div>
+						<div className="DesktopNavLinks"><a href="https://covidwire.in/s/joinus" target="_blank" rel="noopener noreferrer">Join Us</a></div>
+					</div>
 				</div>
 			</div>)
 	}
@@ -47,7 +53,7 @@ function SidePane(props){
 					<div className="SidePaneLinks"><a href="/">Home</a></div>
 					<div className="SidePaneLinks"><a href="/about">About Us</a></div>
 					<div className="SidePaneLinks  SidePaneLinks-sel"><a href="/team">Our Team</a></div>
-					<div className="SidePaneLinks"><a href="https://sarigamayerra.typeform.com/to/gjHcUM" target="_blank" rel="noopener noreferrer">Join Us</a></div>
+					<div className="SidePaneLinks"><a href="https://covidwire.in/s/joinus" target="_blank" rel="noopener noreferrer">Join Us</a></div>
 				</div>
 				<div className="SidePaneHi">
 					<div className="SidePaneHiText">Say Hi!</div>

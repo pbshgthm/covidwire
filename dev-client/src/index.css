@@ -55,6 +55,9 @@ body {
 	margin-top: 1.5vw;
 }
 
+.DesktopNavBar{
+	display: none;
+}
 .SidePane{
 	width: 80vw;
 	position: fixed;
@@ -495,37 +498,33 @@ body {
 }
 .aboutDesc{
 	font-size: 4vw;
-	color: #EF8100;
 }
 .aboutMoto{
-	margin-top: 10vw;
-	font-size: 6vw;
-	text-align: center;
-	font-family: 'EB Garamond', serif;
+	margin-top: -5vw;
+	font-size: 4vw;
+	color: #EF8100;
+	font-style: italic;
 }
 
 .PageHeading{
 	color: #878787;
 	font-size: 8vw;
-	margin: auto;
+	margin-left: 10vw;
 	width: 80vw;
 	margin-top: 25vw;
-	text-align: center;
 }
 
 .TeamName{
 	width: 80vw;
-	margin: auto;
+	margin-left: 10vw;;
 	margin-top: 9vw;
 	font-family: 'EB Garamond', serif;
 	color: #EF8100;
 	font-size: 5vw;
-	font-weight: bold;
-	text-align: center;
 	margin-bottom: 3vw;
 }
 .TeamHolder{
-	padding-left: 15vw;
+	padding-left: 10vw;
 	margin: auto;
 }
 .TeamMembers{
@@ -619,7 +618,25 @@ body {
     	margin-top: 9px;
     }
 
-
+	.DesktopNavBar{
+		display: block;
+		position: absolute;
+		right: 50px;
+		top: 25px;
+	}
+	.DesktopNavLinks{
+		font-family: 'EB Garamond', serif;
+		font-size: 20px;
+		display: inline-block;
+		margin-left: 35px;
+	}
+	.DesktopNavLinks a{
+		text-decoration: none;
+		color: #EFA54E;
+	}
+	.DesktopNavLinks-sel{
+		font-weight: bold;
+	}
     .SettingsBar{
     	position: fixed;
     	top: 160px;
@@ -784,6 +801,15 @@ body {
     	-o-filter: blur(0px);
     	filter: blur(0px);
     }
+	.FeedMsg{
+		color: #E07900;
+		margin: auto;
+		width: 300px;
+		padding-top: 10vw;
+		text-align: center;
+		font-family: 'EB Garamond', serif;
+		font-size: 20px;
+	}
 
 	.FeedFilter{
 		width: 350px;
@@ -986,13 +1012,12 @@ body {
 	}
 	.aboutDesc{
 		font-size: 20px;
-		color: #EF8100;
 	}
 	.aboutMoto{
-		margin-top: 50px;
-		font-size: 30px;
-		text-align: center;
-		font-family: 'EB Garamond', serif;
+		margin-top: -20px;
+		font-size: 20px;
+		color: #EF8100;
+		font-style: italic;
 	}
 	.PageHeading{
 		color: #878787;
@@ -1004,14 +1029,12 @@ body {
 	}
 
 	.TeamName{
-		width: 300px;
+		width: 465px;
 		margin: auto;
 		margin-top: 45px;
 		font-family: 'EB Garamond', serif;
 		color: #EF8100;
-		font-size: 25px;
-		font-weight: bold;
-		text-align: center;
+		font-size: 27px;
 		margin-bottom: 15px;
 	}
 	.TeamHolder{

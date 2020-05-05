@@ -31,6 +31,12 @@ class AppTitleBar extends React.Component {
 					<a href="/" className="AppTitle">CovidWire
 						<img alt="CovidWire Logo" src={require("./assets/logo.png")} className="AppLogo"/>
 					</a>
+					<div className="DesktopNavBar">
+						<div className="DesktopNavLinks"><a href="/">Home</a></div>
+						<div className="DesktopNavLinks"><a href="/about">About Us</a></div>
+						<div className="DesktopNavLinks"><a href="/team">Our Team</a></div>
+						<div className="DesktopNavLinks"><a href="https://covidwire.in/s/joinus" target="_blank" rel="noopener noreferrer">Join Us</a></div>
+					</div>
 				</div>
 			</div>)
 	}
@@ -49,7 +55,7 @@ function SidePane(props){
 					<div className="SidePaneLinks SidePaneLinks-sel"><a href="/">Home</a></div>
 					<div className="SidePaneLinks"><a href="/about">About Us</a></div>
 					<div className="SidePaneLinks"><a href="/team">Our Team</a></div>
-					<div className="SidePaneLinks"><a href="https://sarigamayerra.typeform.com/to/gjHcUM" target="_blank" rel="noopener noreferrer">Join Us</a></div>
+					<div className="SidePaneLinks"><a href="https://covidwire.in/s/joinus" target="_blank" rel="noopener noreferrer">Join Us</a></div>
 				</div>
 				<div className="SidePaneHi">
 					<div className="SidePaneHiText">Say Hi!</div>
@@ -173,16 +179,18 @@ function FormatShare(digest,isWa=true){
 		msg="whatsapp://send?text="
 		msg=msg+digest.digest+'%0A%0A'
 		let ht=digest.hashtags.map(x=>('%23'+x)).join(' ')
-		msg=msg+ht+'* %0A%0A'
-		msg=msg+"*Shared from https://covidwire.in* %0AOne stop for short and sharable authentic info about Covid19 in multitude of regional languages."+"%0A%0A"
-		msg=msg+"Original Source:"+digest.link
+		msg=msg+'*'+ht+'* %0A%0A'
+		msg=msg+"Original Source: "+digest.link+'%0A%0A'
+		msg=msg+"*Shared from https://covidwire.in* %0AOne stop for short and sharable authentic info about Covid19 in multitude of regional languages."
+
 	}
 	else{
 		msg=msg+digest.digest+'\n\n'
 		let ht=digest.hashtags.map(x=>('#'+x)).join(' ')
 		msg=msg+ht+'\n\n'
-		msg=msg+"Shared from https://covidwire.in \nOne stop for short and sharable authentic info about Covid19 in multitude of regional languages."+"\n\n"
-		msg=msg+"Original Source:"+digest.link
+		msg=msg+"Original Source: "+digest.link+"\n\n"
+		msg=msg+"Shared from https://covidwire.in \nOne stop for short and sharable authentic info about Covid19 in multitude of regional languages."
+
 	}
 
 	return msg
@@ -390,7 +398,7 @@ class App extends React.Component{
 	}
 
 	getStateData(state){
-		let baseUrl='https://covidwire.firebaseio.com/beta/'
+		let baseUrl='https://covidwire.firebaseio.com/launch/'
 		let url=baseUrl+state+'.json'
 
 		fetch(url)
@@ -410,7 +418,7 @@ class App extends React.Component{
 
 	formatFeed(state,rawData){
 		let recList=Object.entries(rawData).map(x=>x[1])
-		let langList=this.state.meta.stateDict[state].concat(['english'])
+		let langList=this.state.meta.stateDict[state].concat(['English'])
 		let feedList=langList.map(x=>[])
 		recList.sort((a,b)=>(b['published_time'].localeCompare(a['published_time'])))
 		recList.forEach((record, i) => {
@@ -418,22 +426,26 @@ class App extends React.Component{
 				hash:record['hash'],
 				time:timeSince(record['published_time']),
 				src:record['src_name'],
-				link:record['src_link'],
+				link:record['short_link'],
 				region:(['Global','National'].includes(record['region']))?record['region'].toLowerCase():'state',
 			}
+
 			langList.forEach((lang, i) => {
 				let langDigest={...commDigest}
 				if(lang in record['digests']){
-					//UPDATE IN NEXT VERSION
-					let a='translation'
-					if(lang==='english')a='digest';
 
+					let a='translation'
+					if(lang==='English')a='digest';
 					langDigest['lang']=lang
 					langDigest['digest']=record['digests'][lang][a]
-					langDigest['hashtags']=record['digests']['english']['hashtags']
+					langDigest['hashtags']=record['digests']['English']['hashtags']
+
+					feedList[langList.indexOf(lang)].push(langDigest)
 				}
-				feedList[langList.indexOf(lang)].push(langDigest)
+
 			});
+
+
 
 		});
 		return feedList;
@@ -453,9 +465,9 @@ class App extends React.Component{
 }
 
 
-let metaRawX={'stateDict': {'Telangana': ['Telugu'], 'Andhra Pradesh': ['Telugu'], 'Maharashtra': ['Marathi'], 'Haryana': ['Hindi'], 'Tamil Nadu': ['Tamil'], 'Delhi': ['Hindi'], 'Uttar Pradesh': ['Hindi']}, 'langDict': {'Telugu': ['Telangana', 'Andhra Pradesh'], 'Marathi': ['Maharashtra'], 'Hindi': ['Haryana', 'Delhi', 'Uttar Pradesh'], 'Tamil': ['Tamil Nadu']}}
+let metaRaw={'stateDict': {'Telangana': ['Telugu'], 'Andhra Pradesh': ['Telugu'], 'Maharashtra': ['Marathi'], 'Haryana': ['Hindi'], 'Tamil Nadu': ['Tamil'], 'Delhi': ['Hindi'], 'Uttar Pradesh': ['Hindi']}, 'langDict': {'Telugu': ['Telangana', 'Andhra Pradesh'], 'Marathi': ['Maharashtra'], 'Hindi': ['Haryana', 'Delhi', 'Uttar Pradesh'], 'Tamil': ['Tamil Nadu']}}
 
-let metaRaw={'stateDict': {'Telangana': ['Telugu'], 'Andhra Pradesh': ['Telugu'], 'Haryana': ['Hindi'], 'Tamil Nadu': ['Tamil'], 'Delhi': ['Hindi'], 'Uttar Pradesh': ['Hindi']}, 'langDict': {'Telugu': ['Telangana', 'Andhra Pradesh'], 'Hindi': ['Haryana', 'Delhi', 'Uttar Pradesh'], 'Tamil': ['Tamil Nadu']}}
+let metaRawX={'stateDict': {'Telangana': ['Telugu'], 'Andhra Pradesh': ['Telugu'], 'Haryana': ['Hindi'], 'Tamil Nadu': ['Tamil'], 'Delhi': ['Hindi'], 'Uttar Pradesh': ['Hindi']}, 'langDict': {'Telugu': ['Telangana', 'Andhra Pradesh'], 'Hindi': ['Haryana', 'Delhi', 'Uttar Pradesh'], 'Tamil': ['Tamil Nadu']}}
 
 
 let stateCode={
