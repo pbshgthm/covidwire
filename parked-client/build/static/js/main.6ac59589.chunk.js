@@ -1,2 +1,0 @@
-(this.webpackJsonpcovidwire=this.webpackJsonpcovidwire||[]).push([[0],{3:function(n,e,t){n.exports=t(9)},8:function(n,e,t){},9:function(n,e,t){"use strict";t.r(e);var o=t(0),c=t.n(o),i=t(2),r=t.n(i);t(8);var a=function(){return c.a.createElement("div",{className:"coming-soon"},"Launching Soon")};r.a.render(c.a.createElement(a,null),document.getElementById("root"))}},[[3,1,2]]]);
-//# sourceMappingURL=main.6ac59589.chunk.js.map

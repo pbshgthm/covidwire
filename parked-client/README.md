@@ -1,1 +1,0 @@
-# covidwire-frontend
