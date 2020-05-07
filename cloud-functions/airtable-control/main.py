@@ -6,6 +6,8 @@ from flask import jsonify
 import requests, json
 from datetime import datetime
 from dateutil import tz
+import meta
+import google_translate
 
 #DATABASE AUTHENTICATION
 cred = credentials.Certificate('./gcloud_config.json')
@@ -16,8 +18,7 @@ firebase_admin.initialize_app(cred, {
 #-----------------------
 
 api_keys=json.load(open('./apis_config.json'))
-db_root = db.reference('/beta2')
-db_time = db.reference('/')
+db_time = db.reference('/progress')
 
 #GET TABLE FROM AIRTABLE
 def get_table(base,table_name):
@@ -60,26 +61,13 @@ def shorten_url(url,hash):
 	return 'https://covidwire.in/s/'+hash
 
 
-def get_meta():
-	meta=get_table('master','State Info')
-	state_dict={}
+def get_meta(state_dict):
+
 	lang_dict={}
-	for i in meta:
-		fields=i["fields"]
-		state=fields['State Name']
-		lang=[]
-		for j in range(3):
-			if "Lang_"+str((j+1)) in fields:
-				lang.append(fields["Lang_"+str((j+1))])
-
-		state_dict[state]=lang
-
-		for j in lang:
-			if j in lang_dict:
-				lang_dict[j].append(state)
-			else:
-				lang_dict[j]=[state]
-
+	for state in state_dict:
+		for lang in state_dict[state]:
+			if lang in lang_dict:lang_dict[lang].append(state)
+			else: lang_dict[lang]=[state]
 
 	state_list=[i[0] for i in state_dict.items()]
 	lang_list=[i[0] for i in lang_dict.items()]
@@ -184,7 +172,7 @@ def pull_curation():
 		update_table('a','Curation',{"records":mark_export})
 
 	if not activity=={}:
-		db_time.child('activity').update(activity)
+		db_time.child(get_time().split('T')[0]).update(activity)
 
 def pull_digestion():
 	global hash_dict
@@ -203,7 +191,7 @@ def pull_digestion():
 
 		if 'Exported' in digestion_fields:continue
 
-		mandate_fields=['ID','Region','Hashtags','Digest','Source Link','Digested By','Validated By']
+		mandate_fields=['ID','Region','Hashtags','Headline','Digest','Source Link','Digested By','Validated By']
 		if not all(field in digestion_fields for field in mandate_fields):
 			continue
 
@@ -217,6 +205,7 @@ def pull_digestion():
 			'Hashtags':digestion_fields['Hashtags'],
 			'Digested By':digestion_fields['Digested By'],
 			'Validated By':digestion_fields['Validated By'],
+			'Headline':digestion_fields['Headline'],
 			'Status':'Translation Pending'
 		}
 
@@ -253,6 +242,7 @@ def pull_digestion():
 			'Region-val':digestion_fields['Region'],
 			'Source Link-val':digestion_fields['Source Link'],
 			'Digest-val':digestion_fields['Digest'],
+			'Headline-val':digestion_fields['Headline']
 		}
 
 		if region in ['Global','National']:
@@ -261,7 +251,10 @@ def pull_digestion():
 			lang=meta['state_dict'][region]
 
 		for i in lang:
-			lang_tables[i].append({"fields":translation_fields})
+			auto_translated_text=google_translate.translate_text(digestion_fields['Digest'],i)
+			translation_fields_auto=dict(translation_fields)
+			translation_fields_auto['Digest Auto-Translate-val']=auto_translated_text
+			lang_tables[i].append({"fields":translation_fields_auto})
 
 
 	for state in master_tables:
@@ -280,7 +273,7 @@ def pull_digestion():
 		update_table('a','Digestion',{"records":mark_export})
 
 	if not activity=={}:
-		db_time.child('activity').update(activity)
+		db_time.child(get_time().split('T')[0]).update(activity)
 
 def pull_translation():
 	global hash_dict
@@ -298,15 +291,16 @@ def pull_translation():
 
 			if 'Exported' in translation_fields:continue
 
-			mandate_fields=['ID','Translation','Translated By','Region']
+			mandate_fields=['ID','Headline Translation','Digest Translation','Translated By','Region']
 			if not all(field in translation_fields for field in mandate_fields):
 				continue
 
 			region=translation_fields["Region"]
 
 			master_fields={
-				lang+' Translation':translation_fields['Translation'],
-				lang+' Translation By':translation_fields['Translated By'],
+				'Digest Translation':translation_fields['Digest Translation'],
+				'Headline Translation':translation_fields['Headline Translation'],
+				'Translation By':translation_fields['Translated By'],
 				'Status':'Completed'
 			}
 
@@ -346,7 +340,7 @@ def pull_translation():
 			update_table('b',lang,{"records":mark_export})
 
 	if not activity=={}:
-		db_time.child('activity').update(activity)
+		db_time.child(get_time().split('T')[0]).update(activity)
 
 
 def get_hash_table():
@@ -361,29 +355,17 @@ def get_hash_table():
 
 
 
-
-meta=get_meta()
+meta=get_meta(meta.state_dict)
 hash_dict={}
 
 def pull_data(request):
 	global hash_dict
 	hash_dict=get_hash_table()
-
 	pull_curation()
 	pull_digestion()
 	pull_translation()
 	return
 
-##############################
-##							##
-##	  META DICT FROM DB     ##
-##    HASH DICT FROM DB     ##
-##		TIME STAMP DB   	##
-##							##
-##############################
-
-
-#pull_curation()
 
 # URL VALIDATION
 # OTHER FIELDS VALIDATION

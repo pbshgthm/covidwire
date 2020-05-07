@@ -1,3 +1,5 @@
 firebase_admin
 flask
 python-dateutil
+google-cloud
+google-cloud-translate
