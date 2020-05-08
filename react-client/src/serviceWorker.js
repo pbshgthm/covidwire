@@ -1,3 +1,221 @@
+// Service Worker that uses stale while revalidate strategy
+
+// const STATIC_OFFLINE_VERSION = 1;
+// const RUNTIME_OFFILE_VERSION = 1;
+
+// const CURRENT_CACHES = {
+//   precache: 'static-cache-v' + STATIC_OFFLINE_VERSION,
+//   runtime_cache: 'data-cache-v' + RUNTIME_OFFILE_VERSION,
+// };
+
+// const FILES_TO_CACHE = [
+//   '/index.css',
+//   'logo.svg',
+//   '/App.js',
+//   '/index.js',
+//   '/pages/About.js',
+//   '/pages/Team.js',
+//   '/assets/back.png',
+//   '/assets/down.png',
+//   '/assets/global.png',
+//   '/assets/instagram.png',
+//   '/assets/logo-dark.png',
+//   '/assets/logo-icon.png',
+//   '/assets/logo.png',
+//   '/assets/mail.png',
+//   '/assets/menu.png',
+//   '/assets/national.png',
+//   '/assets/phone.png',
+//   '/assets/share.png',
+//   '/assets/state.png',
+//   '/assets/whatsapp.png',
+// ];
+
+// // self.addEventListener('install', function (event) {
+
+// //   console.log('Service Worker Install');
+
+// //   event.waitUntil(
+// //     caches.open(CURRENT_CACHES.precache).then(function (cache) {
+// //       var cachePromises = FILES_TO_CACHE.map(function (urlToPrefetch) {
+
+// //         var url = new URL(urlToPrefetch);
+
+// //         url.search += (url.search ? '&' : '?') + 'cache-bust=' + Date.now();
+
+// //         var request = new Request(url, { mode: 'no-cors' });
+// //         return fetch(request).then(function (response) {
+// //           if (response.status >= 400) {
+// //             throw new Error('request for ' + urlToPrefetch +
+// //               ' failed with status ' + response.statusText);
+// //           }
+
+// //           // Use the original URL without the cache-busting parameter as the key for cache.put().
+// //           return cache.put(urlToPrefetch, response);
+// //         }).catch(function (error) {
+// //           console.error('Not caching ' + urlToPrefetch + ' due to ' + error);
+// //         });
+// //       });
+
+// //       return Promise.all(cachePromises).then(function () {
+// //         console.log('Pre-fetching complete.');
+// //       });
+// //     }).catch(function (error) {
+// //       console.error('Pre-fetching failed:', error);
+// //     })
+// //   );
+// // });
+
+// // self.addEventListener('activate', function (event) {
+
+// //   console.log('Service Worker Activated...');
+
+// //   // Delete all caches that aren't named in CURRENT_CACHES.
+
+// //   var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function (key) {
+// //     return CURRENT_CACHES[key];
+// //   });
+
+// //   event.waitUntil(
+// //     caches.keys().then(function (cacheNames) {
+// //       return Promise.all(
+// //         cacheNames.map(function (cacheName) {
+// //           if (expectedCacheNames.indexOf(cacheName) === -1) {
+// //             // If this cache name isn't present in the array of expected cache names, then delete it.
+// //             console.log('Deleting out of date cache:', cacheName);
+// //             return caches.delete(cacheName);
+// //           }
+// //         })
+// //       );
+// //     })
+// //   );
+// // });
+
+// // self.addEventListener('fetch', function (event) {
+
+// //   console.log('Service Worker Fetch...');
+
+// //   if (event.request.url.includes('/launch/')) {
+// //     console.log('Fetch URL ', event.request.url);
+
+// //     event.respondWith(fetch(event.request).then(function (response) {
+// //       return caches.open(CURRENT_CACHES.runtime_cache).then(function (cache) {
+// //         return cache.put(event.request, response.clone()).then(function () {
+// //           return response;
+// //         });
+// //       });
+// //     }).catch(function () {
+// //       return caches.match(event.request)
+// //     })
+// //     );
+// //   } else {
+// //     event.respondWith(
+// //       caches.match(event.request)
+// //         .then((response) => {
+// //           return response || fetch(event.request);
+// //         })
+// //     )
+// //   }
+// // });
+
+// export function register() {
+
+//   window.addEventListener('install', function (event) {
+
+//     console.log('Service Worker Install');
+
+//     event.waitUntil(
+//       caches.open(CURRENT_CACHES.precache).then(function (cache) {
+//         var cachePromises = FILES_TO_CACHE.map(function (urlToPrefetch) {
+
+//           var url = new URL(urlToPrefetch);
+
+//           url.search += (url.search ? '&' : '?') + 'cache-bust=' + Date.now();
+
+//           var request = new Request(url, { mode: 'no-cors' });
+//           return fetch(request).then(function (response) {
+//             if (response.status >= 400) {
+//               throw new Error('request for ' + urlToPrefetch +
+//                 ' failed with status ' + response.statusText);
+//             }
+
+//             // Use the original URL without the cache-busting parameter as the key for cache.put().
+//             return cache.put(urlToPrefetch, response);
+//           }).catch(function (error) {
+//             console.error('Not caching ' + urlToPrefetch + ' due to ' + error);
+//           });
+//         });
+
+//         return Promise.all(cachePromises).then(function () {
+//           console.log('Pre-fetching complete.');
+//         });
+//       }).catch(function (error) {
+//         console.error('Pre-fetching failed:', error);
+//       })
+//     );
+//   });
+
+//   window.addEventListener('activate', function (event) {
+
+//     console.log('Service Worker Activated...');
+
+//     // Delete all caches that aren't named in CURRENT_CACHES.
+
+//     var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function (key) {
+//       return CURRENT_CACHES[key];
+//     });
+
+//     event.waitUntil(
+//       caches.keys().then(function (cacheNames) {
+//         return Promise.all(
+//           cacheNames.map(function (cacheName) {
+//             if (expectedCacheNames.indexOf(cacheName) === -1) {
+//               // If this cache name isn't present in the array of expected cache names, then delete it.
+//               console.log('Deleting out of date cache:', cacheName);
+//               return caches.delete(cacheName);
+//             }
+//           })
+//         );
+//       })
+//     );
+//   });
+
+//   window.addEventListener('fetch', function (event) {
+
+//     console.log('Service Worker Fetch...');
+
+//     if (event.request.url.includes('/launch/')) {
+//       console.log('Fetch URL ', event.request.url);
+
+//       event.respondWith(fetch(event.request).then(function (response) {
+//         return caches.open(CURRENT_CACHES.runtime_cache).then(function (cache) {
+//           return cache.put(event.request, response.clone()).then(function () {
+//             return response;
+//           });
+//         });
+//       }).catch(function () {
+//         return caches.match(event.request)
+//       })
+//       );
+//     } else {
+//       event.respondWith(
+//         caches.match(event.request)
+//           .then((response) => {
+//             return response || fetch(event.request);
+//           })
+//       )
+//     }
+//   }); 
+// }
+
+
+
+
+
+
+
+
+
 // This optional code is used to register a service worker.
 // register() is not called by default.
 
@@ -51,7 +269,94 @@ export function register(config) {
         registerValidSW(swUrl, config);
       }
     });
-  }
+
+    // window.addEventListener('install', function (event) {
+
+    //   console.log('Service Worker Install');
+
+    //   event.waitUntil(
+    //     caches.open(CURRENT_CACHES.precache).then(function (cache) {
+    //       var cachePromises = FILES_TO_CACHE.map(function (urlToPrefetch) {
+
+    //         var url = new URL(urlToPrefetch);
+
+    //         url.search += (url.search ? '&' : '?') + 'cache-bust=' + Date.now();
+
+    //         var request = new Request(url, { mode: 'no-cors' });
+    //         return fetch(request).then(function (response) {
+    //           if (response.status >= 400) {
+    //             throw new Error('request for ' + urlToPrefetch +
+    //               ' failed with status ' + response.statusText);
+    //           }
+
+    //           // Use the original URL without the cache-busting parameter as the key for cache.put().
+    //           return cache.put(urlToPrefetch, response);
+    //         }).catch(function (error) {
+    //           console.error('Not caching ' + urlToPrefetch + ' due to ' + error);
+    //         });
+    //       });
+
+    //       return Promise.all(cachePromises).then(function () {
+    //         console.log('Pre-fetching complete.');
+    //       });
+    //     }).catch(function (error) {
+    //       console.error('Pre-fetching failed:', error);
+    //     })
+    //   );
+    // });
+
+    // window.addEventListener('activate', function (event) {
+
+    //   console.log('Service Worker Activated...');
+
+    //   // Delete all caches that aren't named in CURRENT_CACHES.
+
+    //   var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function (key) {
+    //     return CURRENT_CACHES[key];
+    //   });
+
+    //   event.waitUntil(
+    //     caches.keys().then(function (cacheNames) {
+    //       return Promise.all(
+    //         cacheNames.map(function (cacheName) {
+    //           if (expectedCacheNames.indexOf(cacheName) === -1) {
+    //             // If this cache name isn't present in the array of expected cache names, then delete it.
+    //             console.log('Deleting out of date cache:', cacheName);
+    //             return caches.delete(cacheName);
+    //           }
+    //         })
+    //       );
+    //     })
+    //   );
+    // });
+
+    // window.addEventListener('fetch', function (event) {
+
+    //   console.log('Service Worker Fetch...');
+
+    //   if (event.request.url.includes('/launch/')) {
+    //     console.log('Fetch URL ', event.request.url);
+
+    //     event.respondWith(fetch(event.request).then(function (response) {
+    //       return caches.open(CURRENT_CACHES.runtime_cache).then(function (cache) {
+    //         return cache.put(event.request, response.clone()).then(function () {
+    //           return response;
+    //         });
+    //       });
+    //     }).catch(function () {
+    //       return caches.match(event.request)
+    //     })
+    //     );
+    //   } else {
+    //     event.respondWith(
+    //       caches.match(event.request)
+    //         .then((response) => {
+    //           return response || fetch(event.request);
+    //         })
+    //     )
+    //   }
+    // }); 
+}
 }
 
 function registerValidSW(swUrl, config) {

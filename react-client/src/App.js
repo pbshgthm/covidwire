@@ -362,6 +362,7 @@ class App extends React.Component{
 		this.getStateData=this.getStateData.bind(this)
 		this.changeCurrState=this.changeCurrState.bind(this)
 		this.formatFeed=this.formatFeed.bind(this)
+		this.fetchFromCache=this.fetchFromCache.bind(this)
 
 	}
 
@@ -397,9 +398,42 @@ class App extends React.Component{
 
 	}
 
+	fetchFromCache(url) {
+		// No cache exists, return null
+		if(!('caches' in window)) {
+			return null;
+		}
+		// Return cached response
+		return caches.match(url).then((response) => {
+			return response;
+		}).catch((err) => {
+			console.log('Error in getting response from cache for URL - ', url);
+			return null;
+		});
+	}
+
 	getStateData(state){
 		let baseUrl='https://covidwire.firebaseio.com/launch/'
 		let url=baseUrl+state+'.json'
+
+		this.fetchFromCache(url)
+			.then(
+				function (result) {
+					if(result)
+						return result.json()
+						.then(
+							(result) => {
+								if (result != null) {
+									this.setState({
+										stateData: result,
+										feedList: this.formatFeed(state, result)
+									})
+								}
+							}
+						)
+				} 
+			)
+
 
 		fetch(url)
 		.then(
