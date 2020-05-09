@@ -99,6 +99,9 @@ self.addEventListener('fetch', function (event) {
         console.log('Fetch URL ', event.request.url);
 
         event.respondWith(fetch(event.request).then(function (response) {
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+                return response;    
+            }
             return caches.open(CURRENT_CACHES.runtime_cache).then(function (cache) {
                 return cache.put(event.request, response.clone()).then(function () {
                     console.log("Fetching from network for URL ", event.request.url);
@@ -112,7 +115,7 @@ self.addEventListener('fetch', function (event) {
         })
         );
     } else {
-        console.log("URL without launch found - ", event.request.url);
+        console.log("URL without /launch/ found - ", event.request.url);
         event.respondWith(
             caches.match(event.request)
                 .then((response) => {
