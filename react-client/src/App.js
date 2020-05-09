@@ -404,7 +404,11 @@ class App extends React.Component{
 			return null;
 		}
 		// Return cached response
+		console.log("Fetching from cache for URL ", url);
 		return caches.match(url).then((response) => {
+			console.log("Response found in cache!");
+			console.log("URL - ", url);
+			console.log("Response - ", response);
 			return response;
 		}).catch((err) => {
 			console.log('Error in getting response from cache for URL - ', url);
