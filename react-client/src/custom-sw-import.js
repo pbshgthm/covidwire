@@ -1,74 +1,28 @@
 // Service Worker that uses stale while revalidate strategy
 
-import packageJson from '../src/package.json';
-global.appVersion = packageJson.version;
+// import packageJson from '../package.json';
+// global.appVersion = packageJson.version;
 
-const STATIC_OFFLINE_VERSION = global.appVersion;
-const RUNTIME_OFFILE_VERSION = global.appVersion;
+const OFFLINE_VERSION = 1;
 
 const CURRENT_CACHES = {
-    precache: 'static-cache-v' + STATIC_OFFLINE_VERSION,
-    runtime_cache: 'data-cache-v' + RUNTIME_OFFILE_VERSION,
+    precache: 'static-cache-v' + OFFLINE_VERSION,
+    runtime_cache: 'data-cache-v' + OFFLINE_VERSION,
 };
 
 const FILES_TO_CACHE = [
-    '/index.css',
-    'logo.svg',
-    '/App.js',
-    '/index.js',
-    '/pages/About.js',
-    '/pages/Team.js',
-    '/assets/back.png',
-    '/assets/down.png',
-    '/assets/global.png',
-    '/assets/instagram.png',
-    '/assets/logo-dark.png',
-    '/assets/logo-icon.png',
-    '/assets/logo.png',
-    '/assets/mail.png',
-    '/assets/menu.png',
-    '/assets/national.png',
-    '/assets/phone.png',
-    '/assets/share.png',
-    '/assets/state.png',
-    '/assets/whatsapp.png',
+    '/index.html',
 ];
 
 self.addEventListener('install', function (event) {
 
     console.log('Service Worker Install');
-
+    
     self.skipWaiting();
 
     event.waitUntil(
-        caches.open(CURRENT_CACHES.precache).then(function (cache) {
-            var cachePromises = FILES_TO_CACHE.map(function (urlToPrefetch) {
-
-                var url = new URL(urlToPrefetch);
-
-                url.search += (url.search ? '&' : '?') + 'cache-bust=' + Date.now();
-
-                var request = new Request(url, { mode: 'no-cors' });
-                return fetch(request).then(function (response) {
-                    if (response.status >= 400) {
-                        throw new Error('request for ' + urlToPrefetch +
-                            ' failed with status ' + response.statusText);
-                    }
-
-                    // Use the original URL without the cache-busting parameter as the key for cache.put().
-                    return cache.put(urlToPrefetch, response);
-                }).catch(function (error) {
-                    console.error('Not caching ' + urlToPrefetch + ' due to ' + error);
-                });
-            });
-
-            return Promise.all(cachePromises).then(function () {
-                console.log('Pre-fetching complete.');
-            });
-        }).catch(function (error) {
-            console.error('Pre-fetching failed:', error);
-        })
-    );
+        caches.open(CURRENT_CACHES.precache)
+        .then(cache => cache.addAll(FILES_TO_CACHE)));
 });
 
 self.addEventListener('activate', function (event) {
@@ -104,9 +58,6 @@ self.addEventListener('fetch', function (event) {
         console.log('Fetch URL ', event.request.url);
 
         event.respondWith(fetch(event.request).then(function (response) {
-            if (!response || response.status !== 200 || response.type !== 'basic') {
-                return response;    
-            }
             return caches.open(CURRENT_CACHES.runtime_cache).then(function (cache) {
                 return cache.put(event.request, response.clone()).then(function () {
                     console.log("Fetching from network for URL ", event.request.url);
@@ -115,12 +66,13 @@ self.addEventListener('fetch', function (event) {
                 });
             });
         }).catch(function () {
-            console.log("Serving file from cache for URL ", event.request.url);
+            console.log("Serving file from cache from service worker for URL ", event.request.url);
+            console.log("Response ", caches.match(event.request));
             return caches.match(event.request)
         })
         );
-    } else if (/fonts.(googleapis|gstatic).com/.test(event.request.url)) {
-        console.log('Caching Google fonts');
+    } else if ((/fonts.(googleapis|gstatic).com/.test(event.request.url)) || (/static/.test(event.request.url))) {
+        console.log('Caching Static Files with URL', event.request.url);
 
         event.respondWith(
             caches.open(CURRENT_CACHES.precache).then(function (cache) {

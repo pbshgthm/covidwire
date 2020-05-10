@@ -14,8 +14,8 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "start": "react-scripts start && cra-append-sw --mode dev ./public/custom-sw-import.js",
-    "build": "react-scripts build && cra-append-sw --skip-compile ./public/custom-sw-import.js",
+    "start": "react-scripts start && cra-append-sw --mode dev ./src/custom-sw-import.js",
+    "build": "react-scripts build && cra-append-sw --skip-compile ./src/custom-sw-import.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "start-sw": "http-server ./build"
