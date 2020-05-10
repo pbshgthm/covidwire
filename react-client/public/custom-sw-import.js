@@ -1,7 +1,10 @@
 // Service Worker that uses stale while revalidate strategy
 
-const STATIC_OFFLINE_VERSION = 1;
-const RUNTIME_OFFILE_VERSION = 1;
+import packageJson from '../src/package.json';
+global.appVersion = packageJson.version;
+
+const STATIC_OFFLINE_VERSION = global.appVersion;
+const RUNTIME_OFFILE_VERSION = global.appVersion;
 
 const CURRENT_CACHES = {
     precache: 'static-cache-v' + STATIC_OFFLINE_VERSION,
@@ -34,6 +37,8 @@ const FILES_TO_CACHE = [
 self.addEventListener('install', function (event) {
 
     console.log('Service Worker Install');
+
+    self.skipWaiting();
 
     event.waitUntil(
         caches.open(CURRENT_CACHES.precache).then(function (cache) {
@@ -113,6 +118,22 @@ self.addEventListener('fetch', function (event) {
             console.log("Serving file from cache for URL ", event.request.url);
             return caches.match(event.request)
         })
+        );
+    } else if (/fonts.(googleapis|gstatic).com/.test(event.request.url)) {
+        console.log('Caching Google fonts');
+
+        event.respondWith(
+            caches.open(CURRENT_CACHES.precache).then(function (cache) {
+                return cache.match(event.request).then(function (response) {
+                    return response || fetch(event.request).then(function (response) {
+                        if (!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+                        cache.put(event.request, response.clone());
+                        return response;
+                    });
+                });
+            })
         );
     } else {
         console.log("URL without /launch/ found - ", event.request.url);

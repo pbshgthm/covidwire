@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/precache-manifest.d423804816dc06f348d473cd71fafacc.js"
+  "/precache-manifest.b7f78267cfcd6584985cd62fabf4e16e.js"
 );
 
 self.addEventListener('message', (event) => {
@@ -39,8 +39,11 @@ workbox.routing.registerNavigationRoute(workbox.precaching.getCacheKeyForURL("/i
 });
 // Service Worker that uses stale while revalidate strategy
 
-const STATIC_OFFLINE_VERSION = 1;
-const RUNTIME_OFFILE_VERSION = 1;
+import packageJson from '../src/package.json';
+global.appVersion = packageJson.version;
+
+const STATIC_OFFLINE_VERSION = global.appVersion;
+const RUNTIME_OFFILE_VERSION = global.appVersion;
 
 const CURRENT_CACHES = {
     precache: 'static-cache-v' + STATIC_OFFLINE_VERSION,
@@ -73,6 +76,8 @@ const FILES_TO_CACHE = [
 self.addEventListener('install', function (event) {
 
     console.log('Service Worker Install');
+
+    self.skipWaiting();
 
     event.waitUntil(
         caches.open(CURRENT_CACHES.precache).then(function (cache) {
@@ -138,6 +143,9 @@ self.addEventListener('fetch', function (event) {
         console.log('Fetch URL ', event.request.url);
 
         event.respondWith(fetch(event.request).then(function (response) {
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+                return response;    
+            }
             return caches.open(CURRENT_CACHES.runtime_cache).then(function (cache) {
                 return cache.put(event.request, response.clone()).then(function () {
                     console.log("Fetching from network for URL ", event.request.url);
@@ -150,8 +158,24 @@ self.addEventListener('fetch', function (event) {
             return caches.match(event.request)
         })
         );
+    } else if (/fonts.(googleapis|gstatic).com/.test(event.request.url)) {
+        console.log('Caching Google fonts');
+
+        event.respondWith(
+            caches.open(CURRENT_CACHES.precache).then(function (cache) {
+                return cache.match(event.request).then(function (response) {
+                    return response || fetch(event.request).then(function (response) {
+                        if (!response || response.status !== 200 || response.type !== 'basic') {
+                            return response;
+                        }
+                        cache.put(event.request, response.clone());
+                        return response;
+                    });
+                });
+            })
+        );
     } else {
-        console.log("URL without launch found - ", event.request.url);
+        console.log("URL without /launch/ found - ", event.request.url);
         event.respondWith(
             caches.match(event.request)
                 .then((response) => {
