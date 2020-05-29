@@ -6,7 +6,8 @@ from flask import jsonify
 import requests, json
 from datetime import datetime
 from dateutil import tz
-import meta
+from bs4 import BeautifulSoup
+import meta_data
 import google_translate
 
 #DATABASE AUTHENTICATION
@@ -21,9 +22,14 @@ api_keys=json.load(open('./apis_config.json'))
 db_time = db.reference('/progress')
 
 #GET TABLE FROM AIRTABLE
-def get_table(base,table_name):
+def get_table(base,table_name,filter=False,offset=False):
 	url="https://api.airtable.com/v0/"+api_keys["airtable_base_"+base]+"/"+table_name
+	if filter:url=url+'?filterByFormula=AND(NOT({Exported}),{Status}="Completed")'
+	if offset:url=url+"?offset="+offset
 	x = requests.get(url,headers = {"Authorization": "Bearer "+api_keys["airtable_key"]})
+	#print(x.json(),table_name)
+	if "offset" in x.json():
+		return x.json()["records"]+get_table(base,table_name,filter,offset=x.json()["offset"])
 	return x.json()["records"]
 
 #-----------------------
@@ -31,12 +37,29 @@ def get_table(base,table_name):
 def add_to_table(base,table_name,data):
 	url="https://api.airtable.com/v0/"+api_keys["airtable_base_"+base]+"/"+table_name
 	x = requests.post(url,headers = {"Authorization": "Bearer "+api_keys["airtable_key"]},json=data)
-
+	#print(x.json())
 
 def update_table(base,table_name,data):
 	url="https://api.airtable.com/v0/"+api_keys["airtable_base_"+base]+"/"+table_name
 	x = requests.patch(url,headers = {"Authorization": "Bearer "+api_keys["airtable_key"]},json=data)
+	#print(x.json())
 
+
+
+def get_preview_img(url):
+	try:
+		response = requests.get(url)
+		soup = BeautifulSoup(response.text,features="lxml")
+		metas = soup.find_all('meta')
+		imgs=[]
+		for i in metas:
+			if "property" in i.attrs:
+				if i["property"]=="og:image":imgs.append(i["content"])
+		if len(imgs)==0:print(url,'Preview image not found')
+		return imgs[0]
+	except Exception as e:
+		print(e,url)
+		return ""
 
 def link_hash(url):
 	dynlink_param={
@@ -57,8 +80,9 @@ def get_time(format="iso"):
 		return itc.isoformat().replace('.',':').replace('T',' ').split('+')[0]
 	return itc.isoformat()
 
-def shorten_url(url,hash):
-	return 'https://covidwire.in/s/'+hash
+def shorten_url(url):
+	x=requests.post("https://api-ssl.bitly.com/v4/shorten",headers={"Authorization": "Bearer "+api_keys["bitly_key"]},json={"long_url":url})
+	return x.json()['link']
 
 
 def get_meta(state_dict):
@@ -84,7 +108,8 @@ def get_meta(state_dict):
 def pull_curation():
 	print('pulling curation...')
 	activity={}
-	records=get_table('a','Curation')
+
+	records=get_table('a','Curation',filter=True)
 
 	digest_records=[]
 	mark_export=[]
@@ -93,7 +118,6 @@ def pull_curation():
 
 	for record in records:
 		curation_fields=record['fields']
-
 		if 'Exported' in curation_fields:continue
 
 		mandate_fields=['Region','Domain','Published Time','Source Link','Source Name','Curated By']
@@ -110,17 +134,20 @@ def pull_curation():
 			remarks=curation_fields["Remarks"]
 		else: remarks=""
 
+		p_img=get_preview_img(curation_fields['Source Link'].split('?')[0])
+
 		#UPDATE MASTER BASE
 		master_fields={
 			'ID':hash,
 			'Published Time':curation_fields['Published Time'],
 			'Source Name':curation_fields['Source Name'],
 			'Source Link':curation_fields['Source Link'].split('?')[0],
-			'Short Link':shorten_url(curation_fields['Source Link'].split('?')[0],hash),
+			'Short Link':shorten_url(curation_fields['Source Link']),
 			'Domain':curation_fields['Domain'],
 			'Region':curation_fields['Region'],
 			'Curated By':curation_fields['Curated By'],
-			'Status':'Digestion Pending'
+			'Status':'Digestion Pending',
+			'Preview Image':p_img
 		}
 
 		if curation_fields['Region'] in ['Global','National']:
@@ -143,10 +170,12 @@ def pull_curation():
 		# ADD TO DIGESTION UPDATE LIST
 		digest_fields={
 			'ID-val':hash,
+			'Published Time-val':curation_fields['Published Time'],
 			'Region-val':curation_fields['Region'],
 			'Domain-val':curation_fields['Domain'],
 			'Source Link-val':curation_fields['Source Link'].split('?')[0],
-			'Remarks-val': remarks
+			'Remarks-val': remarks,
+			'Preview Image-val':p_img
 		}
 		digest_records.append({"fields":digest_fields})
 
@@ -164,21 +193,23 @@ def pull_curation():
 				"records":master_tables[state],
 				"typecast": True
 			})
+			#pass
 
 	if not len(digest_records)==0:
 		add_to_table('a','Digestion',{"records":digest_records})
-
+		#pass
 	if not len(mark_export)==0:
 		update_table('a','Curation',{"records":mark_export})
-
+		#pass
 	if not activity=={}:
 		db_time.child(get_time().split('T')[0]).update(activity)
+		#pass
 
 def pull_digestion():
 	global hash_dict
 	activity={}
 	print('pulling digestion...')
-	records=get_table('a','Digestion')
+	records=get_table('a','Digestion',filter=True)
 
 	mark_export=[]
 	mark_status=[]
@@ -191,22 +222,25 @@ def pull_digestion():
 
 		if 'Exported' in digestion_fields:continue
 
-		mandate_fields=['ID','Region','Hashtags','Headline','Digest','Source Link','Digested By','Validated By']
+		mandate_fields=['ID','Region','Headline','Digest','Source Link','Digested By','Validated By']
 		if not all(field in digestion_fields for field in mandate_fields):
 			continue
 
 		if digestion_fields['Validated By']=="FLAG RED":continue
 
 		region=digestion_fields['Region']
+		img_approval=""
+		if "Image Approval" in digestion_fields:
+			img_approval=digestion_fields["Image Approval"]
 
 		# UDPATE MASTER BASE
 		master_fields={
 			'Digest':digestion_fields['Digest'],
-			'Hashtags':digestion_fields['Hashtags'],
 			'Digested By':digestion_fields['Digested By'],
 			'Validated By':digestion_fields['Validated By'],
 			'Headline':digestion_fields['Headline'],
-			'Status':'Translation Pending'
+			'Status':'Translation Pending',
+			'Image Approval':img_approval
 		}
 
 		if region in ['Global','National']:
@@ -214,10 +248,15 @@ def pull_digestion():
 		else: state_list=[region]
 
 		for state in state_list:
-			master_tables[state].append({
-				"id":hash_dict[state][digestion_fields["ID"]],
-				"fields":master_fields
-			})
+			try:
+				master_tables[state].append({
+					"id":hash_dict[state][digestion_fields["ID"]],
+					"fields":master_fields
+				})
+			except Exception as e:
+				print(e,digestion_fields["ID"],state)
+				continue
+
 
 		activity[get_time("formated")]={
 				'activity'  :'digestion',
@@ -244,6 +283,8 @@ def pull_digestion():
 			'Digest-val':digestion_fields['Digest'],
 			'Headline-val':digestion_fields['Headline']
 		}
+		if 'Published Time' in digestion_fields:
+			translation_fields['Published Time-val']=digestion_fields['Published Time']
 
 		if region in ['Global','National']:
 			lang=[i[0] for i in meta['lang_dict'].items()]
@@ -260,20 +301,28 @@ def pull_digestion():
 	for state in master_tables:
 		if not len(master_tables[state])==0:
 			print('Updating Digestion - '+state+' ('+str(len(master_tables[state]))+')')
-			update_table("master",state,{
-				"records":master_tables[state],
-				"typecast": True
-			})
+			batch=split_list(master_tables[state],10)
+			for j in batch:
+				update_table("master",state,{
+					"records":j,
+					"typecast": True
+				})
+				#pass
 
 	for i in lang_tables:
 		if not len(lang_tables[i])==0:
-			add_to_table('b',i,{'records':lang_tables[i]})
-
+			batch=split_list(lang_tables[i],10)
+			for j in batch:
+				add_to_table('b',i,{'records':j})
+				#pass
 	if not len(mark_export)==0:
-		update_table('a','Digestion',{"records":mark_export})
-
+		batch=split_list(mark_export,10)
+		for j in batch:
+			update_table('a','Digestion',{"records":j})
+			#pass
 	if not activity=={}:
 		db_time.child(get_time().split('T')[0]).update(activity)
+		#pass
 
 def pull_translation():
 	global hash_dict
@@ -283,7 +332,7 @@ def pull_translation():
 	master_tables={k:[] for k in meta['state_list']}
 
 	for lang in lang_list:
-		records=get_table('b',lang)
+		records=get_table('b',lang,filter=True)
 		mark_export=[]
 
 		for record in records:
@@ -308,10 +357,15 @@ def pull_translation():
 				state_list=meta['lang_dict'][lang]
 			else:state_list=[region]
 			for state in state_list:
-				master_tables[state].append({
-					"id":hash_dict[state][translation_fields["ID"]],
-					"fields":master_fields
-				})
+				try:
+					master_tables[state].append({
+						"id":hash_dict[state][translation_fields["ID"]],
+						"fields":master_fields
+					})
+				except Exception as e:
+					print(e,translation_fields["ID"],state)
+					continue
+
 			activity[get_time("formated")]={
 					'activity'  :'translation',
 					'timestamp' :get_time(),
@@ -331,17 +385,23 @@ def pull_translation():
 		for state in master_tables:
 			if not len(master_tables[state])==0:
 				print('Updating Translation - '+state+' ('+str(len(master_tables[state]))+')')
-				update_table("master",state,{
-					"records":master_tables[state],
-					"typecast": True
-				})
+				batch=split_list(master_tables[state],10)
+				for j in batch:
+					update_table("master",state,{
+						"records":j,
+						"typecast": True
+					})
+					#pass
 
 		if not len(mark_export)==0:
-			update_table('b',lang,{"records":mark_export})
+			batch=split_list(mark_export,10)
+			for j in batch:
+				update_table('b',lang,{"records":j})
+				#pass
 
 	if not activity=={}:
 		db_time.child(get_time().split('T')[0]).update(activity)
-
+		#pass
 
 def get_hash_table():
 	hash_table={}
@@ -353,10 +413,13 @@ def get_hash_table():
 	return hash_table
 
 
+def split_list(mylist, chunk_size):
+	return [mylist[offs:offs+chunk_size] for offs in range(0, len(mylist), chunk_size)]
 
 
-meta=get_meta(meta.state_dict)
+meta=get_meta(meta_data.state_dict)
 hash_dict={}
+
 
 def pull_data(request):
 	global hash_dict
@@ -367,6 +430,14 @@ def pull_data(request):
 	return
 
 
+
+#export GOOGLE_APPLICATION_CREDENTIALS="./translate_keys.json"
+#gcloud functions deploy pull_data --runtime python37 --trigger-http --allow-unauthenticated
+
+#pull_data('asa')
+
+
+## MORE THAN 100 CURATED
 # URL VALIDATION
 # OTHER FIELDS VALIDATION
 # URL SAFE VALUE FOR STATE NAMES

@@ -3,3 +3,5 @@ flask
 python-dateutil
 google-cloud
 google-cloud-translate
+beautifulsoup4
+lxml

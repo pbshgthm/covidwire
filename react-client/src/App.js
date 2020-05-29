@@ -1,86 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
-
-
-class AppTitleBar extends React.Component {
-	constructor(props){
-		super(props)
-		this.state={
-			showPane:false
-
-		}
-		this.togglePane=this.togglePane.bind(this)
-	}
-
-	togglePane(){
-		if(this.state.showPane){
-			document.body.style.overflow = "scroll";
-			this.setState({showPane:false})
-		}else{
-			document.body.style.overflow = "hidden";
-			this.setState({showPane:true})
-		}
-	}
-
-	render() {
-		return (
-			<div>
-				<SidePane showPane={this.state.showPane} togglePane={this.togglePane}/>
-				<div className="AppTitleBar">
-					<img className="AppMenuBtn" onClick={this.togglePane} src={require("./assets/menu.png")}  alt="Show Menu"/>
-					<a href="/" className="AppTitle">CovidWire
-						<img alt="CovidWire Logo" src={require("./assets/logo.png")} className="AppLogo"/>
-					</a>
-					<div className="DesktopNavBar">
-						<div className="DesktopNavLinks"><a href="/">Home</a></div>
-						<div className="DesktopNavLinks"><a href="/about">About Us</a></div>
-						<div className="DesktopNavLinks"><a href="/team">Our Team</a></div>
-						<div className="DesktopNavLinks"><a href="https://covidwire.in/s/joinus" target="_blank" rel="noopener noreferrer">Join Us</a></div>
-					</div>
-				</div>
-			</div>)
-	}
-}
-
-function SidePane(props){
-	return(
-		<div>
-			<div className={classNames('BgBlock',{"BgBlock-sel":props.showPane})} onClick={props.togglePane}></div>
-			<div className={classNames('SidePane',{"SidePane-sel":props.showPane})}>
-				<img className="SidepaneBack" alt="Hide Side Pane" src={require("./assets/back.png")} onClick={props.togglePane}/>
-				<div className="SidePaneName">CovidWire
-					<img alt="CovidWire Logo" src={require("./assets/logo-dark.png")} className="SidePaneLogo"/>
-				</div>
-				<div className="SidePaneNav">
-					<div className="SidePaneLinks SidePaneLinks-sel"><a href="/">Home</a></div>
-					<div className="SidePaneLinks"><a href="/about">About Us</a></div>
-					<div className="SidePaneLinks"><a href="/team">Our Team</a></div>
-					<div className="SidePaneLinks"><a href="https://covidwire.in/s/joinus" target="_blank" rel="noopener noreferrer">Join Us</a></div>
-				</div>
-				<div className="SidePaneHi">
-					<div className="SidePaneHiText">Say Hi!</div>
-					<div className="SidePaneContact">
-						<img className="SidePaneContactIcon" src={require("./assets/mail.png")} alt="Email"/>
-						<a href="mailto:hello@covidwire.in" target="_blank" rel="noopener noreferrer">
-							hello@covidwire.in
-						</a>
-					</div>
-					<div className="SidePaneContact-ph">
-						<img className="SidePaneContactIcon" src={require("./assets/phone.png")} alt="Phone"/>
-						<a href="tel:+91 7400401323" target="_blank" rel="noopener noreferrer" >7400401323</a> |
-						<a href="tel:+91 6305660413" target="_blank" rel="noopener noreferrer" > 6305660413</a>
-					</div>
-					<div className="SidePaneContact">
-						<img className="SidePaneContactIcon" src={require("./assets/instagram.png")} alt="Instagram"/>
-						<a href="https://instagram.com/covid.wire" target="_blank" rel="noopener noreferrer">
-							covid.wire
-						</a>
-					</div>
-				</div>
-			</div>
-		</div>
-	)
-}
+import AppTitleBar from './components/AppTitleBar';
 
 class SettingsBar extends React.Component {
 	constructor(props) {
@@ -166,6 +86,7 @@ class SettingsBar extends React.Component {
 				</div>
 				<div className={classNames("StateListBox",{"StateListBox-sel":this.state.showList})}>
 					{stateListContent}
+					<div className="MoreComingSoon">More states coming soon...</div>
 				</div>
 			</div>
 		)
@@ -173,80 +94,56 @@ class SettingsBar extends React.Component {
 }
 
 
-function FormatShare(digest,isWa=true){
+function FormatShare(digest){
 	let msg=""
-	if(isWa){
-		msg="whatsapp://send?text="
-		msg=msg+digest.digest+'%0A%0A'
-		let ht=digest.hashtags.map(x=>('%23'+x)).join(' ')
-		msg=msg+'*'+ht+'* %0A%0A'
-		msg=msg+"Original Source: "+digest.link+'%0A%0A'
-		msg=msg+"*Shared from https://covidwire.in* %0AOne stop for short and sharable authentic info about Covid19 in multitude of regional languages."
 
-	}
-	else{
-		msg=msg+digest.digest+'\n\n'
-		let ht=digest.hashtags.map(x=>('#'+x)).join(' ')
-		msg=msg+ht+'\n\n'
-		msg=msg+"Original Source: "+digest.link+"\n\n"
-		msg=msg+"Shared from https://covidwire.in \nOne stop for short and sharable authentic info about Covid19 in multitude of regional languages."
+	msg="whatsapp://send?text=";
+	msg=msg+"*"+digest.headline.trim()+'*  %0A%0A';
+	msg=msg+'_'+formatDate(digest.date)+'  |  '+digest.src+'_ %0A%0A';
+	msg=msg+digest.digest+'%0A%0A';;
+	msg=msg+"*Shared from https://covidwire.in* %0AOne stop for short and sharable authentic info about Covid19 in multiple regional languages. %0A%0A";
+	msg=msg+"Source : "+digest.link.split('//')[1];
 
-	}
 
 	return msg
 }
 
 
-function CopyClipboard(str){
-  	const el = document.createElement('textarea');
-  	el.value = str;
-  	document.body.appendChild(el);
-  	el.select();
-  	document.execCommand('copy');
-  	document.body.removeChild(el);
-};
 
 function NewsCard(props){
-	let hashtags=props.cardData.hashtags.map((x,i)=>(<div key={'hashtag-'+i} className="CardHashtags">{x}</div>))
 
 	return(
 		<div className="NewsCard">
-			<div className="NewsCardHeader">
-				<img src={require('./assets/'+props.cardData.region+'.png')} alt="Region Icon" className="CardRegionIcon"/>
-				<div className="CardHashtagsHolder">{hashtags}</div>
-				<div className="CardTimeAgo">{props.cardData.time}</div>
+			<div className={classNames("CardHeader","CardRegion"+props.cardData.region)}>
+				<div className="CardDomain">{props.cardData.domain}</div>
+				<div className="CardTitle">{props.cardData.headline}</div>
 			</div>
-			<div className="NewsCardBody">{props.cardData.digest}</div>
-			<div className="NewsCardFooter">
-				<a className="NewsCardSource" target="_blank" rel="noopener noreferrer" href={props.cardData.link}> {props.cardData.src.toUpperCase()}</a>
-				<div className="NewsShareBox">
-
-					<img onClick={()=>CopyClipboard(FormatShare(props.cardData,false))} src={require('./assets/share.png')} className="CardShareIcons CSCB" alt="Share Link"/>
-					<a href={FormatShare(props.cardData)}>
-						<img src={require('./assets/whatsapp.png')} className="CardShareIcons" alt="Share on WhatsApp"/>
-					</a>
-
-				</div>
+			<div className="CardTime">{props.cardData.time}</div>
+			<div className="CardBody">{props.cardData.digest}</div>
+			<div className="CardFooter">
+				<a href={props.cardData.link} className="CardSource" target="_blank" rel="noopener noreferrer">{props.cardData.src}</a>
+				<a href={FormatShare(props.cardData)}>
+					<img onClick={()=>logFirebase({'share-news':props.cardData.hash})} className="CardShare" src={require("./assets/whatsapp.png")} alt="Whatsapp"/>
+				</a>
 			</div>
 		</div>
 	)
 }
 
-function FeedFilter(props){
-
+function RegionFilter(props){
 	return(
-		<div className="FeedFilter">
+		<div className="RegionFilter">
 			<div className={
-				classNames("FeedFilterOpt FFOpt-1",{"FFOpt-1-sel":props.selOpt===1})} onClick={()=>props.changeFilterOpt(1)}>
+				classNames("RegionFilterOpt RFOpt-1",{"RFOpt-1-sel":props.selOpt===1})} onClick={()=>props.changeFilterOpt(1)}>
 			All</div>
 			<div className={
-				classNames("FeedFilterOpt FFOpt-2",{"FFOpt-2-sel":props.selOpt===2})} onClick={()=>props.changeFilterOpt(2)}>
+				classNames("RegionFilterOpt RFOpt-2",{"RFOpt-2-sel":props.selOpt===2})} onClick={()=>props.changeFilterOpt(2)}>
 			Global</div>
 			<div className={
-				classNames("FeedFilterOpt FFOpt-3",{"FFOpt-3-sel":props.selOpt===3})} onClick={()=>props.changeFilterOpt(3)}>
+				classNames("RegionFilterOpt RFOpt-3",{"RFOpt-3-sel":props.selOpt===3})} onClick={()=>props.changeFilterOpt(3)}>
 			National</div>
 			<div className={
-				classNames("FeedFilterOpt FFOpt-4",{"FFOpt-4-sel":props.selOpt===4})} onClick={()=>props.changeFilterOpt(4)}>
+				classNames("RegionFilterOpt RFOpt-4",{"RFOpt-4-sel":props.selOpt===4})} onClick={()=>props.changeFilterOpt(4)}>
 			State</div>
 
 		</div>
@@ -258,9 +155,12 @@ class NewsFeed extends React.Component{
 	constructor(props){
 		super(props)
 		this.state={
-			filterOpt:1
+			filterOpt:1,
+			showScroll:false
 		}
 		this.changeFilterOpt=this.changeFilterOpt.bind(this)
+		this.hideScroll=this.hideScroll.bind(this)
+		this.scrollToTop=this.scrollToTop.bind(this)
 	}
 	//NEED BETTER STATE MANAGEMENT
 	changeFilterOpt(opt){
@@ -268,36 +168,90 @@ class NewsFeed extends React.Component{
 			filterOpt:opt
 		})
 	}
+	componentDidMount(){
+        window.addEventListener('scroll', this.hideScroll);
+    }
+
+    componentWillUnmount(){
+         window.removeEventListener('scroll', this.hideScroll);
+    }
+
+	hideScroll(){
+		if(document.documentElement.scrollTop>300){
+			this.setState({showScroll:true})
+		}
+		else{
+			this.setState({showScroll:false})
+		}
+	}
+
+	scrollToTop(){
+  		const c = document.documentElement.scrollTop || document.body.scrollTop;
+  		if (c > 0) {
+    		window.requestAnimationFrame(this.scrollToTop);
+    		window.scrollTo(0, c - c / 8);
+  		}
+	};
 
 	render(){
 		let filterDict={
-			1:['global','national','state'],
-			2:['global'],
-			3:['national'],
-			4:['state']
+			1:['Global','National','State'],
+			2:['Global'],
+			3:['National'],
+			4:['State']
 		}
 		let allNewsCards=this.props.feedData;
 		let newsCards=<div className="FeedMsg">Fetching News...</div>
 		if(allNewsCards!==undefined){
-			newsCards=allNewsCards.filter((item)=>
+			let filterCards=allNewsCards.filter((item)=>
 				(filterDict[this.state.filterOpt].indexOf(item['region'])!==-1)
 			)
-			newsCards=newsCards.map((x,i)=>(<NewsCard key={'card-'+i} cardData={x}/>));
+			let last_date=''
+			newsCards=[]
+			for(var i=0;i<filterCards.length;i++){
+				let d=filterCards[i].date.split('T')[0];
+				if(d!==last_date){
+					newsCards.push(<div key={"Date-"+i} className="FeedDate">{formatDate(d)}</div>)
+				}last_date=d;
+				newsCards.push(<NewsCard key={'card-'+i} cardData={filterCards[i]}/>)
+				if(i===3){
+					newsCards.push(
+						<a key="ShareCard" href="whatsapp://send?text=Have you checked out *CovidWire* ? This webapp is a quick stop for *short and shareable authentic information about COVID19, accessible in multiple regional languages* .%0A%0AIt is a volunteer powered initiative, so you could be a part of it too!%0A%0AVisit and checkout this project at https://covidwire.in.">
+						<img onClick={()=>logFirebase('Share CovidWire')} alt="Share CovidWire" src={require('./assets/sharecard.png')} className="InAppCards"/>
+						</a>)
+				}
+				if(i===5){
+					newsCards.push(
+						<a key="JoinCard" href="https://covidwire.in/s/join" target="_blank" rel="noopener noreferrer">
+							<img  alt="Join CovidWire" src={require('./assets/joincard.png')} className="InAppCards"/>
+						</a>)
+				}
+			}
 		}else{
 
 		}
 
-		if(newsCards.length==0)
+		if(newsCards.length===0)
 			newsCards=<div className="FeedMsg">Nothing here yet, will get back with more news soon!</div>
 
 		return(
 			<div className="NewsFeed">
 				<div className="DesktopBlock"></div>
-				<FeedFilter selOpt={this.state.filterOpt} changeFilterOpt={this.changeFilterOpt}/>
+				<RegionFilter selOpt={this.state.filterOpt} changeFilterOpt={this.changeFilterOpt}/>
 				{newsCards}
+				<img src={require("./assets/scrolltop.png")} alt="Scroll to Top" className={ classNames("ScrollTop",{"ScrollTopView":this.state.showScroll})} onClick={this.scrollToTop}/>
+
 			</div>
 		)
 	}
+}
+
+function formatDate(date_str) {
+	date_str=date_str.split('T')[0]
+	let month = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+	let date_arr = date_str.split('-');
+
+  	return Number(date_arr[2])+' '+month[Number(date_arr[1]) - 1]+' '+date_arr[0]
 }
 
 function timeSince(date) {
@@ -310,13 +264,18 @@ function timeSince(date) {
   	var interval = Math.floor(seconds / 31536000);
 
   	interval = Math.floor(seconds / 86400);
-  	if (interval > 1) {return interval + " days";}
+  	if (interval >= 1) {
+		if(interval===1)return "1 day ago";
+		return interval + " days ago";
+	}
 
+
+	return "Today"
   	interval = Math.floor(seconds / 3600);
-  	if (interval > 1) {return interval + " hrs";}
+  	if (interval >= 1) {return interval + " hrs ago";}
 
   	interval = Math.floor(seconds / 60);
-  	return interval + " mins";
+  	return interval + " mins ago";
 
 }
 
@@ -362,17 +321,14 @@ class App extends React.Component{
 		this.getStateData=this.getStateData.bind(this)
 		this.changeCurrState=this.changeCurrState.bind(this)
 		this.formatFeed=this.formatFeed.bind(this)
-		this.fetchFromCache=this.fetchFromCache.bind(this)
-
+		this.formatPageUrl=this.formatPageUrl.bind(this)
 	}
 
 	componentDidMount() {
-
 		this.getStateData(this.state.currState.name)
 	}
 
 	changeCurrState(currState){
-
 
 		let currStateNow=this.state.currState;
 		if(currState.name!==currStateNow.name){
@@ -398,42 +354,20 @@ class App extends React.Component{
 
 	}
 
-	fetchFromCache(url) {
-		// No cache exists, return null
-		if(!('caches' in window)) {
-			return null;
-		}
-		// Return cached response
-		return caches.match(url).then((response) => {
-			return response;
-		}).catch((err) => {
-			console.log('Error in getting response from cache for URL - ', url);
-			return null;
-		});
+	formatPageUrl(num){
+		const pageSize=10;
+		let end=new Date(new Date().setDate(new Date().getDate()-pageSize*num)).toISOString().split('T')[0];
+
+		let start=new Date(new Date().setDate(new Date().getDate()-
+		(pageSize*(num+1)-1))).toISOString().split('T')[0];
+
+		return '?orderBy="$key"&startAt="'+start+'"&endAt="'+end+'"';
+		//total pageSize days including today
 	}
 
 	getStateData(state){
-		let baseUrl='https://covidwire.firebaseio.com/launch/'
-		let url=baseUrl+state+'.json'
-
-		this.fetchFromCache(url)
-			.then(
-				function (result) {
-					if(result)
-						return result.json()
-						.then(
-							(result) => {
-								if (result != null) {
-									this.setState({
-										stateData: result,
-										feedList: this.formatFeed(state, result)
-									})
-								}
-							}
-						)
-				} 
-			)
-
+		let baseUrl="https://covidwire.firebaseio.com/feed/"
+		let url=baseUrl+state+'.json'+this.formatPageUrl(0)
 
 		fetch(url)
 		.then(
@@ -441,9 +375,13 @@ class App extends React.Component{
 		.then(
 			(result)=>{
 				if(result!=null){
+					let flatDict={}
+					Object.values(result).forEach((item, i) => {
+						flatDict=Object.assign({}, flatDict, item);
+					});
 					this.setState({
 						stateData:result,
-						feedList:this.formatFeed(state,result)
+						feedList:this.formatFeed(state,flatDict)
 					})
 				}
 			}
@@ -451,35 +389,34 @@ class App extends React.Component{
 	}
 
 	formatFeed(state,rawData){
-		let recList=Object.entries(rawData).map(x=>x[1])
+		let recList=Object.values(rawData)
+
 		let langList=this.state.meta.stateDict[state].concat(['English'])
 		let feedList=langList.map(x=>[])
 		recList.sort((a,b)=>(b['published_time'].localeCompare(a['published_time'])))
 		recList.forEach((record, i) => {
 			let commDigest={
 				hash:record['hash'],
-				time:timeSince(record['published_time']),
+				//time:timeSince(record['published_time']),
+				time:formatDate(record['published_time'].split('T')[0]),
+				date:record['published_time'],
 				src:record['src_name'],
-				link:record['short_link'],
-				region:(['Global','National'].includes(record['region']))?record['region'].toLowerCase():'state',
+				link:"https://covidwire.in/s/"+record['hash'],
+				domain:record['domain'],
+				region:(['Global','National'].includes(record['region']))?record['region']:'State',
 			}
 
 			langList.forEach((lang, i) => {
 				let langDigest={...commDigest}
 				if(lang in record['digests']){
 
-					let a='translation'
-					if(lang==='English')a='digest';
-					langDigest['lang']=lang
-					langDigest['digest']=record['digests'][lang][a]
-					langDigest['hashtags']=record['digests']['English']['hashtags']
+					langDigest['digest']=record['digests'][lang]['digest']
+					langDigest['headline']=record['digests'][lang]['headline']
 
 					feedList[langList.indexOf(lang)].push(langDigest)
 				}
 
 			});
-
-
 
 		});
 		return feedList;
@@ -489,7 +426,7 @@ class App extends React.Component{
 
 		return (
 	      <div className="App">
-	  		<AppTitleBar/>
+	  		<AppTitleBar navSel="home"/>
 	  		<SettingsBar metaData={this.state.meta} currState={this.state.currState} changeCurrState={this.changeCurrState}/>
 	  		<NewsFeed feedData={this.state.feedList[this.state.currState.lang]}/>
 			<div className="DesktopDesc">One stop for short and sharable authentic info about Covid19 in multitude of regional languages.</div>
@@ -499,9 +436,16 @@ class App extends React.Component{
 }
 
 
-let metaRaw={'stateDict': {'Telangana': ['Telugu'], 'Andhra Pradesh': ['Telugu'], 'Maharashtra': ['Marathi'], 'Haryana': ['Hindi'], 'Tamil Nadu': ['Tamil'], 'Delhi': ['Hindi'], 'Uttar Pradesh': ['Hindi']}, 'langDict': {'Telugu': ['Telangana', 'Andhra Pradesh'], 'Marathi': ['Maharashtra'], 'Hindi': ['Haryana', 'Delhi', 'Uttar Pradesh'], 'Tamil': ['Tamil Nadu']}}
 
-let metaRawX={'stateDict': {'Telangana': ['Telugu'], 'Andhra Pradesh': ['Telugu'], 'Haryana': ['Hindi'], 'Tamil Nadu': ['Tamil'], 'Delhi': ['Hindi'], 'Uttar Pradesh': ['Hindi']}, 'langDict': {'Telugu': ['Telangana', 'Andhra Pradesh'], 'Hindi': ['Haryana', 'Delhi', 'Uttar Pradesh'], 'Tamil': ['Tamil Nadu']}}
+function logFirebase(content){
+	try {
+		//firebase.analytics().logEvent(content)
+	}catch{
+
+	}
+	console.log(content)
+}
+let metaRaw={'stateDict': {'Andhra Pradesh': ['Telugu'], 'Maharashtra': ['Marathi'], 'Delhi': ['Hindi']}, 'langDict': {'Telugu': ['Andhra Pradesh'], 'Marathi': ['Maharashtra'], 'Hindi': ['Delhi']}}
 
 
 let stateCode={
@@ -513,6 +457,7 @@ let stateCode={
 	'Maharashtra':'mh',
 	'Uttar Pradesh':'up'
 }
+
 let langCode={
 	'Tamil':'tam',
 	'Hindi':'hin',
@@ -532,4 +477,5 @@ let glyphDict={
 	'Marathi':'ळ'
 }
 
+//take meta completely outside everything
 export default App;
