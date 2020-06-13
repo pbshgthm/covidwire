@@ -74,6 +74,7 @@ def get_preview_img(url):
 
 
 def link_hash(url):
+	url=url.strip()
 	dynlink_param={
     	"longDynamicLink": "https://covidwire.in/s?link="+url,
     	"suffix": {

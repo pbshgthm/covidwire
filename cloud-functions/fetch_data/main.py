@@ -27,7 +27,9 @@ def pull_curation():
 	for record in records:
 		curation_fields=record['fields']
 		try:hash=link_hash(curation_fields['Source Link'])
-		except Exception as e:continue
+		except Exception as e:
+			print(e)
+			continue
 
 		p_img=get_preview_img(curation_fields['Source Link'].split('?')[0])
 
@@ -251,7 +253,7 @@ def pull_data(request):
 
 
 
-#pull_digestion()
+pull_data('sds')
 
 
 #export GOOGLE_APPLICATION_CREDENTIALS="./translate_keys.json"
