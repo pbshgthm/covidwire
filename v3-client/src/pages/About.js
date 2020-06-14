@@ -115,7 +115,7 @@ function About(){
 				<div className="AboutTeamMembers">
 					Saumya Prabodh Srivastava<br/>
 					Deeba Altaf<br/>
-					Girdharilal<br/>
+					Giridhari Lal<br/>
 					Priyodarshani Debsharma<br/>
 					Sri Pravallika S<br/>
 					Suhailah Javid
