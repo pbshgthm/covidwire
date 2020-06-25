@@ -135,7 +135,8 @@ def translate_text(text,lang):
 	lang_code={
 		'Telugu':'te',
 		'Hindi':'hi',
-		'Marathi':'mr'
+		'Marathi':'mr',
+		'Tamil':'ta'
 	}
 
 	response = client.translate_text(

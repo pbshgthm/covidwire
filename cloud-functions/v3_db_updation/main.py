@@ -75,6 +75,11 @@ def format_entry(fields):
 				"headline":fields['Headline Marathi'],
 				"digest":fields['Digest Marathi'],
 				"auto":fields['Translator Marathi']=='AUTO TRANSLATE'
+			},
+			"Tamil":{
+				"headline":safe_dict(fields,'Headline Tamil'),
+				"digest":safe_dict(fields,'Digest Tamil'),
+				"auto":safe_dict(fields,'Translator Tamil')=='AUTO TRANSLATE'
 			}
 		}
 	}
@@ -148,6 +153,7 @@ def pull_v3(request):
     	"Delhi":{},
     	"Maharashtra":{},
     	"Andhra Pradesh":{},
+		"Tamil Nadu":{},
     	"Hope":{}
 	}
 

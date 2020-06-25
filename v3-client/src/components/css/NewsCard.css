@@ -21,8 +21,11 @@
 	margin-bottom: 9vw;
 	transition: 0.3s;
 	padding-top: 3vw;
+	display: block;
 }
-
+.NewsCardHide{
+	display: none;
+}
 .NewsCardRow{
 	padding-left: 4vw;
 	padding-right: 4vw;
@@ -86,7 +89,7 @@
 	padding-left: 3.2vw;
 	padding-right: 4vw;
 	color: #5E5E5E;
-	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2';
+	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2','Baloo Thambi 2';
 	line-height: 125%;
 	font-size: 5.65vw;
 	margin-top: 0vw;

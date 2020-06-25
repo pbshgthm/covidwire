@@ -253,7 +253,7 @@ def pull_data(request):
 
 
 
-pull_data('sds')
+#pull_data('sds')
 
 
 #export GOOGLE_APPLICATION_CREDENTIALS="./translate_keys.json"

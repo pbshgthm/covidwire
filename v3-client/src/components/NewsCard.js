@@ -42,6 +42,7 @@ function NewsCard(props){
 	const [langSel,setLangSel]=useState(props.langSel)
 
 	useEffect(()=>{
+		setCardExpand(props.cardData.form!=="Short")
 		setLangSel(props.langSel)
 		setDefaultLang(props.langSel)
 		if(props.langSel!=='English'){
@@ -51,7 +52,9 @@ function NewsCard(props){
 
 
 	return(
-		<div className="NewsCard">
+		<div className={classNames("NewsCard",{
+			"NewsCardHide":props.cardData.digests[langSel].digest===""
+		})}>
 			<div className={classNames("NewsCardHeaderState",{
 					"NewsCardHeaderGlobal":props.cardData.region==="Global",
 					"NewsCardHeaderNational":props.cardData.region==="National",
