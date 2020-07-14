@@ -66,7 +66,7 @@ function Feed(props){
 			setEndFeed(true)
 			return;
 		}
-		console.log(pageVal)
+		console.log(url+'.json'+pageVal)
 		fetch(url+'.json'+pageVal)
 			.then(
 				(result)=>result.json()

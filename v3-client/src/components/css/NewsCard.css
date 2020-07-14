@@ -94,6 +94,7 @@
 	font-size: 5.65vw;
 	margin-top: 0vw;
 	margin-bottom: 1.7vw;
+	word-wrap: break-word;
 }
 a{
 	text-decoration: none;

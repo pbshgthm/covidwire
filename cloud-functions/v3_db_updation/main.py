@@ -80,6 +80,11 @@ def format_entry(fields):
 				"headline":safe_dict(fields,'Headline Tamil'),
 				"digest":safe_dict(fields,'Digest Tamil'),
 				"auto":safe_dict(fields,'Translator Tamil')=='AUTO TRANSLATE'
+			},
+			"Malayalam":{
+				"headline":safe_dict(fields,'Headline Malayalam'),
+				"digest":safe_dict(fields,'Digest Malayalam'),
+				"auto":safe_dict(fields,'Translator Malayalam')=='AUTO TRANSLATE'
 			}
 		}
 	}
@@ -154,7 +159,9 @@ def pull_v3(request):
     	"Maharashtra":{},
     	"Andhra Pradesh":{},
 		"Tamil Nadu":{},
-    	"Hope":{}
+		"Kerala":{},
+    	"Hope":{},
+		"Telangana":{}
 	}
 
 	for region in meta_data.region_list:
@@ -191,3 +198,5 @@ def safe_dict(dict_,key,default=""):
 def update_table(base,table_name,data):
 	url="https://api.airtable.com/v0/"+api_keys["airtable_base_"+base]+"/"+table_name
 	x = requests.patch(url,headers = {"Authorization": "Bearer "+api_keys["airtable_key"]},json=data)
+
+#gcloud functions deploy pull_v3 --runtime python37 --trigger-http --allow-unauthenticated

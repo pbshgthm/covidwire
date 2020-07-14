@@ -136,7 +136,8 @@ def translate_text(text,lang):
 		'Telugu':'te',
 		'Hindi':'hi',
 		'Marathi':'mr',
-		'Tamil':'ta'
+		'Tamil':'ta',
+		'Malayalam':'ml'
 	}
 
 	response = client.translate_text(

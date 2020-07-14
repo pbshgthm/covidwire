@@ -1,7 +1,9 @@
 const stateConfig={
 	'Andhra Pradesh':['Telugu','English'],
 	'Delhi':['Hindi','English'],
+	'Kerala':['Malayalam','English'],
 	'Maharashtra':['Marathi','English'],
+	'Telangana':['Telugu','English'],
 	'Tamil Nadu':['Tamil','English']
 }
 
@@ -9,6 +11,10 @@ const langConfig={
 	'Hindi':{
 		'native':'हिन्दी',
 		'glyph':'अ'
+	},
+	'Malayalam':{
+		'native':'മലയാളം',
+		'glyph':'അ'
 	},
 	'Marathi':{
 		'native':'मराठी',
@@ -30,7 +36,7 @@ const langConfig={
 
 const domainConfig=["Healthcare", "Society", "Administration",  "Politics", "Economy", "Legal",  "Science", "Environment", "Sports","Others"]
 
-const regionConfig=["Global","National","Andhra Pradesh","Delhi","Maharashtra","Tamil Nadu"]
+const regionConfig=["Global","National","Andhra Pradesh","Delhi","Kerala","Maharashtra","Telangana","Tamil Nadu"]
 
 
 const config={
