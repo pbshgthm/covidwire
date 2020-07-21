@@ -115,7 +115,8 @@ def pull_digestion():
 			'Digested By':digestion_fields['Digested By'],
 			'Validated By':digestion_fields['Validated By'],
 			'Image Approval':digestion_fields["Image Approval"],
-			'Format':safe_dict(digestion_fields,"Format")
+			'Format':safe_dict(digestion_fields,"Format"),
+			'Featured':safe_dict(digestion_fields,"Featured")
 		}
 
 		auto_trans={}
