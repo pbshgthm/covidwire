@@ -1,0 +1,231 @@
+.FeedDateBox{
+	opacity: 1;
+	background-color: #EFA54E;
+	margin: 0 auto;
+	width: 35vw;
+	text-align: center;
+	font-size: 3.5vw;
+	height: 7vw;
+	line-height: 7.5vw;
+	font-weight: bold;
+	color: white;
+	border-radius: 1vw;
+	margin-top: -3vw;
+	margin-bottom: 6vw;
+	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+}
+.NewsCard{
+	background-color: #ffffff;
+	box-shadow: 0px 0px 10px rgba(98, 98, 98, 0.3);
+	border-radius: 1.5vw;
+	margin-bottom: 9vw;
+	transition: 0.3s;
+	padding-top: 3vw;
+	display: block;
+}
+.NewsCardHide{
+	display: none;
+}
+.NewsCardRow{
+	padding-left: 4vw;
+	padding-right: 4vw;
+	display: block;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+}
+
+
+.NewsCardHeaderState{
+	border-left: 0.8vw solid #54A3B5;
+}
+
+.NewsCardHeaderNational{
+	border-left: 0.8vw solid #5FA075;
+}
+
+.NewsCardHeaderGlobal{
+	border-left: 0.8vw solid #E78888;
+}
+
+.NewsCardHeaderHope{
+	border-left: 0.8vw solid #DB8B2F;
+}
+
+.NewsCardRegion{
+	margin-left: -0.8vw;
+	font-size: 3.5vw;
+	font-weight: 700;
+	display: inline-block;
+	color : #54A3B5;
+}
+
+.NewsCardRegionNational{
+	color : #5FA075;
+}
+
+.NewsCardRegionGlobal{
+	color : #E78888;
+}
+
+
+
+.NewsCardRegion::after{
+	content : '⋅';
+	padding-left: 1vw;
+	padding-right: 1vw;
+	font-size: 5vw;
+	vertical-align: middle;
+}
+.NewsCardDomain{
+	font-size: 3.5vw;
+	color: #9E9E9E;
+	font-weight: 600;
+	display: inline-block;
+}
+.NewsCardHeadline{
+	padding-left: 3.2vw;
+	padding-right: 4vw;
+	color: #5E5E5E;
+	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2','Baloo Thambi 2';
+	line-height: 125%;
+	font-size: 5.65vw;
+	margin-top: 0vw;
+	margin-bottom: 1.7vw;
+	word-wrap: break-word;
+}
+a{
+	text-decoration: none;
+}
+.NewsCardSource{
+	display: inline-block;
+	color: #6585A3;
+	font-weight: 700;
+	font-size: 3.5vw;
+}
+.NewsCardDate{
+	display: inline-block;
+	font-weight: 600;
+	font-size: 3.5vw;
+	color: #A9A9A9;
+	padding-left: 2vw;
+}
+
+.NewsCardImage{
+	margin-top: 2.7vw;
+	width: 94vw;
+	padding-left: 0vw;
+	padding-right: 0vw;
+}
+
+.NewsCardContent{
+	max-height: 0vh;
+	overflow: hidden;
+	padding-bottom: 1vw;
+	transition: 0.5s;
+}
+.NewsCardContentShow{
+	max-height: 100vh;
+	transition: 0.7s linear;
+}
+.NewsCardBody{
+	padding-left: 4vw;
+	padding-right: 4vw;
+	margin-top: 2vw;
+	color: #707070;
+	font-size: 4vw;
+	margin-bottom: 1.5vw;
+	line-height: 155%;
+}
+.NewsCardView{
+	margin-top: 1.6vw;
+	display: inline-block;
+}
+.NewsCardViewText{
+	color: #BBBBBB;
+	font-weight: bold;
+	font-size: 3.7vw;
+}
+.NewsCardViewDropDownIcon{
+	margin-left: 1vw;
+	width: 2.3vw;
+	opacity: 0.7;
+}
+.NewsCardViewOpt{
+	margin-top: 2vw;
+	overflow: hidden;
+	height: 0vw;
+	transition: 0.3s;
+}
+
+.NewsCardViewOptSel{
+	height: 7vw;
+	transition: 0.3s;
+	padding-bottom: 1vw;
+}
+.NewsCardViewOptVal{
+	font-size: 5vw;
+	display: inline-block;
+	margin-right: 5vw;
+	color: #7D7D7D;
+}
+.NewsCardViewOptValSel{
+	color: #EF8100;
+	line-height: 4.5vw;
+	border-bottom: 1.5px solid #EF8100;
+}
+.NewsCardShare{
+	float: right;
+	display: inline-block;
+	width: 8vw;
+}
+.NewsCardAutoTrans{
+	background-color: #C8C8C8;
+	font-size: 3.5vw;
+	color: #ffffff;
+	width: 60vw;
+	margin: auto;
+	height: 0vw;
+	line-height: 8.5vw;
+	font-weight: 700;
+	text-align: center;
+	border-radius: 3vw 3vw 0vw 0vw;
+	overflow: hidden;
+	transition: 0.3s;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+}
+.NewsCardAutoTransShow{
+	margin-top: 1vw;
+	height: 8vw;
+	transition: 0.3s;
+}
+
+.NewsCardReadMore{
+	background-color: #C8C8C8;
+	color: #ffffff;
+	width: 40vw;
+	border-radius: 3vw 3vw 0vw 0vw;
+	font-size: 3.5vw;
+	color: #ffffff;
+	margin: auto;
+	font-size: 3.5vw;
+	font-weight: 700;
+	line-height: 8vw;
+	text-align: center;
+	border-radius: 3vw 3vw 0vw 0vw;
+	overflow: hidden;
+	max-height: 0vw;
+	transition: 0.3s;
+}
+.NewsCardReadMoreSel{
+	padding-top: 0.5vw;
+	margin-top: 3vw;
+	max-height: 30vw;
+	transition: 0.3s;
+}

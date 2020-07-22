@@ -1,0 +1,9 @@
+ERROR in fetching data (handle paging rule)
+Stats card
+Resource card
+about page
+touch indicator
+
+IMPORTANT========
+
+Scroll to top on support page
