@@ -1,30 +1,5 @@
 # CovidWire Client
 
-**Version : Brahmaputra Build v4.0**
-
-CovidWire uses a static react client with Client Side Rendering.
-
-## Project Status
-
-Under construction...
-
-## Installation
-
-```python
-npm install   # install node packages
-npm start     # start development server
-```
-## Features
-* Search Functionality
-* Date picker
-* Auto Translation Management
-* Featured Digests
-* CovidWire Speaks Blog
-* Multimedia inclusion in Feed
-* On boarding Graphics
-* Dark Mode
-* Progressive Web App
-* UNLISTED
 
 ## Database
 
