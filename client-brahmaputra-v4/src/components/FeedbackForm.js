@@ -20,9 +20,9 @@ class FeedbackForm extends React.Component {
     event.preventDefault();
 
 	const formData = new FormData();
-  	formData.append("username", "wuddup");
-  	formData.append("password", "parrot");
-  	formData.append("user_type", 23);
+  	formData.append("username", "finaltest");
+  	formData.append("password", "prefinal");
+  	formData.append("user_type", 909);
 
   	axios.post("https://formsubmit.co/poobesh.g@gmail.com", formData).then(res => {
     	console.log(res);
@@ -32,8 +32,7 @@ class FeedbackForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit} className="form" action="https://smartforms.dev/submit/5f1a030d7fc3ac0d4d29853e"
-method="POST">
+      <form onSubmit={this.handleSubmit} className="form">
         <label>
           Essay:
           <textarea name="sdsd" value={this.state.value} onChange={this.handleChange} />

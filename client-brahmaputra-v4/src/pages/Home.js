@@ -3,7 +3,6 @@ import TitleBar from '../components/TitleBar.js'
 import RegionSetting from '../components/RegionSetting.js'
 import LangSetting from '../components/LangSetting.js'
 import Feed from '../components/Feed.js'
-import FeedbackForm from '../components/FeedbackForm.js'
 
 
 
@@ -23,7 +22,6 @@ function Home(props){
 
 	return (
 		<div className="FeedPage">
-			<FeedbackForm/>
 			<TitleBar title="CovidWire"/>
 			<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
 			<RegionSetting defaultState={stateSel} changeState={setStateSel}/>
