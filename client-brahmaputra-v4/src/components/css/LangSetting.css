@@ -1,0 +1,30 @@
+.LangSetting{
+	margin-top: 20vw;
+	text-align: center;
+	display: block;
+}
+.LangSettingBtn{
+	width: 11vw;
+	height: 11vw;
+	border-radius: 5.5vw;
+	display: inline-block;
+	color: #858585;
+	font-weight: 400;
+	line-height: 11.3vw;
+	font-size: 4.5vw;
+	background-color: #ffffff;
+	margin-left: 1.5vw;
+	margin-right: 1.5vw;
+	box-shadow: 0px 0px 10px rgba(136, 136, 136, 0.3);
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+}
+.LangSettingBtn-sel{
+	color: #ffffff;
+	font-weight: 500;
+	background: linear-gradient(45deg, #FFAF50, #FFC450);
+	box-shadow: 0px 0px 5px rgba(136, 136, 136, 0.4);
+}

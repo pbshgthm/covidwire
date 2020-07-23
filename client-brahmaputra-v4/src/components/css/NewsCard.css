@@ -16,15 +16,20 @@
 }
 .NewsCard{
 	background-color: #ffffff;
-	box-shadow: 0px 0px 10px rgba(98, 98, 98, 0.3);
-	border-radius: 1.5vw;
+	box-shadow: 0px 0px 10px rgba(136, 136, 136, 0.3);
+	border-radius: 2vw;
 	margin-bottom: 9vw;
 	transition: 0.3s;
-	padding-top: 3vw;
 	display: block;
+	padding-top: 3vw;
+	padding-bottom: 2vw;
 }
 .NewsCardHide{
 	display: none;
+}
+
+.NewsCardHeaderState{
+	padding-top: 2.5vw;
 }
 .NewsCardRow{
 	padding-left: 4vw;
@@ -37,22 +42,6 @@
    	-webkit-user-select: none;
 }
 
-
-.NewsCardHeaderState{
-	border-left: 0.8vw solid #54A3B5;
-}
-
-.NewsCardHeaderNational{
-	border-left: 0.8vw solid #5FA075;
-}
-
-.NewsCardHeaderGlobal{
-	border-left: 0.8vw solid #E78888;
-}
-
-.NewsCardHeaderHope{
-	border-left: 0.8vw solid #DB8B2F;
-}
 
 .NewsCardRegion{
 	margin-left: -0.8vw;
@@ -72,7 +61,7 @@
 
 
 
-.NewsCardRegion::after{
+.NewsCardDomain::before{
 	content : '⋅';
 	padding-left: 1vw;
 	padding-right: 1vw;
@@ -92,9 +81,10 @@
 	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2','Baloo Thambi 2';
 	line-height: 125%;
 	font-size: 5.65vw;
-	margin-top: 0vw;
-	margin-bottom: 1.7vw;
+	margin-top: -1vw;
+	margin-bottom: 1vw;
 	word-wrap: break-word;
+	font-weight: 500;
 }
 a{
 	text-decoration: none;
@@ -114,10 +104,29 @@ a{
 }
 
 .NewsCardImage{
-	margin-top: 2.7vw;
+	border-radius: 2vw 2vw 0vw 0vw;
 	width: 94vw;
 	padding-left: 0vw;
 	padding-right: 0vw;
+	margin-top: -3vw;
+	margin-bottom: 1vw;
+}
+
+.NewsCardAutoRibbon{
+	width: 94vw;
+	background-color: #FF9B25;
+	color: white;
+	text-align: center;
+	font-weight: 600;
+	font-size: 3.5vw;
+	line-height: 8vw;
+	height: 7vw;
+	margin-top: -3vw;
+	margin-bottom: 2vw;
+}
+
+.NewsCardAutoRibbonNoImg{
+	border-radius: 2vw 2vw 0vw 0vw;
 }
 
 .NewsCardContent{
@@ -127,105 +136,102 @@ a{
 	transition: 0.5s;
 }
 .NewsCardContentShow{
-	max-height: 100vh;
+	max-height: 200vh;
 	transition: 0.7s linear;
 }
 .NewsCardBody{
 	padding-left: 4vw;
 	padding-right: 4vw;
-	margin-top: 2vw;
+	margin-top:2vw;
 	color: #707070;
 	font-size: 4vw;
 	margin-bottom: 1.5vw;
 	line-height: 155%;
 }
-.NewsCardView{
-	margin-top: 1.6vw;
+
+.NewsCardLang{
 	display: inline-block;
-}
-.NewsCardViewText{
-	color: #BBBBBB;
-	font-weight: bold;
-	font-size: 3.7vw;
-}
-.NewsCardViewDropDownIcon{
-	margin-left: 1vw;
-	width: 2.3vw;
-	opacity: 0.7;
-}
-.NewsCardViewOpt{
 	margin-top: 2vw;
-	overflow: hidden;
-	height: 0vw;
-	transition: 0.3s;
+	margin-bottom: 0vw;
+	background-color: white;
+}
+.NewsCardLangBtn{
+	font-size: 4vw;
+	text-align: center;
+	line-height: 8.5vw;
+	color: #838383;
+	width:8.5vw;
+	height:8.5vw;
+	border-radius: 5vw;
+	background-color: #EFEFEF;
+	position: relative;
+	display: inline-block;
+	transition: margin 0.3s;
+	margin-left: -8.5vw;
+}
+.NewsCardLangBtn:first-child{
+	margin-left: 0vw;
 }
 
-.NewsCardViewOptSel{
-	height: 7vw;
-	transition: 0.3s;
-	padding-bottom: 1vw;
+.NewsCardLangBtnSel{
+	z-index: 1;
 }
-.NewsCardViewOptVal{
-	font-size: 5vw;
-	display: inline-block;
-	margin-right: 5vw;
-	color: #7D7D7D;
+
+.NewsCardLangBtnView{
+	position: relative;
+	margin-right: 2vw;
+	margin-left: 0vw;
 }
-.NewsCardViewOptValSel{
-	color: #EF8100;
-	line-height: 4.5vw;
-	border-bottom: 1.5px solid #EF8100;
+
+.NewsCardLangBtnView.NewsCardLangBtnSel{
+	z-index: 1;
+	color: white;
+	background: linear-gradient(45deg, #FFAF50, #FFC450);
+}
+
+.NewsCardFeedback{
+	height: 7.5vw;
+	line-height: 7.5vw;
+	text-align: center;
+	width: 40vw;
+	border-radius: 2vw;
+	color: #CECECE;
+	margin-left: 28vw;
+	display: block;
+	margin-top: -8vw;
+	visibility: visible;
+	transition: opacity 0.5s ease, visibility 0s 0s ease;
+	opacity: 1;
+}
+.NewsCardFeedbackHide{
+	visibility: hidden;
+	opacity: 0;
+	transition: 0.2s;
+
 }
 .NewsCardShare{
+	margin-top: 2vw;
 	float: right;
 	display: inline-block;
 	width: 8vw;
 }
-.NewsCardAutoTrans{
-	background-color: #C8C8C8;
-	font-size: 3.5vw;
-	color: #ffffff;
-	width: 60vw;
-	margin: auto;
-	height: 0vw;
-	line-height: 8.5vw;
-	font-weight: 700;
-	text-align: center;
-	border-radius: 3vw 3vw 0vw 0vw;
-	overflow: hidden;
-	transition: 0.3s;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-tap-highlight-color: transparent;
-	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	-webkit-user-select: none;
-}
-.NewsCardAutoTransShow{
-	margin-top: 1vw;
+.NewsCardSave{
+	margin-top: 2vw;
+	display: inline-block;
+	float: left;
 	height: 8vw;
-	transition: 0.3s;
+	margin-right: 3vw;
 }
-
-.NewsCardReadMore{
-	background-color: #C8C8C8;
-	color: #ffffff;
-	width: 40vw;
-	border-radius: 3vw 3vw 0vw 0vw;
+.NewsCardExpand{
+	border-radius: 2vw;
 	font-size: 3.5vw;
-	color: #ffffff;
-	margin: auto;
-	font-size: 3.5vw;
-	font-weight: 700;
-	line-height: 8vw;
+	width: 88vw;
+	height: 8vw;
+	line-height: 8.5vw;
 	text-align: center;
-	border-radius: 3vw 3vw 0vw 0vw;
-	overflow: hidden;
-	max-height: 0vw;
-	transition: 0.3s;
-}
-.NewsCardReadMoreSel{
-	padding-top: 0.5vw;
-	margin-top: 3vw;
-	max-height: 30vw;
-	transition: 0.3s;
+	background-color: #EAEAEA;
+	color: #9A9A9A;
+	margin-left: 3vw;
+	margin-top: 2vw;
+	margin-bottom: 1vw;
 }

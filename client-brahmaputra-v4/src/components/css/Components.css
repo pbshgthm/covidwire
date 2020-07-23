@@ -1,6 +1,7 @@
 /*--- START NAVBAR  ----*/
 
 .Navbar{
+	z-index: 2;
 	width: 100vw;
 	background: #FFFFFF;
 	box-shadow: 0px -3px 5px rgba(186, 186, 186, 0.25);
@@ -31,42 +32,6 @@
 /*--- END NAVBAR ----*/
 
 
-/*--- START TITLEBAR ----*/
-
-.TitleBar{
-	z-index: 5;
-	position: fixed;
-	top: -15vw;
-	font-family: 'Crimson Text';
-	width: 100vw;
-	background-color: #ffffff;
-	box-shadow: 0px 3px 5px rgba(186, 186, 186, 0.25);
-	display: block;
-	font-size: 6vw;
-	text-align: center;
-	color: #565656;
-	padding-top: 1.5vw;
-	padding-bottom: 1.5vw;
-	transition: 0.5s;
-
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
-	-webkit-tap-highlight-color: transparent;
-	-moz-user-select: none;
-   	-khtml-user-select: none;
-   	-webkit-user-select: none;
-}
-.TitleBarSel{
-	top: 0vh;
-	transition: 0.5s;
-}
-.TitleBack{
-	width: 3vw;
-	z-index: 6;
-	top: 3vw;
-	left: 4vw;
-	position: absolute;
-}
-/*--- END TITLEBAR ----*/
 
 /*--- START FEED ---*/
 

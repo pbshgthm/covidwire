@@ -3,9 +3,9 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	font-size:16px;
-	background-color: #F6F6F6;
-	font-family: 'Nunito Sans',  'Baloo 2', 'Baloo Tammudu 2', 'Baloo Thambi 2';
-	background-image: url('./assets/bg.png');
+	background-color: #FEFEFE;
+	font-family: 'Nunito Sans',  'Baloo 2', 'Baloo Tammudu 2', 'Baloo Thambi 2','Baloo Chettan 2';
+	background-image: url('assets/bg2.png');
 	background-size: 100vw;
 	background-attachment: fixed;
 }
@@ -337,4 +337,9 @@ body {
 	  color: #888888;
 
   }
+}
+
+
+.form{
+	margin-top: 20vw;
 }

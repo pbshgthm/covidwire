@@ -82,7 +82,7 @@ function Setting(props){
 		setStateOpt(stateOptTemp)
 	},[])
 
-	
+
 	useEffect(()=>{
 
 		let langOptTemp=[]

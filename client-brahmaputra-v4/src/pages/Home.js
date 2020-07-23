@@ -1,7 +1,10 @@
 import React, { useState, useEffect} from 'react';
 import TitleBar from '../components/TitleBar.js'
-import Setting from '../components/Setting.js'
+import RegionSetting from '../components/RegionSetting.js'
+import LangSetting from '../components/LangSetting.js'
 import Feed from '../components/Feed.js'
+import FeedbackForm from '../components/FeedbackForm.js'
+
 
 
 function Home(props){
@@ -20,9 +23,10 @@ function Home(props){
 
 	return (
 		<div className="FeedPage">
+			<FeedbackForm/>
 			<TitleBar title="CovidWire"/>
-			<img className="MainLogo" alt="CW Logo" src={require('../assets/logo-main.png')}/>
-			<Setting defaultState={stateSel} changeState={setStateSel} changeLang={setLangSel} defaultLang={langSel}/>
+			<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
+			<RegionSetting defaultState={stateSel} changeState={setStateSel}/>
 			<Feed baseUrl={"feed/"+stateSel} langSel={langSel} pageSize={1}/>
 		</div>
 	);

@@ -35,19 +35,24 @@ function FormatShare(cardData,langSel){
 
 function NewsCard(props){
 
-	const [viewExpand,setViewExpand]=useState(false);
-	const [cardExpand,setCardExpand]=useState(props.cardData.form!=="Short");
-
+	const [langView,setLangView]=useState(false);
+	const [cardExpand,setCardExpand]=useState(false);
+	const [cardShort,setCardShort]=useState(false)
+	const [noImg,setNoImg]=useState(props.cardData.img==="")
+	const [saveCard,setSaveCard]=useState(false)
 	const [defaultLang,setDefaultLang]=useState(props.langSel)
 	const [langSel,setLangSel]=useState(props.langSel)
 
 	useEffect(()=>{
+		setCardShort(props.cardData.form==="Short")
 		setCardExpand(props.cardData.form!=="Short")
+
+		//for no collapsing for indian languages
+		//setCardShort(props.cardData.form==="Short"&&props.cardData.langSel==="English")
+		//setCardExpand(props.cardData.form!=="Short"||props.cardData.langSel!=="English")
+
 		setLangSel(props.langSel)
 		setDefaultLang(props.langSel)
-		if(props.langSel!=='English'){
-			setCardExpand(!props.cardData.digests[props.langSel]['auto'])
-		}
 	},[props])
 
 
@@ -55,29 +60,35 @@ function NewsCard(props){
 		<div className={classNames("NewsCard",{
 			"NewsCardHide":props.cardData.digests[langSel].digest===""
 		})}>
-			<div className={classNames("NewsCardHeaderState",{
-					"NewsCardHeaderGlobal":props.cardData.region==="Global",
-					"NewsCardHeaderNational":props.cardData.region==="National",
-					"NewsCardHeaderHope":props.cardData.region==="Hope"
-			})}>
-				<div className="NewsCardRow">
-					{(props.cardData.region!=="Hope")&&<Link to={"/sections/"+regCorr(props.cardData.region)}>
-						<div className={classNames("NewsCardRegion",{
-							"NewsCardRegionGlobal":props.cardData.region==="Global",
-							"NewsCardRegionNational":props.cardData.region==="National"
-						})}>
-						{regCorr(props.cardData.region)}
-						</div>
-					</Link>}
-					<div className="NewsCardDomain">{props.cardData.domain}</div>
-				</div>
-				<a href={props.cardData.link} target="_blank" rel="noopener noreferrer">
-					<div className="NewsCardHeadline">
-						{props.cardData.digests[langSel]['headline']}
+			{/*Preview Image*/}
+			{props.cardData.img&&<img className="NewsCardImage" alt="" src={props.cardData.img} onError={i => {i.target.style.display='none';setNoImg(true);console.log('sdsds')}}/>}
+
+			{/*Auto translation ribbon*/}
+			{props.cardData.digests[langSel]['auto']&&<div className={classNames("NewsCardAutoRibbon",{"NewsCardAutoRibbonNoImg":noImg})}>
+				This content is Auto-translated to {langSel}
+			</div>}
+
+			{/*Header*/}
+			<div className="NewsCardRow">
+				{/*Region*/}
+				{(props.cardData.region!=="Hope")&&<Link to={"/sections/"+regCorr(props.cardData.region)}>
+					<div className={classNames("NewsCardRegion",{
+						"NewsCardRegionGlobal":props.cardData.region==="Global",
+						"NewsCardRegionNational":props.cardData.region==="National"
+					})}>
+					{regCorr(props.cardData.region)}
 					</div>
-				</a>
+				</Link>}
+				{/*Domain*/}
+				<div className="NewsCardDomain">{props.cardData.domain}</div>
 			</div>
 
+			{/*Digest*/}
+			<div className="NewsCardHeadline">
+					{props.cardData.digests[langSel]['headline']}
+			</div>
+
+			{/*Source,date*/}
 			<div className="NewsCardRow">
 				<a href={props.cardData.link} target="_blank" rel="noopener noreferrer">
 					<div className="NewsCardSource">{props.cardData.src}</div>
@@ -85,41 +96,48 @@ function NewsCard(props){
 				<div className="NewsCardDate">{formatDate(props.cardData.time,"year")}</div>
 			</div>
 
-			{props.cardData.img&&<img className="NewsCardImage" alt="" src={props.cardData.img} onError={i => i.target.style.display='none'}/>}
-
+			{/*Body*/}
 			<div className={classNames("NewsCardContent",{
 				"NewsCardContentShow":cardExpand
 			})}>
-				<div className="NewsCardBody">{formatBody(props.cardData.digests[langSel]['digest'])}</div>
+				{/*Digest*/}
+				<div className="NewsCardBody">
+					{formatBody(props.cardData.digests[langSel]['digest'])}
+				</div>
+				{/*Footer*/}
 				<div className="NewsCardRow">
-					<div className="NewsCardView">
-						<div className="NewsCardViewText" onClick={()=>{setViewExpand(!viewExpand)}}>language
-							<img className="NewsCardViewDropDownIcon" alt="dropdown" src={require('../assets/dropdown.png')}/>
-						</div>
-						<div className= {classNames("NewsCardViewOpt",{"NewsCardViewOptSel":viewExpand})}>
-							{Object.entries(config.lang).map(x=>(
-								<div key={"viewLang-"+x[0]} onClick={()=>{setLangSel(x[0])}} className={classNames("NewsCardViewOptVal",{
-									"NewsCardViewOptValSel":langSel===x[0]})
-								}>{x[1]['glyph']}</div>
-							))}
-						</div>
+					{/*Save card*/}
+					<img onClick={()=>setSaveCard(!saveCard)} className="NewsCardSave" alt="Share" src={require("../assets/save"+(saveCard?"-yes":"-no")+".png")}/>
+					{/*Lang setting*/}
+					<div className="NewsCardLang">
+						{
+							Object.entries(config.lang).map(x=>(
+								<div key={x[0]} className={classNames("NewsCardLangBtn",{
+									"NewsCardLangBtnSel":langSel===x[0],
+									"NewsCardLangBtnView":langView
+								})} onClick={()=>{setLangView(!langView);setLangSel(x[0])}}>
+									{x[1].glyph}
+								</div>
+							))
+						}
 					</div>
+					{/*Whatsapp Share*/}
 					<a href={FormatShare(props.cardData,langSel)}>
 						<img className="NewsCardShare" alt="Share" src={require("../assets/whatsapp.png")}/>
 					</a>
-				</div>
-			</div>
-			<div className={classNames("NewsCardAutoTrans",{
-				"NewsCardAutoTransShow":props.cardData.digests[langSel]['auto']
-			})} onClick={()=>setCardExpand(!cardExpand)}>
-				{"Auto Translated. Tap to "+(cardExpand?"collapse":"expand")}
-			</div>
 
-			<div className={classNames("NewsCardReadMore",{
-				"NewsCardReadMoreSel":(defaultLang==="English")&&(!cardExpand)&&(props.cardData.form==="Short")&&(langSel==="English")
-			})} onClick={()=>{setCardExpand(true)}}>
-				Tap to read more
+				</div>
+				{/*Send feedback*/}
+				{<div className={classNames("NewsCardFeedback",{
+					"NewsCardFeedbackHide":langView})}>
+					send feedback
+				</div>}
 			</div>
+			{/*Expand button*/}
+			{cardShort&&<div className="NewsCardExpand"
+				onClick= {()=>setCardExpand(!cardExpand) }>
+				{cardExpand?"Tap to Hide Summary":"Tap to Read Summary"}
+			</div>}
 		</div>
 	)
 }

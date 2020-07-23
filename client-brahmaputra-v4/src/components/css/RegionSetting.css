@@ -1,42 +1,31 @@
-/*
-.SettingBtnHolder{
-	height: 10vw;
-	width: 38vw;
-	border-radius: 7vw;
-	background: #FFFFFF;
-	box-shadow: 0px 0px 10px rgba(136, 136, 136, 0.38);
-	margin: 0 auto;
-	margin-top: 3vw;
-	padding-left: 1vw;
-	padding-right: 1vw;
-	overflow-y: hidden;
+.RegionSettingHolder{
+	margin: auto;
+	width: 50vw;
+	align-content: center;
+	text-align: center;
+	margin-top: 6vw;
 }
-.SettingBtnHolderFull{
-	width: 78vw;
-}
-.SettingBtn{
+.RegionSettingBtn{
 	display: inline-block;
-	line-height: 11vw;
-	font-size: 3.5vw;
-	width: 38vw;
+	line-height: 11.5vw;
 	text-align: center;
 	color: #888888;
-	font-weight: 700;
+	font-weight: 600;
+	padding-left: 5vw;
+	padding-right: 5vw;
+	height: 10.7vw;
+	border-radius: 6vw;
+	background: #ffffff;
+	font-size: 4vw;
 	-moz-user-select: none;
    	-khtml-user-select: none;
    	-webkit-user-select: none;
+	box-shadow: 0px 0px 10px rgba(136, 136, 136, 0.3);
 }
 
-.SettingDropDownIcon{
-	margin-left: 2vw;
-	width: 2.3vw;
-}
-
-.SettingBtnFull:last-child{
-	box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-	border-left: 1px solid #DEDEDE;
+.RegionSettingLocationIcon{
+	width: 2vw;
+	margin-right: 2vw;
 }
 
 .ScreenBlock{
@@ -116,4 +105,3 @@
 	color: #707070;
 	padding-left: 8vw;
 }
-*/
