@@ -27,7 +27,6 @@ function FeedbackForm(props){
 			"Id":props.cardData.hash,
 			'Region':props.cardData.region,
 			'Language':props.cardData.lang,
-			'Headline':props.cardData.headline,
 		}).then(res => {
     		console.log(res,res.data)
   		});
@@ -44,7 +43,7 @@ function FeedbackForm(props){
 				</div>
 				<div className="FeedbackOptions">
 					{feedbackOpt.map(x=>(
-						<div className={classNames("FeedbackOpt",
+						<div key={x} className={classNames("FeedbackOpt",
 							{"FeedbackOpt-Sel":feedbackSel===x})} onClick={()=>setFeedbackSel(x)}>
 							<div className="FeedbackOptText">{x}</div>
 						</div>
