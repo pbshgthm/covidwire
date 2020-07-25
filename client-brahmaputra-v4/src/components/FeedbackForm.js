@@ -18,29 +18,12 @@ function FeedbackForm(props){
 	const [feedbackSel,setFeedbackSel]=useState("")
 
 
-	/*
-  	handleChange(event) {
-    	this.setState({value: event.target.value});
-  	}
-
-  	handleSubmit(event) {
-    	event.preventDefault();
+	function sendFormData(){
 		const formData = new FormData();
-  		formData.append("username", "finaltest");
-  		formData.append("password", "prefinal");
-  		formData.append("user_type", 909);
-
+  		formData.append("Feedback", feedbackOpt[feedbackSel]);
   		axios.post("https://formsubmit.co/poobesh.g@gmail.com", formData).then(res => {
-    		console.log(res);
-    		console.log(res.data);
+    		console.log(res,res.data)
   		});
-  	}
-	*/
-
-	function toggleInArr(arr,index){
-		arr[index]=!arr[index]
-		console.log(arr)
-		return arr
 	}
 
   	return (
@@ -50,7 +33,7 @@ function FeedbackForm(props){
 				"FeedbackFormSel":props.showFeedback
 			})}>
 				<div className="FeedbackDesc">Tell us what went wrong about
-					<div className="FeedbackHeadline">{props.headline}</div>
+					<div className="FeedbackHeadline">{'"'+props.headline+'"'}</div>
 				</div>
 				<div className="FeedbackOptions">
 					{feedbackOpt.map(x=>(
@@ -60,8 +43,8 @@ function FeedbackForm(props){
 						</div>
 					))}
 				</div>
-				<div className="FeedbackCancel" onClick={()=>props.setShowFeedback(false)}>Cancel</div>
-				<div className={classNames("FeedbackSubmit",
+				<div className="FeedbackCancel" onClick={()=>props.setShowFeedback()}>Cancel</div>
+				<div onClick={()=>sendFormData()} className={classNames("FeedbackSubmit",
 					{"FeedbackSubmitSel":feedbackSel!==""})}>
 					Submit
 				</div>

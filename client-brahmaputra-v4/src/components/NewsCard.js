@@ -34,7 +34,7 @@ function FormatShare(cardData,langSel){
 
 
 function NewsCard(props){
-	console.log('sdsdsds')
+
 	const [langView,setLangView]=useState(false);
 	const [cardExpand,setCardExpand]=useState(false);
 	const [cardShort,setCardShort]=useState(false)
@@ -128,7 +128,7 @@ function NewsCard(props){
 
 				</div>
 				{/*Send feedback*/}
-				{<div onClick={()=>props.setFeedbackData(props.cardData.digests[langSel]['headline'])} className={classNames("NewsCardFeedback",{
+				{<div onClick={()=>props.setFeedbackData(props.cardData.digests[langSel]['digest'])} className={classNames("NewsCardFeedback",{
 					"NewsCardFeedbackHide":langView})}>
 					send feedback
 				</div>}

@@ -96,11 +96,12 @@
 	text-align: center;
 	background-color: #EAEAEA;
 	color: #9A9A9A;
-	margin-left: 7vw;
+	margin-left: 6vw;
 	margin-top: 5vw;
 	margin-bottom: 1vw;
 }
 .FeedbackSubmitSel{
 	color: white;
+	font-weight: bold;
 	background: linear-gradient(45deg, #FFAF50, #FFC450);
 }

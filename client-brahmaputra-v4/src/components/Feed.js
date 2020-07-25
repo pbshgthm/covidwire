@@ -99,7 +99,7 @@ function Feed(props){
 				}
 		))
 	}
-
+	//this is a checkpoint
 	return(
 		<React.Fragment>
 			<FeedbackForm headline={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
