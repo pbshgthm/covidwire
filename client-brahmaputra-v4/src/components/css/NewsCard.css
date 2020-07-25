@@ -202,6 +202,11 @@ a{
 	visibility: visible;
 	transition: opacity 0.5s ease, visibility 0s 0s ease;
 	opacity: 1;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
 }
 .NewsCardFeedbackHide{
 	visibility: hidden;

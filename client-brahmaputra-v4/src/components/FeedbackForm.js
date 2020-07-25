@@ -17,11 +17,18 @@ function FeedbackForm(props){
 
 	const [feedbackSel,setFeedbackSel]=useState("")
 
+	useEffect(()=>{
+		setFeedbackSel("")
+	},[props.showFeedback])
 
 	function sendFormData(){
-		const formData = new FormData();
-  		formData.append("Feedback", feedbackOpt[feedbackSel]);
-  		axios.post("https://formsubmit.co/poobesh.g@gmail.com", formData).then(res => {
+		axios.post("https://us-central1-covidwire.cloudfunctions.net/feedback_via_slack", {
+			"Feedback":feedbackSel,
+			"Id":props.cardData.hash,
+			'Region':props.cardData.region,
+			'Language':props.cardData.lang,
+			'Headline':props.cardData.headline,
+		}).then(res => {
     		console.log(res,res.data)
   		});
 	}
@@ -33,7 +40,7 @@ function FeedbackForm(props){
 				"FeedbackFormSel":props.showFeedback
 			})}>
 				<div className="FeedbackDesc">Tell us what went wrong about
-					<div className="FeedbackHeadline">{'"'+props.headline+'"'}</div>
+					<div className="FeedbackHeadline">{'"'+props.cardData.headline+'"'}</div>
 				</div>
 				<div className="FeedbackOptions">
 					{feedbackOpt.map(x=>(

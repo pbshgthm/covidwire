@@ -102,7 +102,7 @@ function Feed(props){
 	//this is a checkpoint
 	return(
 		<React.Fragment>
-			<FeedbackForm headline={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
+			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
 			<div className="NewsFeed">{feedFormat(feedData,props.langSel,setFeedbackData)}</div>
 			{(!endFeed)&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton.png')} alt="Card Skeleton"/>

@@ -128,7 +128,12 @@ function NewsCard(props){
 
 				</div>
 				{/*Send feedback*/}
-				{<div onClick={()=>props.setFeedbackData(props.cardData.digests[langSel]['digest'])} className={classNames("NewsCardFeedback",{
+				{<div onClick={()=>props.setFeedbackData({
+					'headline':props.cardData.digests[langSel]['headline'],
+					'hash':props.cardData.hash,
+					'region':props.cardData.region,
+					'lang':langSel
+				})} className={classNames("NewsCardFeedback",{
 					"NewsCardFeedbackHide":langView})}>
 					send feedback
 				</div>}
