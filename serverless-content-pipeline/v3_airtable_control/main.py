@@ -6,7 +6,7 @@ from firebase_admin import db
 from support import *
 
 #DATABASE AUTHENTICATION
-cred = credentials.Certificate('./gcloud_config.json')
+cred = credentials.Certificate('./firebase-admin-cred.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://covidwire.firebaseio.com'
 })
@@ -254,8 +254,8 @@ def pull_data(request):
 
 
 
-pull_data('sds')
+#pull_data('sds')
 
 
-#export GOOGLE_APPLICATION_CREDENTIALS="./translate_keys.json"
+#export GOOGLE_APPLICATION_CREDENTIALS="./translation_api_cred.json"
 #gcloud functions deploy pull_data --runtime python37 --trigger-http --allow-unauthenticated

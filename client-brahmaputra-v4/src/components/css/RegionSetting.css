@@ -35,14 +35,14 @@
 	opacity: 0.6;
 	position: fixed;
 	top: 0vh;
-	z-index: 2;
+	z-index: 5;
 	transition: 0.5s;
 }
 
 .PopupMenu{
 	position: fixed;
 	bottom: -100vh;
-	z-index: 4;
+	z-index: 6;
 	width: 100vw;
 	background-color: #ffffff;
 	border-radius: 5vw 5vw 0vw 0vw;
@@ -72,6 +72,7 @@
 	padding-top: 4.5vw;
 	padding-bottom: 3.5vw;
 	color: #707070;
+	height: 6vw;
 }
 .MenuOption-Sel{
 	background-color: #FFF1E0;
@@ -96,6 +97,7 @@
 	text-align: right;
 	color: #B1B1B1;
 	word-spacing: 3vw;
+	float: right;
 }
 
 .MenuOptFallback{

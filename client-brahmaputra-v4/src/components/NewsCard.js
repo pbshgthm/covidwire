@@ -34,7 +34,7 @@ function FormatShare(cardData,langSel){
 
 
 function NewsCard(props){
-
+	console.log('sdsdsds')
 	const [langView,setLangView]=useState(false);
 	const [cardExpand,setCardExpand]=useState(false);
 	const [cardShort,setCardShort]=useState(false)
@@ -106,8 +106,6 @@ function NewsCard(props){
 				</div>
 				{/*Footer*/}
 				<div className="NewsCardRow">
-					{/*Save card*/}
-					<img onClick={()=>setSaveCard(!saveCard)} className="NewsCardSave" alt="Share" src={require("../assets/save"+(saveCard?"-yes":"-no")+".png")}/>
 					{/*Lang setting*/}
 					<div className="NewsCardLang">
 						{
@@ -125,10 +123,12 @@ function NewsCard(props){
 					<a href={FormatShare(props.cardData,langSel)}>
 						<img className="NewsCardShare" alt="Share" src={require("../assets/whatsapp.png")}/>
 					</a>
+					{/*Save card*/}
+					<img onClick={()=>setSaveCard(!saveCard)} className="NewsCardSave" alt="Share" src={require("../assets/save"+(saveCard?"-yes":"-no")+".png")}/>
 
 				</div>
 				{/*Send feedback*/}
-				{<div className={classNames("NewsCardFeedback",{
+				{<div onClick={()=>props.setFeedbackData(props.cardData.digests[langSel]['headline'])} className={classNames("NewsCardFeedback",{
 					"NewsCardFeedbackHide":langView})}>
 					send feedback
 				</div>}

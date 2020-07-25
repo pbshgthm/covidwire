@@ -114,7 +114,7 @@ a{
 
 .NewsCardAutoRibbon{
 	width: 94vw;
-	background-color: #FF9B25;
+	background-color: #FFAF50;
 	color: white;
 	text-align: center;
 	font-weight: 600;
@@ -218,9 +218,9 @@ a{
 .NewsCardSave{
 	margin-top: 2vw;
 	display: inline-block;
-	float: left;
+	float: right;
 	height: 8vw;
-	margin-right: 3vw;
+	margin-right: 4vw;
 }
 .NewsCardExpand{
 	border-radius: 2vw;

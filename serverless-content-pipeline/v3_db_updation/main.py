@@ -9,7 +9,7 @@ from dateutil import tz
 import meta_data
 
 #DATABASE AUTHENTICATION
-cred = credentials.Certificate('./gcloud_config.json')
+cred = credentials.Certificate('firebase-admin-cred.json')
 firebase_admin.initialize_app(cred, {
     'databaseURL': 'https://covidwire.firebaseio.com'
 })
@@ -136,6 +136,7 @@ def pull_v3(request):
 			if date in date_dict:date_dict[date][db_fields['hash']]=db_fields
 			else:date_dict[date]={db_fields['hash']:db_fields}
 	db_feed.child('Common').set(date_dict)
+	db_feed.child('India & World').set(date_dict)
 	# FEED FILLING END
 
 	domain_wise={
@@ -189,8 +190,6 @@ def pull_v3(request):
 
 
 
-
-
 def safe_dict(dict_,key,default=""):
 	if key in dict_:return dict_[key]
 	return default
@@ -199,4 +198,6 @@ def update_table(base,table_name,data):
 	url="https://api.airtable.com/v0/"+api_keys["airtable_base_"+base]+"/"+table_name
 	x = requests.patch(url,headers = {"Authorization": "Bearer "+api_keys["airtable_key"]},json=data)
 
+
+#pull_v3('as')
 #gcloud functions deploy pull_v3 --runtime python37 --trigger-http --allow-unauthenticated

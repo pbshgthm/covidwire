@@ -47,12 +47,12 @@ export const orderFeed = (rawFeed)=>{
 	return(orderedFeed)
 }
 
-export const feedFormat = (feedData,langSel)=>{
+export const feedFormat = (feedData,langSel,setFeedbackData)=>{
 	let feedList=[]
 	feedData.forEach(dayFeed=>{
 		feedList.push(<div className="FeedDateBox" key={dayFeed[0]}>{formatDate(dayFeed[0])}</div>)
 		dayFeed[1].forEach((cardData,i) => {
-			feedList.push(<NewsCard key={cardData[1].hash} cardData={cardData[1]} langSel={langSel}/>)
+			feedList.push(<NewsCard key={cardData[1].hash} cardData={cardData[1]} langSel={langSel} setFeedbackData={setFeedbackData}/>)
 		});
 
 	})
@@ -73,4 +73,12 @@ export const urlEncode = (url)=>{
 
 export const urlDecode = (url)=>{
 	return url.split('+').map(x=>x.charAt(0).toUpperCase() + x.slice(1)).join(' ').replace(' And ',' and ')
+}
+
+export const preventScroll=(noScroll)=>{
+	if(noScroll){
+		document.body.style.overflow = "hidden"
+	}else{
+		document.body.style.overflow = "scroll"
+	}
 }

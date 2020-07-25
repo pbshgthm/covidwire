@@ -3,6 +3,7 @@ import classNames from 'classnames';
 
 import './css/RegionSetting.css'
 import config from '../config.js'
+import {preventScroll} from './utils.js'
 
 function RegionSettingBtn(props){
 	return(
@@ -16,8 +17,10 @@ function RegionSettingBtn(props){
 }
 
 function PopupMenu(props){
-	let stateFallbackOpt = <div className="MenuOptFallback" onClick={()=>changeSelection("Common")}>
-		View Global and National news only</div>
+	let stateFallbackOpt = <div className={classNames("MenuOptFallback",{
+		"MenuOption-Sel": "India & World"===props.selOpt})}
+		onClick={()=>changeSelection("India & World")}>
+		<i>State not listed? <u>View just India & World</u></i> </div>
 
 
 	function changeSelection(selOpt){
@@ -29,7 +32,8 @@ function PopupMenu(props){
 
 	return(
 		<React.Fragment>
-			<div className={classNames({"ScreenBlock":props.visible})} onClick={()=>props.setVisibility(false)}></div>
+			{props.visible&&<div className="ScreenBlock" onClick={()=>props.setVisibility(false)}></div>}
+			
 			<div className={classNames("PopupMenu",{"PopupMenu-Sel":props.visible})}>
 				<div className="MenuDesc">Select State</div>
 				<div className="MenuOptionList">
@@ -65,6 +69,9 @@ function RegionSetting(props){
 		setStateOpt(stateOptTemp)
 	},[])
 
+	useEffect(()=>{
+		preventScroll(showStateMenu)
+	},[showStateMenu])
 
 	useEffect(()=>{
 		if(props.changeState)props.changeState(stateSel)
@@ -74,7 +81,6 @@ function RegionSetting(props){
 	return(
 		<React.Fragment>
 			<RegionSettingBtn stateSel={stateSel} setShowStateMenu={setShowStateMenu}/>
-
 			<PopupMenu selOpt={stateSel} options={stateOpt} visible={showStateMenu} setSelection={setState} setVisibility={setShowStateMenu}/>
 		</React.Fragment>
 	)

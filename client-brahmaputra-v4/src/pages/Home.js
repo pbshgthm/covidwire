@@ -7,7 +7,6 @@ import Feed from '../components/Feed.js'
 
 
 
-
 function Home(props){
 
 	let defaultState=(localStorage.getItem("cwv3-state1")==null)?'Delhi':localStorage.getItem("cwv3-state1");

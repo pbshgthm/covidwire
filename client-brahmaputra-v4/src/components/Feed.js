@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef} from 'react';
-
-
 import debounce from "lodash.debounce";
 import {formatPageUrl,orderFeed,feedFormat,scrollToTop} from '../components/utils.js';
+
+import FeedbackForm from '../components/FeedbackForm.js'
 
 
 function Feed(props){
@@ -15,7 +15,8 @@ function Feed(props){
 	const [fetchNow,setFetchNow]=useState(false);
 	const [lastPage,setLastPage]=useState(0);
 	const [endFeed,setEndFeed]=useState(false)
-
+	const [showFeedback,setShowFeedback]=useState(false);
+	const [feedbackData,setFeedbackData]=useState("");
 
 	useEffect(() => {
     	return () => {
@@ -47,6 +48,16 @@ function Feed(props){
 			scrollToTop()
   		}
 	})
+
+	useEffect(()=>{
+		if(feedbackData!=="")
+		setShowFeedback(true)
+	},[feedbackData])
+
+	useEffect(()=>{
+		if(!showFeedback)
+		setFeedbackData("")
+	},[showFeedback])
 
 	window.onscroll = debounce(() => {
 		if(endFeed)return
@@ -91,7 +102,8 @@ function Feed(props){
 
 	return(
 		<React.Fragment>
-			<div className="NewsFeed">{feedFormat(feedData,props.langSel)}</div>
+			<FeedbackForm headline={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
+			<div className="NewsFeed">{feedFormat(feedData,props.langSel,setFeedbackData)}</div>
 			{(!endFeed)&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton.png')} alt="Card Skeleton"/>
 				<div className="SkeletonOverlay"></div>
