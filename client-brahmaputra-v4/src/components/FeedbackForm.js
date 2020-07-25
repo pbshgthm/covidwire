@@ -22,12 +22,18 @@ function FeedbackForm(props){
 	},[props.showFeedback])
 
 	function sendFormData(){
-		axios.post("https://us-central1-covidwire.cloudfunctions.net/feedback_via_slack", {
-			"Feedback":feedbackSel,
-			"Id":props.cardData.hash,
-			'Region':props.cardData.region,
-			'Language':props.cardData.lang,
-		}).then(res => {
+		if(feedbackSel=="")return;
+		props.setShowFeedback(false)
+		axios({
+	        method: 'post',
+	        url: "https://us-central1-covidwire.cloudfunctions.net/feedback_via_slack",
+	        data: {
+				"Feedback":feedbackSel,
+				"Id":props.cardData.hash,
+				'Region':props.cardData.region,
+				'Language':props.cardData.lang,
+			},
+    	}).then(res => {
     		console.log(res,res.data)
   		});
 	}
@@ -49,7 +55,7 @@ function FeedbackForm(props){
 						</div>
 					))}
 				</div>
-				<div className="FeedbackCancel" onClick={()=>props.setShowFeedback()}>Cancel</div>
+				<div className="FeedbackCancel" onClick={()=>props.setShowFeedback(false)}>Cancel</div>
 				<div onClick={()=>sendFormData()} className={classNames("FeedbackSubmit",
 					{"FeedbackSubmitSel":feedbackSel!==""})}>
 					Submit

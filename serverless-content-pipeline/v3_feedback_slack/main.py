@@ -5,6 +5,17 @@ import flask
 url=json.load(open('./slack_webhook.json'))["url"]
 def feedback_via_slack(request):
 
+	if request.method == 'OPTIONS':
+		headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+		return ('', 204, headers)
+
+
+
 	content=[i+" : "+request.json[i] for i in request.json]
 	print(content)
 	payload = '{"text":"'+"\n".join(content)+'"}'
@@ -13,10 +24,14 @@ def feedback_via_slack(request):
     }
 	requests.request("POST", url, headers=headers, data=payload)
 
-	response = flask.jsonify(user)
-	response.headers.set('Access-Control-Allow-Origin', '*')
-	response.headers.set('Access-Control-Allow-Methods', 'GET, POST')
-	return response
+	headers = {
+        'Access-Control-Allow-Origin': '*'
+    }
+	return ('Seccess', 200, headers)
+
+
+
+
 #feedback_via_slack({"asa":"123","apple":"pie"})
 
 #gcloud functions deploy feedback_via_slack --runtime python37 --trigger-http --allow-unauthenticated
