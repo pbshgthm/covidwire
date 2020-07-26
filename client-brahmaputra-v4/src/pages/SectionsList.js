@@ -17,7 +17,7 @@ function SectionsList() {
 
 function SectionsPage(){
 
-	scrollToTop()
+	scrollToTop(false)
 	function regCorr(x){
 		let commonDict={
 			"Global":"World",

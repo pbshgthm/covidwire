@@ -59,12 +59,15 @@ export const feedFormat = (feedData,langSel,setFeedbackData)=>{
 	return feedList.slice(1)
 }
 
-export const scrollToTop = ()=>{
-	const c = document.documentElement.scrollTop || document.body.scrollTop;
-	if (c > 0) {
-		window.requestAnimationFrame(scrollToTop);
-		window.scrollTo(0, c - c / 8);
+export const scrollToTop = (animate=true)=>{
+	if(animate){
+		const c = document.documentElement.scrollTop || document.body.scrollTop;
+		if (c > 0) {
+			window.requestAnimationFrame(scrollToTop);
+			window.scrollTo(0, c - c / 8);
+		}
 	}
+	else(window.scrollTo(0,0));
 };
 
 export const urlEncode = (url)=>{
@@ -81,4 +84,31 @@ export const preventScroll=(noScroll)=>{
 	}else{
 		document.body.style.overflow = "scroll"
 	}
+}
+
+
+export const toggleSaved=(cardData)=>{
+	var savedCards=getSaved()
+	console.log(savedCards)
+	if(cardData.hash in savedCards){
+		delete savedCards[cardData.hash];
+	}else{
+		savedCards[cardData.hash]=cardData;
+	}
+	localStorage.setItem('testObject2', JSON.stringify(savedCards));
+}
+
+export const isSaved=(hash)=>{
+	var savedCards=getSaved()
+	console.log(savedCards)
+	return (hash in savedCards)
+}
+
+export const getSaved=()=>{
+	var savedCards = localStorage.getItem('testObject2');
+	savedCards=JSON.parse(savedCards);
+
+	if(savedCards===null)return {}
+	return savedCards
+
 }

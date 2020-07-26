@@ -3,7 +3,7 @@ import {urlDecode} from '../components/utils.js'
 
 
 import TitleBar from '../components/TitleBar.js'
-import Setting from '../components/Setting.js'
+import LangSetting from '../components/LangSetting.js'
 import Feed from '../components/Feed.js'
 
 function regCorr(x){
@@ -35,9 +35,7 @@ function Section(props) {
 	return (
 		<div className="FeedPage">
 			<TitleBar title={section} showBack={true}/>
-			<img onClick={()=>{window.history.back()}} src={require('../assets/back.png')} alt="back" className="SectionBack"/>
-			<div className="PageTitle">{section}</div>
-			<Setting changeLang={setLangSel} defaultLang={langSel}/>
+			<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
 			{ _isMounted.current && <Feed baseUrl={"section/"+regCorr(section)} langSel={langSel} pageSize={3} />}
 		</div>
 	);

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import './css/NewsCard.css'
 import config from '../config.js'
-import {formatDate} from './utils.js'
+import {formatDate,toggleSaved,isSaved} from './utils.js'
 
 
 function regCorr(x){
@@ -56,12 +56,16 @@ function NewsCard(props){
 	},[props])
 
 
+	useEffect(()=>{
+		setSaveCard(isSaved(props.cardData.hash))
+	},[saveCard])
+
 	return(
 		<div className={classNames("NewsCard",{
 			"NewsCardHide":props.cardData.digests[langSel].digest===""
 		})}>
 			{/*Preview Image*/}
-			{props.cardData.img&&<img className="NewsCardImage" alt="" src={props.cardData.img} onError={i => {i.target.style.display='none';setNoImg(true);console.log('sdsds')}}/>}
+			{props.cardData.img&&<img className="NewsCardImage" alt="" src={props.cardData.img} onError={i => {i.target.style.display='none';setNoImg(true)}}/>}
 
 			{/*Auto translation ribbon*/}
 			{props.cardData.digests[langSel]['auto']&&<div className={classNames("NewsCardAutoRibbon",{"NewsCardAutoRibbonNoImg":noImg})}>
@@ -71,10 +75,11 @@ function NewsCard(props){
 			{/*Header*/}
 			<div className="NewsCardRow">
 				{/*Region*/}
-				{(props.cardData.region!=="Hope")&&<Link to={"/sections/"+regCorr(props.cardData.region)}>
+				{<Link to={props.cardData.region!=="Hope"?("/sections/"+regCorr(props.cardData.region)):"/hope"}>
 					<div className={classNames("NewsCardRegion",{
 						"NewsCardRegionGlobal":props.cardData.region==="Global",
-						"NewsCardRegionNational":props.cardData.region==="National"
+						"NewsCardRegionNational":props.cardData.region==="National",
+						"NewsCardRegionHope":props.cardData.region==="Hope"
 					})}>
 					{regCorr(props.cardData.region)}
 					</div>
@@ -124,7 +129,7 @@ function NewsCard(props){
 						<img className="NewsCardShare" alt="Share" src={require("../assets/whatsapp.png")}/>
 					</a>
 					{/*Save card*/}
-					<img onClick={()=>setSaveCard(!saveCard)} className="NewsCardSave" alt="Share" src={require("../assets/save"+(saveCard?"-yes":"-no")+".png")}/>
+					<img onClick={()=>{setSaveCard(!saveCard); toggleSaved(props.cardData)}} className="NewsCardSave" alt="Share" src={require("../assets/save"+(saveCard?"-yes":"-no")+".png")}/>
 
 				</div>
 				{/*Send feedback*/}

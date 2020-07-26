@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import axios from 'axios';
 
 import './css/FeedbackForm.css'
-import config from '../config.js'
 
 
 function FeedbackForm(props){
@@ -22,7 +21,7 @@ function FeedbackForm(props){
 	},[props.showFeedback])
 
 	function sendFormData(){
-		if(feedbackSel=="")return;
+		if(feedbackSel==="")return;
 		props.setShowFeedback(false)
 		axios({
 	        method: 'post',

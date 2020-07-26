@@ -1,18 +1,16 @@
 .FeedDateBox{
 	opacity: 1;
-	background-color: #EFA54E;
 	margin: 0 auto;
 	width: 35vw;
 	text-align: center;
-	font-size: 3.5vw;
+	font-size: 4vw;
 	height: 7vw;
 	line-height: 7.5vw;
-	font-weight: bold;
-	color: white;
+	font-weight: 700;
+	color: #9A9A9A;
 	border-radius: 1vw;
-	margin-top: -3vw;
-	margin-bottom: 6vw;
-	box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25);
+	margin-top: -4vw;
+	margin-bottom: 5vw;
 }
 .NewsCard{
 	background-color: #ffffff;
@@ -28,9 +26,7 @@
 	display: none;
 }
 
-.NewsCardHeaderState{
-	padding-top: 2.5vw;
-}
+
 .NewsCardRow{
 	padding-left: 4vw;
 	padding-right: 4vw;
@@ -44,7 +40,6 @@
 
 
 .NewsCardRegion{
-	margin-left: -0.8vw;
 	font-size: 3.5vw;
 	font-weight: 700;
 	display: inline-block;
@@ -58,7 +53,9 @@
 .NewsCardRegionGlobal{
 	color : #E78888;
 }
-
+.NewsCardRegionHope{
+	color : #E6941B;
+}
 
 
 .NewsCardDomain::before{
@@ -75,10 +72,10 @@
 	display: inline-block;
 }
 .NewsCardHeadline{
-	padding-left: 3.2vw;
+	padding-left: 4vw;
 	padding-right: 4vw;
 	color: #5E5E5E;
-	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2','Baloo Thambi 2';
+	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2', 'Baloo Thambi 2','Baloo Chettan 2';
 	line-height: 125%;
 	font-size: 5.65vw;
 	margin-top: -1vw;
@@ -237,6 +234,7 @@ a{
 	background-color: #EAEAEA;
 	color: #9A9A9A;
 	margin-left: 3vw;
+	font-weight: 600;
 	margin-top: 2vw;
 	margin-bottom: 1vw;
 }

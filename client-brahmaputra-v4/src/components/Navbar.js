@@ -5,7 +5,7 @@ import { Link,useLocation } from "react-router-dom";
 import './css/Components.css'
 
 function Navbar(){
-	let navLinks=['home','hope','sections','support','about'];
+	let navLinks=['home','hope','sections','blog','about'];
 	let location = useLocation();
 	const [navSel,setNavSel]=useState('');
 

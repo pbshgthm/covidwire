@@ -27,9 +27,9 @@
 	transition: 0.5s;
 }
 .TitleBack{
-	width: 3vw;
+	width: 2.5vw;
 	z-index: 6;
-	top: 3vw;
+	top: 4vw;
 	left: 4vw;
 	position: absolute;
 }
