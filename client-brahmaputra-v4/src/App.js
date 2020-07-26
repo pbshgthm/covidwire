@@ -6,7 +6,7 @@ import './App.css';
 import Home from './pages/Home.js'
 import SectionsList from './pages/SectionsList.js'
 import Hope from './pages/Hope.js'
-import Blog from './pages/Blog.js'
+import BlogList from './pages/BlogList.js'
 import About from './pages/About.js'
 
 
@@ -23,7 +23,7 @@ function App() {
 				<Route path="/home" component={Home}/>
 				<Route path="/hope" component={Hope}/>
 				<Route path="/sections" component={SectionsList}/>
-				<Route path="/blog" component={Blog}/>
+				<Route path="/blog" component={BlogList}/>
 				<Route path="/about" component={About}/>
 			</Switch>
 			<div className="DesktopBlock">

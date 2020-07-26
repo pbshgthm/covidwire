@@ -1,7 +1,6 @@
 import React, {useState,useEffect,useRef} from 'react';
 import {urlDecode} from '../components/utils.js'
 
-
 import TitleBar from '../components/TitleBar.js'
 import LangSetting from '../components/LangSetting.js'
 import Feed from '../components/Feed.js'

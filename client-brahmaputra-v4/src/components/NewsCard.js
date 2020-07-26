@@ -58,7 +58,7 @@ function NewsCard(props){
 
 	useEffect(()=>{
 		setSaveCard(isSaved(props.cardData.hash))
-	},[saveCard])
+	},[saveCard,props.cardData.hash])
 
 	return(
 		<div className={classNames("NewsCard",{

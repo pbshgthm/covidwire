@@ -3,7 +3,6 @@ import React, {useState,useEffect,useRef} from 'react';
 import TitleBar from '../components/TitleBar.js'
 import LangSetting from '../components/LangSetting.js'
 import Feed from '../components/Feed.js'
-import {scrollToTop} from '../components/utils.js'
 
 function Hope(props) {
 	let defaultLang=(localStorage.getItem("cwv3-lang1")==null)?'English':localStorage.getItem("cwv3-lang1");
