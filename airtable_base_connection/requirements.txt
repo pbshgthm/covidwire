@@ -1,0 +1,6 @@
+firebase_admin
+python-dateutil
+google-cloud
+google-cloud-translate
+beautifulsoup4
+lxml

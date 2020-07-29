@@ -367,7 +367,7 @@ body {
 	padding-top: 18vw;
 	width: 100vw;
 	background-color: #ffffff;
-	padding-bottom: 40vw;
+	padding-bottom: 25vw;
 	margin-bottom: -20vw;
 }
 .BlogPostTitle{
@@ -404,9 +404,10 @@ body {
 }
 
 .BlogPostBody h3{
-	color:#DA9000;
+	font-size: 5.5vw;
+	color: #A6A6A6;
 	margin-top: -0.5vw;
-	margin-bottom: 2vw;
+	margin-bottom: 3vw;
 }
 
 .BlogPostLinks::before{
