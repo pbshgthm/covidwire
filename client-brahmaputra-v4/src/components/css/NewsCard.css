@@ -1,7 +1,7 @@
 .FeedDateBox{
 	opacity: 1;
 	margin: 0 auto;
-	width: 35vw;
+	width: 50vw;
 	text-align: center;
 	font-size: 4vw;
 	height: 7vw;
@@ -110,20 +110,12 @@ a{
 }
 
 .NewsCardAutoRibbon{
-	width: 94vw;
-	background-color: #FFAF50;
-	color: white;
-	text-align: center;
+	color: #D39143;
 	font-weight: 600;
 	font-size: 3.5vw;
-	line-height: 8vw;
-	height: 7vw;
-	margin-top: -3vw;
-	margin-bottom: 2vw;
-}
-
-.NewsCardAutoRibbonNoImg{
-	border-radius: 2vw 2vw 0vw 0vw;
+	line-height: 5vw;
+	height: 5vw;
+	margin-left: 4vw;
 }
 
 .NewsCardContent{

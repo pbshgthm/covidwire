@@ -22,7 +22,7 @@ const langConfig={
 	},
 	'Telugu':{
 		'native':'తెలుగు',
-		'glyph':'ఆ'
+		'glyph':'అ'
 	},
 	'Tamil':{
 		'native':'தமிழ்',

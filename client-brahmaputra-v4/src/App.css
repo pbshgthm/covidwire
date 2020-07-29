@@ -403,17 +403,40 @@ body {
 	color: #3A3A3A;
 }
 
-.BlogPostBodyBold{
-	color: #3A3A3A;
-	font-weight: 600;
-	font-size: 5vw;
-	margin-bottom: -3vw;
-	color: #767676;
+.BlogPostBody h3{
+	color:#DA9000;
+	margin-top: -0.5vw;
+	margin-bottom: 2vw;
 }
-.BlogPostBodyItalics{
-	color: #767676;
-	font-weight: 700;
-	font-size: 4vw;
+
+.BlogPostLinks::before{
+	content: 'Reference\A';
+	white-space: pre;
+	color: #A6A6A6;
+	font-weight: 500;
+}
+.BlogPostLinks{
+	word-break: break-all;
+	word-wrap: break-word;
+	width: 90vw;
+	font-size: 3.5;
+	line-height: 6vw;
+	margin-top: 8vw;
+	margin-left: 5vw;
+}
+.BlogPostLinks a{
+	text-decoration: underline;
+	color: #6585A3;
+}
+
+.BlogPostBio{
+	font-style: italic;
+	color: #6D757C;
+	width: 90vw;
+	font-size: 3.5;
+	line-height: 6vw;
+	margin-top: 8vw;
+	margin-left: 5vw;
 }
 /*-- BLOGLIST END----*/
 

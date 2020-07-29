@@ -1,8 +1,46 @@
 import React, { useState, useEffect, useRef} from 'react';
 import debounce from "lodash.debounce";
-import {formatPageUrl,orderFeed,feedFormat,scrollToTop} from '../components/utils.js';
-
+import {formatDate,scrollToTop} from '../components/utils.js';
+import classNames from 'classnames'
 import FeedbackForm from '../components/FeedbackForm.js'
+import NewsCard from './NewsCard.js'
+
+
+
+function formatPageUrl(pageNum,pageSize=1){
+	//bug occurs when the page reload happens before and after 0530 IST
+	//Duplicate key-s found in feed
+	let start=new Date(new Date().setDate(new Date().getDate()-
+	(pageSize*pageNum+pageSize))).toISOString().split('T')[0];
+
+	let end=new Date(new Date().setDate(new Date().getDate()-
+	(pageSize*pageNum+1))).toISOString().split('T')[0];
+	if(pageNum===0){end=new Date(new Date().setDate(new Date().getDate()-
+	0)).toISOString().split('T')[0];}
+	if(start<'2020-03-01')return false;
+	return '?orderBy="$key"&startAt="'+start+'"&endAt="'+end+'"';
+}
+
+
+function orderFeed(rawFeed){
+	let orderedFeed=[]
+	for(const date in rawFeed){
+		let day_news=Object.entries(rawFeed[date])
+		day_news.sort(function(a,b){
+			if(a[1].time>b[1].time)return -1;
+			if(a[1].time<b[1].time)return 1;
+			return 0
+		})
+		orderedFeed.push([date,day_news])
+	}
+	orderedFeed.sort(function(a,b){
+		if(a[0]>b[0])return -1;
+		if(a[0]<b[0])return 1;
+		return 0;
+	})
+	return(orderedFeed)
+}
+
 
 
 function Feed(props){
@@ -17,13 +55,13 @@ function Feed(props){
 	const [endFeed,setEndFeed]=useState(false)
 	const [showFeedback,setShowFeedback]=useState(false);
 	const [feedbackData,setFeedbackData]=useState("");
+	const [autoTrans,setAutoTrans]=useState(true)
 
 	useEffect(() => {
     	return () => {
         	_isMounted.current = false;
     	}
   	}, []);
-
 
 	useEffect(()=>{
 		setBaseUrl(props.baseUrl)
@@ -32,15 +70,15 @@ function Feed(props){
 		setFetchNow(true)
 	},[props.baseUrl])
 
-	useEffect(()=>{
 
+	useEffect(()=>{
 		if(!_isMounted.current)return;
 		if(fetchNow){
 			fetchFeed()
 			setFetchNow(false)
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	},[fetchNow])
+
 
 	useEffect(()=>{
 		if (isInitialMount.current) {
@@ -49,15 +87,18 @@ function Feed(props){
   		}
 	})
 
+
 	useEffect(()=>{
 		if(feedbackData!=="")
 		setShowFeedback(true)
 	},[feedbackData])
 
+
 	useEffect(()=>{
 		if(!showFeedback)
 		setFeedbackData("")
 	},[showFeedback])
+
 
 	window.onscroll = debounce(() => {
 		if(endFeed)return
@@ -67,6 +108,7 @@ function Feed(props){
 		  	if(fetchReady){setFetchNow(true)}
       	}
     }, 100);
+
 
 	const fetchFeed = ()=>{
 		if(endFeed)return
@@ -99,11 +141,40 @@ function Feed(props){
 				}
 		))
 	}
-	//this is a checkpoint
+
+	function feedFormat(feedData,langSel,setFeedbackData,autoTrans){
+		let feedList=[]
+		feedData.forEach(dayFeed=>{
+			var dayCards=[];
+			for(var i=0;i<dayFeed[1].length;i++){
+				var cardData=dayFeed[1][i][1]
+				if(!autoTrans){
+					//if(cardData.digests[langSel]['auto'])continue;
+				}
+				dayCards.push(<NewsCard key={cardData.hash} cardData={cardData} langSel={langSel} setFeedbackData={setFeedbackData}/>)
+			}
+			if(dayCards.length>0){
+				feedList.push(<div className="FeedDateBox" key={dayFeed[0]}>{formatDate(dayFeed[0])}</div>)
+			}
+			feedList=feedList.concat(dayCards)
+
+		})
+		if(feedList.length<2){
+			console.log('asa',feedList)
+			//setFetchNow(true);
+			//return []
+		}
+		return feedList.slice(1)
+	}
+
+
 	return(
 		<React.Fragment>
 			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
-			<div className="NewsFeed">{feedFormat(feedData,props.langSel,setFeedbackData)}</div>
+			{/*<div onClick={()=>setAutoTrans(!autoTrans)} className={classNames("AutoTransSwitch",{
+				"AutoTransSwitchSel":autoTrans
+			})}>Show Auto translation</div>*/}
+			<div className="NewsFeed">{feedFormat(feedData,props.langSel,setFeedbackData,autoTrans)}</div>
 			{(!endFeed)&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton.png')} alt="Card Skeleton"/>
 				<div className="SkeletonOverlay"></div>

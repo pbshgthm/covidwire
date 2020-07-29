@@ -21,14 +21,14 @@ function BlogListPage(props){
 
 	useEffect(()=>{
 		scrollToTop(false)
-		let url="https://covidwire.firebaseio.com/v3/blog/list"
+		let url="https://covidwire.firebaseio.com/blog/list"
 		fetch(url+'.json')
 			.then(
 				(result)=>result.json()
 			.then(
 				(result)=>{
 					setBlogList(Object.values(result).sort(
-						function(a,b){return b.id[3]-a.id[3]}
+						function(a,b){return b.order-a.order}
 					))
 				}
 		))
@@ -40,11 +40,11 @@ function BlogListPage(props){
 			<TitleBar title="CovidWire Speaks"/>
 			<div className="BlogListFeed">
 				{blogList.map(x=>(
-					<Link key={x.id} to={"blog/"+x.id}>
+					<Link key={x.id} to={"blog/csw"+x.order}>
 						<div  className="BlogListCard">
-							<img className="BlogListImg" src={x.img} alt="BlogImg"/>
+							<img className="BlogListImg" src={x.image} alt="BlogImg"/>
 							<div className="BlogListTitle">{x.title}</div>
-							<div className="BlogListAuthors">{x.authors.join(', ')}</div>
+							<div className="BlogListAuthors">{x.authors}</div>
 						</div>
 					</Link>
 				))}

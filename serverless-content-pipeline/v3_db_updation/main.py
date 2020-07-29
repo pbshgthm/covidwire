@@ -22,14 +22,14 @@ db_root = db.reference('/v3')
 db_feed = db.reference('/v3/feed')
 db_section = db.reference('/v3/section')
 db_hope = db.reference('/v3/hope')
+db_blog = db.reference('/v3/blog')
 
 
-def get_table(base,table_name,offset=False):
+def get_table(base,table_name,offset=False,nofilter=False):
 	url="https://api.airtable.com/v0/"+api_keys["airtable_base_"+base]+"/"+table_name
-	url=url+'?filterByFormula=NOT({Status}="C")'
+	if not nofilter:url=url+'?filterByFormula=NOT({Status}="C")'
 	if offset:url=url+"&offset="+offset
 	x = requests.get(url,headers = {"Authorization": "Bearer "+api_keys["airtable_key"]})
-
 	if "offset" in x.json():
 		return x.json()["records"]+get_table(base,table_name,offset=x.json()["offset"])
 	return x.json()["records"]
@@ -189,6 +189,30 @@ def pull_v3(request):
 		db_section.child(domain).set(domain_wise[domain])
 
 
+	#blog
+	'''
+	blog_raw=get_table('v3','CW Speaks',nofilter=True)
+	blog_format={}
+	blog_meta={}
+	for record in blog_raw:
+		blog={
+			'id':record['fields']['ID'],
+			'title':record['fields']['Title'],
+			'authors':record['fields']['Authors'],
+			'img':record['fields']['Image']
+		}
+		blog_meta[blog['id']]=blog
+
+		blog['body']=record['fields']['Body']
+		blog['date']=record['fields']['Date']
+		blog['mins']=record['fields']['Minutes']
+
+		blog_format[blog['id']]=blog
+
+	db_blog.child('list').set(blog_meta)
+	db_blog.child('content').set(blog_format)
+	'''
+
 
 def safe_dict(dict_,key,default=""):
 	if key in dict_:return dict_[key]
@@ -197,6 +221,8 @@ def safe_dict(dict_,key,default=""):
 def update_table(base,table_name,data):
 	url="https://api.airtable.com/v0/"+api_keys["airtable_base_"+base]+"/"+table_name
 	x = requests.patch(url,headers = {"Authorization": "Bearer "+api_keys["airtable_key"]},json=data)
+
+
 
 
 #pull_v3('as')
