@@ -4,7 +4,7 @@ import {formatDate,scrollToTop} from '../components/utils.js';
 import classNames from 'classnames'
 import FeedbackForm from '../components/FeedbackForm.js'
 import NewsCard from './NewsCard.js'
-
+import StatsCard from './StatsCard.js'
 
 
 function formatPageUrl(pageNum,pageSize=1){
@@ -24,12 +24,20 @@ function formatPageUrl(pageNum,pageSize=1){
 
 function orderFeed(rawFeed){
 	let orderedFeed=[]
+
+	function regOrder(reg){
+		var regionOrder={
+			'Global':2,
+			'National':1,
+		}
+		if(reg in regionOrder)return regionOrder[reg];
+		return 0;
+	}
+
 	for(const date in rawFeed){
 		let day_news=Object.entries(rawFeed[date])
 		day_news.sort(function(a,b){
-			if(a[1].time>b[1].time)return -1;
-			if(a[1].time<b[1].time)return 1;
-			return 0
+			return regOrder(a[1].region)-regOrder(b[1].region)
 		})
 		orderedFeed.push([date,day_news])
 	}
@@ -61,7 +69,7 @@ function Feed(props){
     	return () => {
         	_isMounted.current = false;
     	}
-  	}, []);
+  	},[]);
 
 	useEffect(()=>{
 		setBaseUrl(props.baseUrl)
@@ -85,7 +93,7 @@ function Feed(props){
      		isInitialMount.current = false;
 			scrollToTop()
   		}
-	})
+	},[])
 
 
 	useEffect(()=>{
@@ -112,7 +120,7 @@ function Feed(props){
 
 	const fetchFeed = ()=>{
 		if(endFeed)return
-		let url="https://covidwire.firebaseio.com/v3/"+baseUrl
+		let url="https://covidwire.firebaseio.com/"+baseUrl
 		setFetchReady(false)
 
 		let pageVal=formatPageUrl(lastPage,props.pageSize)
@@ -148,9 +156,9 @@ function Feed(props){
 			var dayCards=[];
 			for(var i=0;i<dayFeed[1].length;i++){
 				var cardData=dayFeed[1][i][1]
-				if(!autoTrans){
+				//if(!autoTrans){
 					//if(cardData.digests[langSel]['auto'])continue;
-				}
+				//}
 				dayCards.push(<NewsCard key={cardData.hash} cardData={cardData} langSel={langSel} setFeedbackData={setFeedbackData}/>)
 			}
 			if(dayCards.length>0){
@@ -159,14 +167,23 @@ function Feed(props){
 			feedList=feedList.concat(dayCards)
 
 		})
-		if(feedList.length<2){
-			console.log('asa',feedList)
+		//if(feedList.length<2){
+			//console.log('asa',feedList)
 			//setFetchNow(true);
 			//return []
-		}
+		//}
 		return feedList.slice(1)
 	}
 
+
+	function addStats(statsRegion,feedCards){
+		if(feedCards.length===0)return feedCards;
+		let final=[feedCards[0]];
+		if(statsRegion){
+			final=final.concat([<StatsCard key="stats" region={statsRegion}/>])
+		}
+		return final.concat(feedCards.slice(1))
+	}
 
 	return(
 		<React.Fragment>
@@ -174,7 +191,9 @@ function Feed(props){
 			{/*<div onClick={()=>setAutoTrans(!autoTrans)} className={classNames("AutoTransSwitch",{
 				"AutoTransSwitchSel":autoTrans
 			})}>Show Auto translation</div>*/}
-			<div className="NewsFeed">{feedFormat(feedData,props.langSel,setFeedbackData,autoTrans)}</div>
+			<div className="NewsFeed">{
+				addStats(props.statsRegion,feedFormat(feedData,props.langSel,setFeedbackData,autoTrans))
+			}</div>
 			{(!endFeed)&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton.png')} alt="Card Skeleton"/>
 				<div className="SkeletonOverlay"></div>

@@ -155,14 +155,14 @@ function NewsCard(props){
 
 function formatBody(text){
 	text=text.trim()
-	text=text.replace(/\n\-/g,'\n•');
+	text=text.replace(/\n-/g,'\n•');
 	text=text.replace(/> /g,'');
 	text=text.replace(/```/g,'');
 	text=text.replace(/#/g,'');
 	text=text.replace(/\[x]/g,'');
 	text=text.replace(/\[ ]/g,'');
 
-	if(text[0]=="-")text='•'+text.slice(1)
+	if(text[0]==="-")text='•'+text.slice(1)
 	let formatedText=text.split('\n').map((item, i) => (
     	<span key={'line-'+i}>{item}<br/></span>
 	));

@@ -13,18 +13,6 @@ firebase_admin.initialize_app(cred, {
 db_blog = db.reference('/blog')
 
 
-prismic_url="http://covidwire.cdn.prismic.io/api/v2"
-record_path="/documents/search?ref="
-
-
-ref = requests.get(prismic_url)
-ref = ref.json()["refs"][0]["ref"]
-
-content = requests.get(prismic_url+record_path+ref)
-content = content.json()["results"]
-
-
-
 def format_body(raw):
 	tag={
 		'strong':['<b>','</b>'],
@@ -75,7 +63,18 @@ def format_links(raw):
 	return ''.join(merged).replace('\n','<br/>')
 
 
-def pull_blog(requests):
+def v4_pull_blog(req):
+
+	prismic_url="http://covidwire.cdn.prismic.io/api/v2"
+	record_path="/documents/search?ref="
+
+	ref = requests.get(prismic_url)
+	ref = ref.json()["refs"][0]["ref"]
+
+	content = requests.get(prismic_url+record_path+ref)
+	content = content.json()["results"]
+
+
 	blog_meta={}
 	blog_content={}
 	for post in content:
@@ -86,7 +85,7 @@ def pull_blog(requests):
 			'image':post['data']['image']['url'],
 		}
 		blog_meta['csw'+str(blog['order'])]=blog.copy()
-
+		#print(blog['image'])
 		blog['date']=post['data']['date'],
 		blog['minutes']=int(post['data']['minutes']),
 		blog['body']=format_body(post['data']['body'])
@@ -96,3 +95,9 @@ def pull_blog(requests):
 
 	db_blog.child('list').set(blog_meta)
 	db_blog.child('content').set(blog_content)
+
+
+
+
+#pull_blog('pp')
+#gcloud functions deploy v4_pull_blog --runtime python37 --trigger-http --allow-unauthenticated

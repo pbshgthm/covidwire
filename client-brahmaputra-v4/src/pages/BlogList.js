@@ -40,7 +40,7 @@ function BlogListPage(props){
 			<TitleBar title="CovidWire Speaks"/>
 			<div className="BlogListFeed">
 				{blogList.map(x=>(
-					<Link key={x.id} to={"blog/csw"+x.order}>
+					<Link key={x.order} to={"blog/csw"+x.order}>
 						<div  className="BlogListCard">
 							<img className="BlogListImg" src={x.image} alt="BlogImg"/>
 							<div className="BlogListTitle">{x.title}</div>

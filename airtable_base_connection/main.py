@@ -245,7 +245,7 @@ meta=get_meta()
 hash_dict={}
 
 
-def pull_data(request):
+def v4_airtable_control(request):
 	global hash_dict
 	hash_dict=get_hash_dict(meta)
 	pull_curation()
@@ -258,4 +258,4 @@ def pull_data(request):
 
 
 #export GOOGLE_APPLICATION_CREDENTIALS="./translation_api_cred.json"
-#gcloud functions deploy pull_data --runtime python37 --trigger-http --allow-unauthenticated
+#gcloud functions deploy v4_airtable_control --runtime python37 --trigger-http --allow-unauthenticated

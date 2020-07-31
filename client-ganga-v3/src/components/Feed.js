@@ -58,7 +58,7 @@ function Feed(props){
 
 	const fetchFeed = ()=>{
 		if(endFeed)return
-		let url="https://covidwire.firebaseio.com/v3/"+baseUrl
+		let url="https://covidwire.firebaseio.com/"+baseUrl
 		setFetchReady(false)
 
 		let pageVal=formatPageUrl(lastPage,props.pageSize)

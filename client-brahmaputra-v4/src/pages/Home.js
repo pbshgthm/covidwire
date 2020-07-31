@@ -26,7 +26,7 @@ function Home(props){
 			<TitleBar title="CovidWire"/>
 			<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
 			<RegionSetting defaultState={stateSel} changeState={setStateSel}/>
-			<Feed baseUrl={"feed/"+stateSel} langSel={langSel} pageSize={1}/>
+			<Feed baseUrl={"feed/"+stateSel} langSel={langSel} pageSize={1} statsRegion={stateSel}/>
 		</div>
 	);
 }

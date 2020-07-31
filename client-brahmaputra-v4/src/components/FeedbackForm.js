@@ -8,9 +8,9 @@ import './css/FeedbackForm.css'
 function FeedbackForm(props){
 
 	const feedbackOpt=[
-		'Bad News selection',
-		'Inaccurate Summary',
-		'Translation Error',
+		'Bad news selection',
+		'Inaccurate summary',
+		'Translation error',
 		'No issues, well done!'
 	]
 
@@ -25,7 +25,7 @@ function FeedbackForm(props){
 		props.setShowFeedback(false)
 		axios({
 	        method: 'post',
-	        url: "https://us-central1-covidwire.cloudfunctions.net/feedback_via_slack",
+	        url: "https://us-central1-covidwire.cloudfunctions.net/v4_feedback_slack",
 	        data: {
 				"Feedback":feedbackSel,
 				"Id":props.cardData.hash,

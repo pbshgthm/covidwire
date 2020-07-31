@@ -17,12 +17,11 @@ firebase_admin.initialize_app(cred, {
 #-----------------------
 
 api_keys=json.load(open('./apis_config.json'))
-db_root = db.reference('/v3')
 
-db_feed = db.reference('/v3/feed')
-db_section = db.reference('/v3/section')
-db_hope = db.reference('/v3/hope')
-db_blog = db.reference('/v3/blog')
+
+db_feed = db.reference('/feed')
+db_section = db.reference('/section')
+db_hope = db.reference('/hope')
 
 
 def get_table(base,table_name,offset=False,nofilter=False):
@@ -90,7 +89,7 @@ def format_entry(fields):
 	}
 	return formated_fields
 
-def pull_v3(request):
+def v4_update_db(request):
 
 	master_table={}
 	for region in meta_data.region_list:
@@ -189,30 +188,6 @@ def pull_v3(request):
 		db_section.child(domain).set(domain_wise[domain])
 
 
-	#blog
-	'''
-	blog_raw=get_table('v3','CW Speaks',nofilter=True)
-	blog_format={}
-	blog_meta={}
-	for record in blog_raw:
-		blog={
-			'id':record['fields']['ID'],
-			'title':record['fields']['Title'],
-			'authors':record['fields']['Authors'],
-			'img':record['fields']['Image']
-		}
-		blog_meta[blog['id']]=blog
-
-		blog['body']=record['fields']['Body']
-		blog['date']=record['fields']['Date']
-		blog['mins']=record['fields']['Minutes']
-
-		blog_format[blog['id']]=blog
-
-	db_blog.child('list').set(blog_meta)
-	db_blog.child('content').set(blog_format)
-	'''
-
 
 def safe_dict(dict_,key,default=""):
 	if key in dict_:return dict_[key]
@@ -224,6 +199,5 @@ def update_table(base,table_name,data):
 
 
 
-
 #pull_v3('as')
-#gcloud functions deploy pull_v3 --runtime python37 --trigger-http --allow-unauthenticated
+#gcloud functions deploy v4_update_db --runtime python37 --trigger-http --allow-unauthenticated
