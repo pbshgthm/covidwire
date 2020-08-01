@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef} from 'react';
+import React, { useState, useEffect} from 'react';
 
 import './css/StatsCard.css'
 import {formatDate} from './utils.js'
@@ -34,7 +34,7 @@ function StatsChart(props){
 function StatsCard(props){
 
 	const [statsData,setStatsData]=useState({});
-	const [statsReady,SetStatsReady]=useState(false);
+	const [statsReady,setStatsReady]=useState(false);
 	const [statsRegion,setStatsRegion]=useState(props.region==="India & World"?"India":props.region);
 
 	useEffect(()=>{
@@ -45,10 +45,11 @@ function StatsCard(props){
 			.then(
 				(result)=>{
 					setStatsData(result)
-					SetStatsReady(true)
+					setStatsReady(true)
+					setStatsRegion(statsRegion)
 				}
 		))
-	},[props.region])
+	},[props.region,statsRegion])
 
 	return (
 		statsReady&&<div className="StatsCard">
