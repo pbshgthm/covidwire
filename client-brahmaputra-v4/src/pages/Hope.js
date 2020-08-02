@@ -2,7 +2,7 @@ import React, {useState,useEffect,useRef} from 'react';
 
 import TitleBar from '../components/TitleBar.js'
 import LangSetting from '../components/LangSetting.js'
-import Feed from '../components/Feed.js'
+import SearchFeed from '../components/SearchFeed.js'
 import Navbar from '../components/Navbar.js'
 
 function Hope(props) {
@@ -10,6 +10,15 @@ function Hope(props) {
 
 	const [langSel,setLangSel]=useState(defaultLang)
 	const _isMounted = useRef(true);
+
+	const [feedConfig,setFeedConfig]=useState({
+		term:'hope',
+		type: 'feed',
+		region: 'Hope',
+		stats:false
+	})
+
+	const [navHide,setNavHide]=useState(false)
 
 	useEffect(()=>{
 		localStorage.setItem("cwv3-lang1", langSel);
@@ -23,9 +32,11 @@ function Hope(props) {
 
 	return (
 		<div className="FeedPage">
-			<TitleBar title="Hope"/>
-			<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
-			{_isMounted.current && <Feed baseUrl={"hope"} langSel={langSel} pageSize={5}Z/>}
+			<img className="HopeTitle" src={require("../assets/hope-title.png")}/>
+			<div className="HopeBg"></div>
+			<LangSetting defaultLang={langSel} changeLang={setLangSel} hope={true}/>
+			<div className="HopeDesc">Dearly curated with the hope to bring positive new to light</div>
+			{_isMounted.current && <SearchFeed langSel={langSel} pageSize={5} feedConfig={feedConfig}/>}
 			<Navbar/>
 		</div>
 	);

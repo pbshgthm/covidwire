@@ -29,7 +29,7 @@ function LangSetting(props){
 	return(
 		<div className="LangSetting">
 			{langOpt.map(x=>(
-				<div key={x.val} className={classNames("LangSettingBtn",{"LangSettingBtn-sel":x.val===langSel})} onClick={()=>setLangSel(x.val)}>{x.glyph}</div>
+				<div key={x.val} className={classNames("LangSettingBtn",{"LangSettingBtn-sel":x.val===langSel,"LangSettingBtnHope":props.hope})} onClick={()=>setLangSel(x.val)}>{x.glyph}</div>
 			))}
 		</div>
 

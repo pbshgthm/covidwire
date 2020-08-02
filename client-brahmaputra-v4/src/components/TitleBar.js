@@ -69,6 +69,7 @@ function TitleBar(props){
 	useEffect(()=>{
 		if(showSearch)return;
 		setSearchKey('')
+		if(props.feedConfig.region=="Hope")return
 		props.setFeedConfig({
 			term:'feed/'+props.feedConfig.region,
 			type:'feed',

@@ -95,34 +95,36 @@ body {
 /*---- HOPE ---*/
 .HopeBg{
 	z-index: -1;
-	position: fixed;
 	top: 0vw;
+	position: fixed;
 	width: 100vw;
 	height: 100vh;
-	background-size: 100vw;
-	background-image: url('./assets/hope-bg.png');
+	background-image: url('assets/bg-hope.png');
 }
 
-.HopeHeader{
-	width: 50vw;
-	background-color: rgba(255,255,255,0.6);
-	padding-top: 3vw;
-	padding-left: 25vw;
-	padding-right: 25vw;
+
+.HopeTitle{
+	margin-left: 20vw;
+	margin-top: 5vw;
+	width: 60vw;
+	left: 20vw;
+	margin-bottom: -17vw;
 }
 
 .HopeDesc{
-	margin-top: -1.4vw;
+	font-family: 'Crimson Text';
+	margin-top: 6vw;
 	width: 70vw;
-	font-size: 5vw;
+	font-size: 5.5vw;
 	color: #3F3D56;
-	font-weight: 600;
+	font-weight: 500;
 	padding-left: 15vw;
 	padding-right: 15vw;
+	margin-bottom: 0vw;
+	text-align: center;
 	background-color: rgba(255,255,255,0.6);
-	padding-bottom: 3vw;
-	margin-bottom: 5vw;
 }
+
 
 /*----------------- ---------------*/
 

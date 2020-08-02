@@ -62,7 +62,7 @@ function NewsCard(props){
 
 	return(
 		<div className={classNames("NewsCard",{
-			"NewsCardHide":props.cardData.digests[langSel].digest===""
+			"NewsCardHope":props.hope
 		})}>
 			{/*Preview Image*/}
 			{props.cardData.img&&<img className="NewsCardImage" alt="" src={props.cardData.img} onError={i => {i.target.style.display='none';setNoImg(true)}}/>}

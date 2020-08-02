@@ -46,13 +46,13 @@ export const orderFeed = (rawFeed)=>{
 }
 
 
-export const feedFormat = (feedData,langSel,setFeedbackData)=>{
+export const feedFormat = (feedData,langSel,setFeedbackData,hope=false)=>{
 	let feedList=[]
 	feedData.forEach(dayFeed=>{
 		var dayCards=[];
 		for(var i=0;i<dayFeed[1].length;i++){
 			var cardData=dayFeed[1][i][1]
-			dayCards.push(<NewsCard key={cardData.hash} cardData={cardData} langSel={langSel} setFeedbackData={setFeedbackData}/>)
+			dayCards.push(<NewsCard hope={hope} key={cardData.hash} cardData={cardData} langSel={langSel} setFeedbackData={setFeedbackData}/>)
 		}
 		if(dayCards.length>0){
 			feedList.push(<div className="FeedDateBox" key={dayFeed[0]}>{formatDate(dayFeed[0])}</div>)
@@ -74,8 +74,9 @@ export const addStats = (statsRegion,feedCards)=>{
 }
 
 
-export const getData=(feedConfig,lastPage=0,pageSize=2)=>{
+export const getData=(feedConfig,pageSize=2,lastPage=0)=>{
 
+	console.log(pageSize,lastPage)
 	if(feedConfig.type==="search"){
 		console.log('searching '+feedConfig.term)
 		return axios({
@@ -97,6 +98,7 @@ export const getData=(feedConfig,lastPage=0,pageSize=2)=>{
 
 		});
 	}else{
+		console.log(feedConfig)
 		let url="https://covidwire.firebaseio.com/"+feedConfig.term
 		let pageVal=formatPageUrl(lastPage,pageSize)
 		console.log(url+'.json'+pageVal)
