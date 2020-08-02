@@ -5,12 +5,7 @@ import classNames from 'classnames'
 import FeedbackForm from '../components/FeedbackForm.js'
 
 
-
 import {feedFormat,formatPageUrl,orderFeed,addStats,getData} from './FeedUtils.js'
-
-
-
-
 
 
 function SearchFeed(props){
@@ -29,6 +24,8 @@ function SearchFeed(props){
 	const [showFeedback,setShowFeedback]=useState(false);
 	const [feedbackData,setFeedbackData]=useState("");
 
+	const [isSearching,setIsSearching]=useState(false)
+
 	useEffect(() => {
     	return () => {
         	_isMounted.current = false;
@@ -36,7 +33,6 @@ function SearchFeed(props){
   	},[]);
 
 	useEffect(()=>{
-		console.log(props.feedConfig)
 		setFeedConfig(props.feedConfig)
 		setFeedData([])
 		setLastPage(0)
@@ -78,17 +74,27 @@ function SearchFeed(props){
 
 	const fetchFeed = ()=>{
 		setEndFeed(false)
+
+		if(feedConfig.type==="search"){
+			setIsSearching(true)
+		}
 		getData(feedConfig,props.pageVal,lastPage).then(result => {
+
 
 			setFeedData([
 				...feedData,
 				...result
 			])
+
+
 			setFetchReady(true)
 			setLastPage(lastPage+1)
 
 
-			if(feedConfig.type==='search')setEndFeed(true)
+			if(feedConfig.type==='search'){
+				setEndFeed(true)
+				setIsSearching(false)
+			}
 
 			if(Object.keys(result).length===0){
 				if(feedConfig.type==='feed'){
@@ -108,10 +114,11 @@ function SearchFeed(props){
 		<React.Fragment>
 			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
 			<div className="NewsFeed">
-				<div>{feedConfig.type+' '+feedConfig.term}</div>
+				<img src={require('../assets/searching.png')} alt="Searching" className={classNames('SearchingImg',{'SearchingImgSel':isSearching})}/>
+				{(feedConfig.type==="search")&&<div className="FeedDesc">{"Search results : "+feedConfig.term}</div>}
 				{feedFormat(feedData,props.langSel,setFeedbackData)}
 			</div>
-			{(!endFeed)&&<div className="SkeletonHolder">
+			{(!endFeed)&&(feedConfig.type!=='searchs')&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton.png')} alt="Card Skeleton"/>
 				<div className="SkeletonOverlay"></div>
 			</div>}

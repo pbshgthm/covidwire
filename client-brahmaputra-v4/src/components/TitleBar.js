@@ -12,7 +12,7 @@ function SearchInterface(props){
 
 	const handleKeyDown = (event) => {
     	if (event.key === 'Enter') {
-			props.setSearchKey(keyWord)
+			hitSearch();
     	}
   	}
 
@@ -25,6 +25,11 @@ function SearchInterface(props){
 		else{setPlaceHolder('')}
 	},[keyWord])
 
+	function hitSearch(){
+		searchInput.current.blur()
+		props.setSearchKey(keyWord)
+	}
+
 	return(
 		<React.Fragment>
 			<div className="TitleBarSearchPanel">
@@ -35,7 +40,7 @@ function SearchInterface(props){
 				onInput={(e)=>setKeyWord(e.target.value)}
 				onKeyDown={handleKeyDown}/>
 
-				<img className={"TitleBarSearchBtn"} src={require('../assets/search.png')} alt="Search" onClick={()=>props.setSearchKey(keyWord)}/>
+				<img className={"TitleBarSearchBtn"} src={require('../assets/search.png')} alt="Search" onClick={()=>hitSearch()}/>
 				<div className="SearchPlaceholder">{placeHolder}</div>
 			</div>
 		</React.Fragment>

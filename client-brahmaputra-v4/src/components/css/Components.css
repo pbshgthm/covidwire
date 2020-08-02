@@ -36,10 +36,32 @@
 /*--- START FEED ---*/
 
 .NewsFeed{
+	text-align: center;
 	padding: 3vw;
-	padding-top: 8vw;
+	padding-top: 0vw;
+	transition: 1s;
 }
 
+.SearchingImg{
+	width: 0vw;
+	opacity: 0;
+	transition: opacity 0.5s, width 0.5s 0.5s, margin-bottom 0.5s 0.5s;
+	margin-top: 0vw;
+	margin-bottom: 0vw;
+}
+.SearchingImgSel{
+	transition: opacity 0.5s, margin-bottom 0.5s;
+	opacity: 1;
+	width: 60vw;
+	margin-top: 10vw;
+	margin-bottom: 100vh;
+}
+.FeedDesc{
+	font-size: 4.5vw;
+	margin-bottom: 4vw;
+	color: #767676;
+	font-weight: 600;
+}
 .SkeletonHolder{
 	margin-bottom: 9vw;
 	overflow-x: hidden;
