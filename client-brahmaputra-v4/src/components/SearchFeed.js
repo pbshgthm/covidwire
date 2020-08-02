@@ -4,7 +4,7 @@ import debounce from "lodash.debounce";
 import classNames from 'classnames'
 import FeedbackForm from '../components/FeedbackForm.js'
 
-
+import {preventScroll} from './utils.js'
 import {feedFormat,formatPageUrl,orderFeed,addStats,getData} from './FeedUtils.js'
 
 
@@ -76,6 +76,7 @@ function SearchFeed(props){
 		setEndFeed(false)
 
 		if(feedConfig.type==="search"){
+			preventScroll(true)
 			setIsSearching(true)
 		}
 		getData(feedConfig,props.pageVal,lastPage).then(result => {
@@ -92,6 +93,7 @@ function SearchFeed(props){
 
 
 			if(feedConfig.type==='search'){
+				preventScroll(false)
 				setEndFeed(true)
 				setIsSearching(false)
 			}
@@ -114,13 +116,13 @@ function SearchFeed(props){
 		<React.Fragment>
 			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
 			<div className="NewsFeed">
-				<img src={require('../assets/searching.png')} alt="Searching" className={classNames('SearchingImg',{'SearchingImgSel':isSearching})}/>
 				{(feedConfig.type==="search")&&<div className="FeedDesc">{"Search results : "+feedConfig.term}</div>}
 				{feedFormat(feedData,props.langSel,setFeedbackData)}
 			</div>
 			{(!endFeed)&&(feedConfig.type!=='searchs')&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton.png')} alt="Card Skeleton"/>
 				<div className="SkeletonOverlay"></div>
+				<img src={require('../assets/searching.png')} alt="Searching" className={classNames('SearchingImg',{'SearchingImgSel':isSearching})}/>
 			</div>}
 		</React.Fragment>
 	)

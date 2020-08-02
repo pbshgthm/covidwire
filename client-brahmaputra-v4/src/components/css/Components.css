@@ -41,20 +41,21 @@
 	padding-top: 0vw;
 	transition: 1s;
 }
+/* this is a checkpoint --*/
 
 .SearchingImg{
-	width: 0vw;
+	position: absolute;
+	width: 40vw;
 	opacity: 0;
-	transition: opacity 0.5s, width 0.5s 0.5s, margin-bottom 0.5s 0.5s;
-	margin-top: 0vw;
-	margin-bottom: 0vw;
+	transition: opacity 2s;
+	left: 30vw;
+	margin-top: 25vw;
 }
+
 .SearchingImgSel{
-	transition: opacity 0.5s, margin-bottom 0.5s;
+	transition: opacity 2s;
 	opacity: 1;
-	width: 60vw;
-	margin-top: 10vw;
-	margin-bottom: 100vh;
+	index:3;
 }
 .FeedDesc{
 	font-size: 4.5vw;
