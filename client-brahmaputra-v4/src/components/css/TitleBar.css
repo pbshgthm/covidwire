@@ -41,14 +41,12 @@
 .TitleBarIcon{
 	float: right;
 	width: 6vw;
-	margin-top: 2vw;
-	margin-right: 2vw;
+	margin-top: 2.5vw;
+	margin-right: 5vw;
 	opacity: 0.5;
 }
 
-.TitleBarIcon:first-of-type{
-	margin-right: 3vw;
-}
+
 
 .TitleBarSearchPanel{
 
@@ -86,10 +84,10 @@
 	position: absolute;
 }
 .TitleBarSearchBtn{
+	float: right;
 	width: 6vw;
-	vertical-align:middle;
-	padding-bottom: 2vw;
-	margin-left: 0vw;
+	margin-top: 2.5vw;
+	margin-right: 5vw;
 	opacity: 0.5;
 }
 

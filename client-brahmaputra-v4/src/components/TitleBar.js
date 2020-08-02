@@ -85,7 +85,6 @@ function TitleBar(props){
 			<div onClick={()=>scrollToTop()} className="TitleBar">
 			{props.showBack&&<img onClick={()=>{window.history.back()}} src={require('../assets/back.png')} alt="back" className="TitleBack"/>}
 				<div className="TitleBarText">{props.title}</div>
-				<img className={"TitleBarIcon"} src={require('../assets/moon.png')} alt="Dark"/>
 				{props.search&&<img onClick={(e)=>{e.stopPropagation();setShowSearch(true)}} className={"TitleBarIcon"} src={require('../assets/search.png')} alt="Search"/>}
 				{showSearch&&<SearchInterface setNavHide={props.setNavHide} setShowSearch={setShowSearch} setSearchKey={setSearchKey}/>}
 			</div>

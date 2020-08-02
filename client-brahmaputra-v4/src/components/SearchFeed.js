@@ -25,6 +25,7 @@ function SearchFeed(props){
 	const [feedbackData,setFeedbackData]=useState("");
 
 	const [isSearching,setIsSearching]=useState(false)
+	const [noResult,setNoResult]=useState(false)
 
 	useEffect(() => {
     	return () => {
@@ -74,7 +75,7 @@ function SearchFeed(props){
 
 	const fetchFeed = ()=>{
 		setEndFeed(false)
-
+		setNoResult(false)
 		if(feedConfig.type==="search"){
 			preventScroll(true)
 			setIsSearching(true)
@@ -89,8 +90,6 @@ function SearchFeed(props){
 				setFetchReady(true)
 				setLastPage(lastPage+1)
 
-
-
 				if(feedConfig.type==='search'){
 					preventScroll(false)
 					setEndFeed(true)
@@ -101,11 +100,12 @@ function SearchFeed(props){
 					if(feedConfig.type==='feed'){
 						setFetchNow(true)
 					}else{
+						setNoResult(true)
 						setEndFeed(true)
 					}
 				}
 
-			},1000)
+			},2000)
 
 		});
 
@@ -116,11 +116,11 @@ function SearchFeed(props){
 		<React.Fragment>
 			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
 			<div className="NewsFeed">
-				{(feedConfig.type==="search")&&<div className="FeedDesc">{"Search results : "+feedConfig.term}</div>}
-				{feedFormat(feedData,props.langSel,setFeedbackData,{hope:true})}
+				{feedFormat(feedData,props.langSel,setFeedbackData,props.hope)}
+				{noResult&&<img className="NoResult" src={require('../assets/no-result.png')}/>}
 			</div>
 			{(!endFeed)&&<div className="SkeletonHolder">
-				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton-fetch.png')} alt="Card Skeleton"/>
+				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton-'+(feedConfig.type==="search"?"search.png":"fetch.png"))} alt="Card Skeleton"/>
 				<div className="SkeletonOverlay"></div>
 			</div>}
 		</React.Fragment>

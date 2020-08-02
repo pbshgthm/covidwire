@@ -35,8 +35,8 @@ function Hope(props) {
 			<img className="HopeTitle" src={require("../assets/hope-title.png")}/>
 			<div className="HopeBg"></div>
 			<LangSetting defaultLang={langSel} changeLang={setLangSel} hope={true}/>
-			<div className="HopeDesc">Dearly curated with the hope to bring positive new to light</div>
-			{_isMounted.current && <SearchFeed langSel={langSel} pageSize={5} feedConfig={feedConfig}/>}
+			<div className="HopeDesc">Dearly curated with the hope to bring positive news to light</div>
+			{_isMounted.current && <SearchFeed langSel={langSel} pageSize={5} feedConfig={feedConfig} hope={true}/>}
 			<Navbar/>
 		</div>
 	);
