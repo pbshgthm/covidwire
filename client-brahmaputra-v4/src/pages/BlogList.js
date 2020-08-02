@@ -4,7 +4,7 @@ import TitleBar from '../components/TitleBar.js'
 import {scrollToTop} from '../components/utils.js'
 
 import BlogPost from './BlogPost.js'
-
+import Navbar from '../components/Navbar.js'
 
 function BlogList() {
 	return (
@@ -36,20 +36,23 @@ function BlogListPage(props){
 
 
 	return (
-		<div className="FeedPage">
-			<TitleBar title="CovidWire Speaks"/>
-			<div className="BlogListFeed">
-				{blogList.map(x=>(
-					<Link key={x.order} to={"blog/csw"+x.order}>
-						<div  className="BlogListCard">
-							<img className="BlogListImg" src={x.image} alt="BlogImg"/>
-							<div className="BlogListTitle">{x.title}</div>
-							<div className="BlogListAuthors">{x.authors}</div>
-						</div>
-					</Link>
-				))}
+		<React.Fragment>
+			<div className="FeedPage">
+				<TitleBar title="CovidWire Speaks"/>
+				<div className="BlogListFeed">
+					{blogList.map(x=>(
+						<Link key={x.order} to={"blog/csw"+x.order}>
+							<div  className="BlogListCard">
+								<img className="BlogListImg" src={x.image} alt="BlogImg"/>
+								<div className="BlogListTitle">{x.title}</div>
+								<div className="BlogListAuthors">{x.authors}</div>
+							</div>
+						</Link>
+					))}
+				</div>
 			</div>
-		</div>
+			<Navbar/>
+		</React.Fragment>
 	);
 }
 

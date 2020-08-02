@@ -4,6 +4,7 @@ import { Switch,Route,Link } from "react-router-dom";
 import {urlEncode,scrollToTop} from '../components/utils.js'
 import config from '../config.js'
 import Section from './Section.js'
+import Navbar from '../components/Navbar.js'
 
 
 function SectionsList() {
@@ -52,6 +53,7 @@ function SectionsPage(){
 				)}
 			</div>
 			<div className="BottomSpace"></div>
+			<Navbar/>
 		</div>
 	)
 }

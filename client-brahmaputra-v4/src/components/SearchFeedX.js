@@ -4,17 +4,16 @@ import debounce from "lodash.debounce";
 import classNames from 'classnames'
 import FeedbackForm from '../components/FeedbackForm.js'
 
-
-
+import axios from 'axios';
 
 import {feedFormat,formatPageUrl,orderFeed,addStats} from './FeedUtils.js'
 
 
-function Feed(props){
+function SearchFeed(props){
 
 	const _isMounted = useRef(true);
 
-	const [baseUrl,setBaseUrl]=useState(props.baseUrl);
+	const [keyword,setKeyword]=useState(props.keyword);
 	const [feedData,setFeedData]=useState([]);
 
 	const [fetchReady,setFetchReady]=useState(true);
@@ -34,11 +33,10 @@ function Feed(props){
   	},[]);
 
 	useEffect(()=>{
-		setBaseUrl(props.baseUrl)
 		setFeedData([])
 		setLastPage(0)
 		setFetchNow(true)
-	},[props.baseUrl])
+	},[props.keyword])
 
 
 	useEffect(()=>{
@@ -74,34 +72,36 @@ function Feed(props){
 
 	const fetchFeed = ()=>{
 		if(endFeed)return
-		let url="https://covidwire.firebaseio.com/"+baseUrl
-		setFetchReady(false)
 
-		let pageVal=formatPageUrl(lastPage,props.pageSize)
-		if(!pageVal){
-			setEndFeed(true)
-			return;
-		}
-		console.log(url+'.json'+pageVal)
-		fetch(url+'.json'+pageVal)
-			.then(
-				(result)=>result.json()
-			.then(
-				(result)=>{
-					if(_isMounted.current){
-						setFeedData([
-							...feedData,
-							...orderFeed(result)
-						])
-						setFetchReady(true)
-						setLastPage(lastPage+1)
 
-						if(Object.keys(result).length===0){
-							setFetchNow(true)
-						}
-					}
+		console.log(keyword)
+		if(keyword==="")return;
+		axios({
+			method: 'post',
+			url: "https://us-central1-covidwire.cloudfunctions.net/v4_search",
+			data: {
+				"keywords":keyword,
+				"filter":{
+					"key":"*",
+					"type":"*"
 				}
-		))
+			},
+		}).then(result => {
+			console.log(result.data)
+			if(_isMounted.current){
+				setFeedData([
+					...feedData,
+					...orderFeed(result.data)
+				])
+				setFetchReady(true)
+				setLastPage(lastPage+1)
+
+				if(Object.keys(result).length===0){
+					setFetchNow(true)
+				}
+			}
+		});
+
 	}
 
 
@@ -109,7 +109,7 @@ function Feed(props){
 		<React.Fragment>
 			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
 			<div className="NewsFeed">{
-				addStats(props.statsRegion,feedFormat(feedData,props.langSel,setFeedbackData,autoTrans))
+				feedFormat(feedData,props.langSel,setFeedbackData,autoTrans)
 			}</div>
 			{(!endFeed)&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton.png')} alt="Card Skeleton"/>
@@ -120,4 +120,4 @@ function Feed(props){
 
 }
 
-export default Feed;
+export default SearchFeed;

@@ -6,15 +6,18 @@ import FeedbackForm from '../components/FeedbackForm.js'
 
 
 
+import {feedFormat,formatPageUrl,orderFeed,addStats,getData} from './FeedUtils.js'
 
-import {feedFormat,formatPageUrl,orderFeed,addStats} from './FeedUtils.js'
 
 
-function Feed(props){
+
+
+
+function SearchFeed(props){
 
 	const _isMounted = useRef(true);
 
-	const [baseUrl,setBaseUrl]=useState(props.baseUrl);
+	const [feedConfig,setFeedConfig]=useState(props.feedConfig);
 	const [feedData,setFeedData]=useState([]);
 
 	const [fetchReady,setFetchReady]=useState(true);
@@ -25,7 +28,6 @@ function Feed(props){
 
 	const [showFeedback,setShowFeedback]=useState(false);
 	const [feedbackData,setFeedbackData]=useState("");
-	const [autoTrans,setAutoTrans]=useState(true)
 
 	useEffect(() => {
     	return () => {
@@ -34,11 +36,12 @@ function Feed(props){
   	},[]);
 
 	useEffect(()=>{
-		setBaseUrl(props.baseUrl)
+		console.log(props.feedConfig)
+		setFeedConfig(props.feedConfig)
 		setFeedData([])
 		setLastPage(0)
 		setFetchNow(true)
-	},[props.baseUrl])
+	},[props.feedConfig])
 
 
 	useEffect(()=>{
@@ -64,6 +67,7 @@ function Feed(props){
 
 	window.onscroll = debounce(() => {
 		if(endFeed)return
+		if(feedConfig.type==='search')
 		if(!_isMounted.current)return;
 		if (window.innerHeight+document.documentElement.scrollTop+350> 		document.documentElement.offsetHeight
       	){
@@ -73,44 +77,40 @@ function Feed(props){
 
 
 	const fetchFeed = ()=>{
-		if(endFeed)return
-		let url="https://covidwire.firebaseio.com/"+baseUrl
-		setFetchReady(false)
+		setEndFeed(false)
+		getData(feedConfig,props.pageVal,lastPage).then(result => {
 
-		let pageVal=formatPageUrl(lastPage,props.pageSize)
-		if(!pageVal){
-			setEndFeed(true)
-			return;
-		}
-		console.log(url+'.json'+pageVal)
-		fetch(url+'.json'+pageVal)
-			.then(
-				(result)=>result.json()
-			.then(
-				(result)=>{
-					if(_isMounted.current){
-						setFeedData([
-							...feedData,
-							...orderFeed(result)
-						])
-						setFetchReady(true)
-						setLastPage(lastPage+1)
+			setFeedData([
+				...feedData,
+				...result
+			])
+			setFetchReady(true)
+			setLastPage(lastPage+1)
 
-						if(Object.keys(result).length===0){
-							setFetchNow(true)
-						}
-					}
+
+			if(feedConfig.type==='search')setEndFeed(true)
+
+			if(Object.keys(result).length===0){
+				if(feedConfig.type==='feed'){
+					setFetchNow(true)
+				}else{
+					setEndFeed(true)
 				}
-		))
+			}
+
+
+		});
+
 	}
 
 
 	return(
 		<React.Fragment>
 			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
-			<div className="NewsFeed">{
-				addStats(props.statsRegion,feedFormat(feedData,props.langSel,setFeedbackData,autoTrans))
-			}</div>
+			<div className="NewsFeed">
+				<div>{feedConfig.type+' '+feedConfig.term}</div>
+				{feedFormat(feedData,props.langSel,setFeedbackData)}
+			</div>
 			{(!endFeed)&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton.png')} alt="Card Skeleton"/>
 				<div className="SkeletonOverlay"></div>
@@ -120,4 +120,4 @@ function Feed(props){
 
 }
 
-export default Feed;
+export default SearchFeed;

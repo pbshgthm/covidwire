@@ -10,8 +10,6 @@ import BlogList from './pages/BlogList.js'
 import About from './pages/About.js'
 
 
-import Navbar from './components/Navbar.js'
-
 function App() {
 
 	return (
@@ -31,7 +29,6 @@ function App() {
 				CovidWire now has a brand new mobile version with multiple new features. Desktop version will be updated soon.<br/><br/>
 				<a href="https://dev.covidwire.in/" >Click here</a> to continue viewing the previous desktop version.
 			</div>
-			<Navbar/>
 		</Router>
 
   );

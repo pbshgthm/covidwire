@@ -4,7 +4,7 @@ import {urlDecode} from '../components/utils.js'
 import TitleBar from '../components/TitleBar.js'
 import LangSetting from '../components/LangSetting.js'
 import Feed from '../components/Feed.js'
-
+import Navbar from '../components/Navbar.js'
 function regCorr(x){
 	let commonDict={
 		"World":"Global",
@@ -32,11 +32,15 @@ function Section(props) {
   	}, []);
 
 	return (
-		<div className="FeedPage">
-			<TitleBar title={section} showBack={true}/>
-			<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
-			{ _isMounted.current && <Feed baseUrl={"section/"+regCorr(section)} langSel={langSel} pageSize={3} />}
-		</div>
+		<React.Fragment>
+			<div className="FeedPage">
+				<TitleBar title={section} showBack={true}/>
+				<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
+				{ _isMounted.current && <Feed baseUrl={"section/"+regCorr(section)} langSel={langSel} pageSize={3} />}
+			</div>
+			<Navbar/>
+		</React.Fragment>
+
 	);
 }
 

@@ -22,6 +22,8 @@ api_keys=json.load(open('./apis_config.json'))
 db_feed = db.reference('/feed')
 db_section = db.reference('/section')
 db_hope = db.reference('/hope')
+db_index = db.reference('/index')
+db_corpus = db.reference('/corpus')
 
 
 def get_table(base,table_name,offset=False,nofilter=False):
@@ -91,6 +93,9 @@ def format_entry(fields):
 
 def v4_update_db(request):
 
+	index_dict={}
+	corpus_dict={}
+
 	master_table={}
 	for region in meta_data.region_list:
 		print('Pulling ',region)
@@ -117,6 +122,14 @@ def v4_update_db(request):
 			if date in date_dict:date_dict[date][db_fields['hash']]=db_fields
 			else:date_dict[date]={db_fields['hash']:db_fields}
 
+			#save for indexing
+			corpus_dict[db_fields['hash']]={
+				'hash':db_fields['hash'],
+				'headline':db_fields['digests']['English']['headline'],
+				'digest':db_fields['digests']['English']['digest']
+			}
+			index_dict[db_fields['hash']]=db_fields
+
 		for common in meta_data.common_list:
 			for record in master_table[common]:
 				db_fields=format_entry(record['fields'])
@@ -124,6 +137,14 @@ def v4_update_db(request):
 				date=db_fields['time'].split('T')[0]
 				if date in date_dict:date_dict[date][db_fields['hash']]=db_fields
 				else:date_dict[date]={db_fields['hash']:db_fields}
+
+			#save for indexing
+				corpus_dict[db_fields['hash']]={
+					'hash':db_fields['hash'],
+					'headline':db_fields['digests']['English']['headline'],
+					'digest':db_fields['digests']['English']['digest']
+				}
+				index_dict[db_fields['hash']]=db_fields
 
 		db_feed.child(state).set(date_dict)
 
@@ -134,6 +155,7 @@ def v4_update_db(request):
 			date=db_fields['time'].split('T')[0]
 			if date in date_dict:date_dict[date][db_fields['hash']]=db_fields
 			else:date_dict[date]={db_fields['hash']:db_fields}
+
 	db_feed.child('Common').set(date_dict)
 	db_feed.child('India & World').set(date_dict)
 	# FEED FILLING END
@@ -189,6 +211,10 @@ def v4_update_db(request):
 
 
 
+	db_index.set(index_dict)
+	db_corpus.set(corpus_dict)
+	print('ALL OK')
+
 def safe_dict(dict_,key,default=""):
 	if key in dict_:return dict_[key]
 	return default
@@ -199,5 +225,5 @@ def update_table(base,table_name,data):
 
 
 
-#pull_v3('as')
-#gcloud functions deploy v4_update_db --runtime python37 --trigger-http --allow-unauthenticated
+#v4_update_db('as')
+#gcloud functions deploy v4_update_db --runtime python37 --timeout=540s --trigger-http --allow-unauthenticated
