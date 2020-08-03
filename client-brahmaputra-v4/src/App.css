@@ -49,13 +49,13 @@ body {
 
 .SectionCategory{
 	width: 90vw;
-	font-size: 7vw;
+	font-size: 5.5vw;
 	margin: auto;
-	padding-bottom: 2vw;
-	margin-bottom: 3vw;
-	font-family: 'Crimson Text';
-	color: #535353;
-	border-bottom: 1px solid #ACACAC;
+	margin-top: 2vw;
+	margin-bottom: 4vw;
+	font-weight: 700;
+	text-align: center;
+	color: #7C7C7C;
 }
 .SectionHolder{
 	padding-top: 20vw;
@@ -103,6 +103,7 @@ body {
 	width: 100vw;
 	height: 100vh;
 	background-image: url('assets/bg-hope.png');
+	background-size: 100vw;
 }
 
 

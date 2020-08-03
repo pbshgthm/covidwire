@@ -8,6 +8,7 @@ import SectionsList from './pages/SectionsList.js'
 import Hope from './pages/Hope.js'
 import BlogList from './pages/BlogList.js'
 import About from './pages/About.js'
+import Saved from './pages/Saved.js'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
 				<Route path="/home" component={Home}/>
 				<Route path="/hope" component={Hope}/>
 				<Route path="/sections" component={SectionsList}/>
+				<Route path="/saved" component={Saved}/>
 				<Route path="/blog" component={BlogList}/>
 				<Route path="/about" component={About}/>
 			</Switch>

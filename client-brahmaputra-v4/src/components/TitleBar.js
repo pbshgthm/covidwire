@@ -1,5 +1,4 @@
-import React, {useState,useEffect,useRef} from 'react';
-import classNames from 'classnames'
+import React from 'react';
 import './css/TitleBar.css';
 import {scrollToTop} from './utils.js';
 

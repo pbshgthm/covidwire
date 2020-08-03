@@ -32,6 +32,20 @@ function SectionsPage(){
 		<div>
 			<TitleBar title="Sections"/>
 			<div className="SectionHolder">
+				<div className="SectionImageHolder">
+					<Link to={'sections/featured'}>
+						<div className="SectionCard">
+							<img className="SectionImage" src={require('../assets/sections/featured.png')} alt="Featured"/>
+							<div className="SectionName">Featured</div>
+						</div>
+					</Link>
+					<Link to={'/saved'}>
+						<div className="SectionCard">
+							<img className="SectionImage" src={require('../assets/sections/saved.png')} alt="Saved"/>
+							<div className="SectionName">Saved</div>
+						</div>
+					</Link>
+				</div>
 				<div className="SectionCategory">Domains</div>
 				<div className="SectionImageHolder">
 					{config.domain.map(x=>(

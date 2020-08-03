@@ -14,7 +14,6 @@ export const formatDate = (date_str,format="day")=>{
 
 
 export const scrollToTop = (animate=true)=>{
-	console.log('upppp')
 	if(animate){
 		const c = document.documentElement.scrollTop || document.body.scrollTop;
 		if (c > 0) {

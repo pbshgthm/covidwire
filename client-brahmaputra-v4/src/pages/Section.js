@@ -24,12 +24,12 @@ function Section(props) {
 		localStorage.setItem("cwv3-lang1", langSel);
 	},[langSel])
 
-	const [feedConfig,setFeedConfig]=useState({
-		term:'section/'+section,
+	const feedConfig={
+		term:'section/'+regCorr(section),
 		type: 'section',
 		region: section,
 		stats:false
-	})
+	}
 
 	useEffect(() => {
     	return () => {

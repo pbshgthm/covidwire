@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef} from 'react';
 import debounce from "lodash.debounce";
 
-import classNames from 'classnames'
 import FeedbackForm from '../components/FeedbackForm.js'
 
-import {preventScroll} from './utils.js'
-import {feedFormat,formatPageUrl,orderFeed,addStats,getData} from './FeedUtils.js'
+import {preventScroll,scrollToTop} from './utils.js'
+import {feedFormat,getData} from './FeedUtils.js'
 
 
 function SearchFeed(props){
@@ -24,7 +23,6 @@ function SearchFeed(props){
 	const [showFeedback,setShowFeedback]=useState(false);
 	const [feedbackData,setFeedbackData]=useState("");
 
-	const [isSearching,setIsSearching]=useState(false)
 	const [noResult,setNoResult]=useState(false)
 
 	useEffect(() => {
@@ -38,6 +36,8 @@ function SearchFeed(props){
 		setFeedData([])
 		setLastPage(0)
 		setFetchNow(true)
+		scrollToTop(false)
+
 	},[props.feedConfig])
 
 
@@ -78,11 +78,13 @@ function SearchFeed(props){
 		setNoResult(false)
 		if(feedConfig.type==="search"){
 			preventScroll(true)
-			setIsSearching(true)
 		}
-		getData(feedConfig,props.pageSize,lastPage).then(result => {
-
-			setTimeout(()=>{
+		getData(feedConfig,props.pageSize,lastPage).then(response => {
+				let result=response['result']
+				if(!response['status']){
+					setEndFeed(true)
+					return
+				}
 				setFeedData([
 					...feedData,
 					...result
@@ -93,7 +95,6 @@ function SearchFeed(props){
 				if(feedConfig.type==='search'){
 					preventScroll(false)
 					setEndFeed(true)
-					setIsSearching(false)
 				}
 
 				if(Object.keys(result).length===0){
@@ -105,19 +106,17 @@ function SearchFeed(props){
 					}
 				}
 
-			},0)
 
 		});
 
 	}
 
-
 	return(
 		<React.Fragment>
 			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
 			<div className="NewsFeed">
-				{feedFormat(feedData,props.langSel,setFeedbackData,props.hope)}
-				{noResult&&<img className="NoResult" src={require('../assets/no-result.png')}/>}
+				{feedFormat(feedData,props.langSel,setFeedbackData,props.hope,(feedConfig.type==="search"?feedConfig.term:false))}
+				{noResult&&<img className="NoResult" src={require('../assets/no-result.png')} alt="NoResult"/>}
 			</div>
 			{(!endFeed)&&<div className="SkeletonHolder">
 				<img className="NewsCardSkeleton" src={require('../assets/card-skeleton-'+(feedConfig.type==="search"?"search.png":"fetch.png"))} alt="Card Skeleton"/>

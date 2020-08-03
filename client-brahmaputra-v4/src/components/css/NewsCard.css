@@ -25,16 +25,19 @@
 	box-shadow: inset 0px 0px 10px 0px rgba(136, 136, 136, 0.15), 0px 0px 7px rgba(136, 136, 136, 0.3);
 }
 .NewsCardHope{
-	box-shadow: inset 0px 0px 10px 10px rgba(57, 147, 216, 0.1);
-	box-shadow: inset 0px 0px 10px 0px rgba(253, 154, 20, 0.18), 0px 0px 7px rgba(136, 136, 136, 0.3);
-	box-shadow: inset 0px 0px 15px 0px rgba(57, 147, 216, 0.2), 0px 0px 7px rgba(136, 136, 136, 0.3);
+	box-shadow: inset 0px 0px 5px 0px rgba(253, 154, 20, 0.18), 0px 0px 7px rgba(136, 136, 136, 0.3);
 
 }
 .NewsCardHide{
 	display: none;
 }
 
-
+.NewsCardImageFeatured{
+	position: absolute;
+	width: 25vw;
+	right: 5vw;
+	margin-top: -6.5vw;
+}
 .NewsCardRow{
 	padding-left: 4vw;
 	padding-right: 4vw;
@@ -91,6 +94,9 @@
 	word-wrap: break-word;
 	font-weight: 500;
 }
+.NewsCardHeadline span{
+	background-color: #FFEDCB;
+}
 a{
 	text-decoration: none;
 }
@@ -144,6 +150,9 @@ a{
 	font-size: 4vw;
 	margin-bottom: 1.5vw;
 	line-height: 155%;
+}
+.NewsCardBody span{
+	background-color: #FFEDCB;
 }
 
 .NewsCardLang{

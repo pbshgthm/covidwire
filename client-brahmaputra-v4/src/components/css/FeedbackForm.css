@@ -13,7 +13,7 @@
 	width: 100vw;
 	background-color: white;
 	position: fixed;
-	bottom: -100vh;
+	bottom: -150vh;
 	z-index: 6;
 	padding-bottom: 8vw;
 	-webkit-tap-highlight-color: rgba(0,0,0,0);

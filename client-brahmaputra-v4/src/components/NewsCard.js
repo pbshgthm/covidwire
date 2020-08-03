@@ -34,25 +34,18 @@ function FormatShare(cardData,langSel){
 
 
 function NewsCard(props){
-
 	const [langView,setLangView]=useState(false);
 	const [cardExpand,setCardExpand]=useState(false);
 	const [cardShort,setCardShort]=useState(false)
 	const [noImg,setNoImg]=useState(props.cardData.img==="")
 	const [saveCard,setSaveCard]=useState(false)
-	const [defaultLang,setDefaultLang]=useState(props.langSel)
 	const [langSel,setLangSel]=useState(props.langSel)
 
 	useEffect(()=>{
 		setCardShort(props.cardData.form==="Short")
 		setCardExpand(props.cardData.form!=="Short")
 
-		//for no collapsing for indian languages
-		//setCardShort(props.cardData.form==="Short"&&props.cardData.langSel==="English")
-		//setCardExpand(props.cardData.form!=="Short"||props.cardData.langSel!=="English")
-
 		setLangSel(props.langSel)
-		setDefaultLang(props.langSel)
 	},[props])
 
 
@@ -64,6 +57,8 @@ function NewsCard(props){
 		<div className={classNames("NewsCard",{
 			"NewsCardHope":props.hope
 		})}>
+			{/*FEATURED */}
+			{props.cardData.featured&&<img className="NewsCardImageFeatured" alt="Featured" src={require("../assets/featured.png")}/>}
 			{/*Preview Image*/}
 			{props.cardData.img&&<img className="NewsCardImage" alt="" src={props.cardData.img} onError={i => {i.target.style.display='none';setNoImg(true)}}/>}
 
@@ -89,9 +84,7 @@ function NewsCard(props){
 			</div>
 
 			{/*Digest*/}
-			<div className="NewsCardHeadline">
-					{props.cardData.digests[langSel]['headline']}
-			</div>
+			<div className="NewsCardHeadline" dangerouslySetInnerHTML={{__html:formatBody(props.cardData.digests[langSel]['headline'],props.mark)}}></div>
 
 			{/*Source,date*/}
 			<div className="NewsCardRow">
@@ -106,9 +99,7 @@ function NewsCard(props){
 				"NewsCardContentShow":cardExpand
 			})}>
 				{/*Digest*/}
-				<div className="NewsCardBody">
-					{formatBody(props.cardData.digests[langSel]['digest'])}
-				</div>
+				<div className="NewsCardBody" dangerouslySetInnerHTML={{__html:formatBody(props.cardData.digests[langSel]['digest'],props.mark)}}></div>
 				{/*Footer*/}
 				<div className="NewsCardRow">
 					{/*Lang setting*/}
@@ -153,7 +144,10 @@ function NewsCard(props){
 }
 
 
-function formatBody(text){
+
+
+function formatBody(text,mark){
+
 	text=text.trim()
 	text=text.replace(/\n-/g,'\n•');
 	text=text.replace(/> /g,'');
@@ -163,9 +157,12 @@ function formatBody(text){
 	text=text.replace(/\[ ]/g,'');
 
 	if(text[0]==="-")text='•'+text.slice(1)
-	let formatedText=text.split('\n').map((item, i) => (
-    	<span key={'line-'+i}>{item}<br/></span>
-	));
+	let formatedText=text.replace(/\n/g,'<br/>')
+	if(mark){
+		var regEx = new RegExp(mark, "ig");
+		formatedText = formatedText.replace(regEx, "<span>$&</span>");
+	}
+
 	return formatedText
 }
 

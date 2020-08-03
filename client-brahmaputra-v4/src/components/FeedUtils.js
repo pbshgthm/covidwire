@@ -20,7 +20,7 @@ export const formatPageUrl = (pageNum,pageSize=1)=>{
 
 export const orderFeed = (rawFeed)=>{
 	let orderedFeed=[]
-
+	console.log(rawFeed)
 	function regOrder(reg){
 		var regionOrder={
 			'Global':2,
@@ -46,13 +46,13 @@ export const orderFeed = (rawFeed)=>{
 }
 
 
-export const feedFormat = (feedData,langSel,setFeedbackData,hope=false)=>{
+export const feedFormat = (feedData,langSel,setFeedbackData,hope=false,mark=false)=>{
 	let feedList=[]
 	feedData.forEach(dayFeed=>{
 		var dayCards=[];
 		for(var i=0;i<dayFeed[1].length;i++){
-			var cardData=dayFeed[1][i][1]
-			dayCards.push(<NewsCard hope={hope} key={cardData.hash} cardData={cardData} langSel={langSel} setFeedbackData={setFeedbackData}/>)
+			var cardData=dayFeed[1][i][1];
+			dayCards.push(<NewsCard mark={mark} hope={hope} key={cardData.hash} cardData={cardData} langSel={langSel} setFeedbackData={setFeedbackData}/>)
 		}
 		if(dayCards.length>0){
 			feedList.push(<div className="FeedDateBox" key={dayFeed[0]}>{formatDate(dayFeed[0])}</div>)
@@ -79,6 +79,10 @@ export const getData=(feedConfig,pageSize=2,lastPage=0)=>{
 	console.log(pageSize,lastPage)
 	if(feedConfig.type==="search"){
 		console.log('searching '+feedConfig.term)
+		let region='Global National';
+		if(feedConfig.region!=="India & World"){
+			region+=feedConfig.region
+		}
 		return axios({
 			method: 'POST',
 			url: "https://us-central1-covidwire.cloudfunctions.net/v4_search",
@@ -86,14 +90,14 @@ export const getData=(feedConfig,pageSize=2,lastPage=0)=>{
 				"keywords":feedConfig.term,
 				"filter":{
 					"key":"region",
-					"value":feedConfig.region
+					"value":region
 				}
 			}
 		}).then(result => {
 			if(result.data.status==="OK"){
-				return orderFeed(result.data.result)
+				return {'result':orderFeed(result.data.result),'allOK':true}
 			}else{
-				return []
+				return {'result':[],'status':false}
 			}
 
 		});
@@ -107,9 +111,12 @@ export const getData=(feedConfig,pageSize=2,lastPage=0)=>{
 						(result)=>result.json()
 					.then(
 						(result)=>{
-							return orderFeed(result)
+							return {'result':orderFeed(result),'status':true}
 						}
-					))
+					)).catch(function(error) {
+							console.log('404')
+    						return {'result':[],'status':false}
+  					});
 
 	}
 

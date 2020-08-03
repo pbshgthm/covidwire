@@ -41,7 +41,7 @@
 
 .PopupMenu{
 	position: fixed;
-	bottom: -100vh;
+	bottom: -150vh;
 	z-index: 6;
 	width: 100vw;
 	background-color: #ffffff;

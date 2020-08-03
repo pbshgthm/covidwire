@@ -1,18 +1,16 @@
 import React, {useState,useEffect,useRef} from 'react';
-import classNames from 'classnames'
 import './css/TitleBar.css';
 import {scrollToTop} from './utils.js';
 
 
 function SearchInterface(props){
 	const searchInput = useRef(null);
-	const [searchFilter,setSearchFilter]=useState('Keyword');
 	const [placeHolder,setPlaceHolder]=useState('Search...')
 	const [keyWord,setKeyWord]=useState('')
-
+	const [lastSearch,setLastSearch]=useState('')
 	const handleKeyDown = (event) => {
     	if (event.key === 'Enter') {
-			hitSearch();
+			handleSumbit()
     	}
   	}
 
@@ -25,9 +23,16 @@ function SearchInterface(props){
 		else{setPlaceHolder('')}
 	},[keyWord])
 
-	function hitSearch(){
-		searchInput.current.blur()
-		props.setSearchKey(keyWord)
+
+
+	function handleSumbit(){
+		if(lastSearch===keyWord){
+			searchInput.current.focus()
+		}else{
+			searchInput.current.blur()
+			props.setSearchKey(keyWord.toLowerCase())
+			setLastSearch(keyWord.toLowerCase())
+		}
 	}
 
 	return(
@@ -37,10 +42,10 @@ function SearchInterface(props){
 
 				<input ref={searchInput} type="text" className="TitleBarInput" onBlur={()=>props.setNavHide(false)}
 				onFocus={()=>props.setNavHide(true)}
-				onInput={(e)=>setKeyWord(e.target.value)}
+				onInput={(e)=>setKeyWord(e.target.value.toLowerCase())}
 				onKeyDown={handleKeyDown}/>
 
-				<img className={"TitleBarSearchBtn"} src={require('../assets/search.png')} alt="Search" onClick={()=>hitSearch()}/>
+				<img className={"TitleBarSearchBtn"} src={require('../assets/search.png')} alt="Search" onClick={()=>handleSumbit()}/>
 				<div className="SearchPlaceholder">{placeHolder}</div>
 			</div>
 		</React.Fragment>
@@ -68,8 +73,9 @@ function TitleBar(props){
 
 	useEffect(()=>{
 		if(showSearch)return;
+		if(searchKey==='')return;
 		setSearchKey('')
-		if(props.feedConfig.region=="Hope")return
+		if(props.feedConfig.region==="Hope")return
 		props.setFeedConfig({
 			term:'feed/'+props.feedConfig.region,
 			type:'feed',
@@ -82,7 +88,7 @@ function TitleBar(props){
 
 	return(
 		<React.Fragment>
-			<div onClick={()=>scrollToTop()} className="TitleBar">
+			<div onClick={()=>{if(!showSearch)scrollToTop()}} className="TitleBar">
 			{props.showBack&&<img onClick={()=>{window.history.back()}} src={require('../assets/back.png')} alt="back" className="TitleBack"/>}
 				<div className="TitleBarText">{props.title}</div>
 				{props.search&&<img onClick={(e)=>{e.stopPropagation();setShowSearch(true)}} className={"TitleBarIcon"} src={require('../assets/search.png')} alt="Search"/>}

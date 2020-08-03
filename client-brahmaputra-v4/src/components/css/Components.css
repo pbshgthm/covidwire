@@ -71,6 +71,7 @@
 	position: static;
 	padding: 0vw;
 	height: 120vw;
+	margin-top: -3vw;
 }
 .SkeletonOverlay{
 	position: absolute;
@@ -78,7 +79,7 @@
 	margin-left: 3vw;
 	height: 60vw;
 	margin-top: 60vw;
-	background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 30%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+	background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 30%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
 	animation: load 1s ease-out infinite;
 	background-repeat: no-repeat;
 	background-position: -20vw 0vw;
