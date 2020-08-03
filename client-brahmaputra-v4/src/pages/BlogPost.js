@@ -26,7 +26,7 @@ function BlogPost(props){
 	return (
 		<React.Fragment>
 			<div className="FeedPage">
-				<TitleBar title="CovidWire Speaks" showBack={true}/>
+				<TitleBar title="CovidWire Speaks" showBack={true} backPath={'/blog'}/>
 				{blogData&&<div className="BlogPostPage">
 					<div className="BlogPostTitle">{blogData.title}</div>
 					<div className="BlogPostAuthors">{blogData.authors}</div>

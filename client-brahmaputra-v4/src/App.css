@@ -57,6 +57,9 @@ body {
 	color: #535353;
 	border-bottom: 1px solid #ACACAC;
 }
+.SectionHolder{
+	padding-top: 20vw;
+}
 
 .SectionImageHolder{
 	padding: 3vw;
@@ -103,7 +106,7 @@ body {
 }
 
 
-.HopeTitle{
+.HopeHeader{
 	margin-left: 20vw;
 	margin-top: 5vw;
 	width: 60vw;
@@ -111,6 +114,32 @@ body {
 	margin-bottom: -17vw;
 }
 
+.HopeTitlebar{
+	z-index: 5;
+	position: fixed;
+	top: -20vw;
+	width: 100vw;
+	background-color: #ffffff;
+	box-shadow: 0px 1px 2px rgba(198, 198, 198, 0.3);
+	display: block;
+	color: #565656;
+	padding-top: 1.5vw;
+	padding-bottom: 1.5vw;
+	transition: 0.5s;
+	height: 10vw;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+}
+.HopeTitlebarSel{
+	top: 0vw;
+}
+.HopeTitlebarImg{
+	margin-left: 40vw;
+	width: 20vw;
+}
 .HopeDesc{
 	font-family: 'Crimson Text';
 	margin-top: 6vw;

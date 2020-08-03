@@ -1,8 +1,7 @@
 import React, { useState, useEffect} from 'react';
-import TitleBar from '../components/TitleBar.js'
+import TitleSearchBar from '../components/TitleSearchBar.js'
 import RegionSetting from '../components/RegionSetting.js'
 import LangSetting from '../components/LangSetting.js'
-import Feed from '../components/Feed.js'
 import SearchFeed from '../components/SearchFeed.js'
 import Navbar from '../components/Navbar.js'
 
@@ -52,14 +51,10 @@ function Home(props){
 
 	return (
 		<div className="FeedPage">
-			<TitleBar setNavHide={setNavHide} search={true} title="CovidWire" setFeedConfig={setFeedConfig} feedConfig={feedConfig}/>
+			<TitleSearchBar setNavHide={setNavHide} search={true} title="CovidWire" setFeedConfig={setFeedConfig} feedConfig={feedConfig}/>
 			<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
 			<RegionSetting defaultState={stateSel} changeState={setStateSel}/>
-			{
-				//<Feed baseUrl={"feed/"+stateSel} langSel={langSel} pageSize={1} statsRegion={stateSel}/>
-			}
 			<SearchFeed langSel={langSel} pageSize={1} feedConfig={feedConfig}/>
-
 			{!navHide&&<Navbar/>}
 		</div>
 	);

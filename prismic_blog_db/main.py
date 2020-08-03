@@ -92,12 +92,12 @@ def v4_pull_blog(req):
 		blog['author_bio']=format_body(post['data']['author_bio'])
 		blog['link']=format_links(post['data']['links'])
 		blog_content['csw'+str(blog['order'])]=blog
-
+		print(blog['image'])
 	db_blog.child('list').set(blog_meta)
 	db_blog.child('content').set(blog_content)
 
 
 
 
-#pull_blog('pp')
+#v4_pull_blog('pp')
 #gcloud functions deploy v4_pull_blog --runtime python37 --trigger-http --allow-unauthenticated

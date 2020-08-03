@@ -97,7 +97,7 @@ function SearchFeed(props){
 				}
 
 				if(Object.keys(result).length===0){
-					if(feedConfig.type==='feed'){
+					if(feedConfig.type==='feed'||feedConfig.type==='section'){
 						setFetchNow(true)
 					}else{
 						setNoResult(true)
@@ -105,7 +105,7 @@ function SearchFeed(props){
 					}
 				}
 
-			},2000)
+			},0)
 
 		});
 

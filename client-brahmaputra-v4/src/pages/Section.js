@@ -3,7 +3,7 @@ import {urlDecode} from '../components/utils.js'
 
 import TitleBar from '../components/TitleBar.js'
 import LangSetting from '../components/LangSetting.js'
-import Feed from '../components/Feed.js'
+import SearchFeed from '../components/SearchFeed.js'
 import Navbar from '../components/Navbar.js'
 function regCorr(x){
 	let commonDict={
@@ -24,6 +24,12 @@ function Section(props) {
 		localStorage.setItem("cwv3-lang1", langSel);
 	},[langSel])
 
+	const [feedConfig,setFeedConfig]=useState({
+		term:'section/'+section,
+		type: 'section',
+		region: section,
+		stats:false
+	})
 
 	useEffect(() => {
     	return () => {
@@ -34,9 +40,9 @@ function Section(props) {
 	return (
 		<React.Fragment>
 			<div className="FeedPage">
-				<TitleBar title={section} showBack={true}/>
+				<TitleBar title={section} showBack={true} backPath={'/sections'}/>
 				<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
-				{ _isMounted.current && <Feed baseUrl={"section/"+regCorr(section)} langSel={langSel} pageSize={3} />}
+				{ _isMounted.current && <SearchFeed langSel={langSel} pageSize={5} feedConfig={feedConfig}/>}
 			</div>
 			<Navbar/>
 		</React.Fragment>
