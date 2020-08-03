@@ -82,7 +82,7 @@ function About(){
 					Rashi Gupta<br/>
 					Saumya Oberoi<br/>
 					Divya Padmanabhan<br/>
-					Nishita Sudhir
+					Nishita Nirmal
 				</div>
 			</div>
 			<div className="AboutTeamHolder">
@@ -160,7 +160,7 @@ function About(){
 				<div className="AboutTeamName">Content Maharashtra</div>
 				<div className="AboutTeamMembers">
 					Janhavi Borkar<br/>
-					Rohan Jhunja<br/><br/>
+					Rohan Jhunja<br/>
 					Devashree Juvekar<br/>
 					Muneeb Mohiuddin<br/>
 					Prajakta Dharmadhikari<br/>
