@@ -96,10 +96,9 @@ export const getData=(feedConfig,pageSize=2,lastPage=0)=>{
 			if(result.data.status==="OK"){
 				return {'result':orderFeed(result.data.result),'status':true}
 			}else{
-				return {'result':[],'status':false}
+				return {'result':[],'status':true}
 			}
-
-		});
+	})
 	}else{
 		console.log(feedConfig)
 		let url="https://covidwire.firebaseio.com/"+feedConfig.term
