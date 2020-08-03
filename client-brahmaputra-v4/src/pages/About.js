@@ -2,6 +2,8 @@ import React,{useState, useEffect, useRef} from 'react';
 import classNames from 'classnames';
 
 import TitleBar from '../components/TitleBar.js';
+import Navbar from '../components/Navbar.js';
+
 import {scrollToTop} from '../components/utils.js';
 
 function About(){
@@ -15,15 +17,14 @@ function About(){
 	useEffect(()=>{
 		if (isInitialMount.current) {
      		isInitialMount.current = false;
-			scrollToTop();
+			scrollToTop(false);
   		}
 	},[])
 
 	return(
 		<React.Fragment>
-
+			<Navbar/>
 			<TitleBar title="About"/>
-			<div className="PageTitle">About Us</div>
 			<div className="AboutText">
 				Hello! We are CovidWire. Our platform is built and powered by student volunteers from India to bring together authentic, verified, factful information about Covid-19 pandemic and provide it in an easy to read and share format, in multiple regional languages.
 			</div>

@@ -5,7 +5,18 @@ import FeedbackForm from '../components/FeedbackForm.js'
 
 import {preventScroll,scrollToTop} from './utils.js'
 import {feedFormat,getData} from './FeedUtils.js'
+import StatsCard from './StatsCard'
 
+
+
+function addStats(statsRegion,feedCards){
+ 		if(feedCards.length===0)return feedCards;
+ 		let final=[feedCards[0]];
+ 		if(statsRegion){
+ 			final=final.concat([<StatsCard key="stats" region={statsRegion}/>])
+ 		}
+ 		return final.concat(feedCards.slice(1))
+}
 
 function SearchFeed(props){
 
@@ -115,7 +126,7 @@ function SearchFeed(props){
 		<React.Fragment>
 			<FeedbackForm cardData={feedbackData} showFeedback={showFeedback} setShowFeedback={setShowFeedback}/>
 			<div className="NewsFeed">
-				{feedFormat(feedData,props.langSel,setFeedbackData,props.hope,(feedConfig.type==="search"?feedConfig.term:false))}
+				{props.feedConfig.stats?addStats(props.feedConfig.region,feedFormat(feedData,props.langSel,setFeedbackData,props.hope,(feedConfig.type==="search"?feedConfig.term:false))):feedFormat(feedData,props.langSel,setFeedbackData,props.hope,(feedConfig.type==="search"?feedConfig.term:false))}
 				{noResult&&<img className="NoResult" src={require('../assets/no-result.png')} alt="NoResult"/>}
 			</div>
 			{(!endFeed)&&<div className="SkeletonHolder">

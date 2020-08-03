@@ -36,7 +36,7 @@ function Home(props){
 				term:'feed/'+stateSel,
 				type:'feed',
 				region:stateSel,
-				stats:false
+				stats:true
 			})
 		}
 		else{

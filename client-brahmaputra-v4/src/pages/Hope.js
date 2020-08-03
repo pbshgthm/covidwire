@@ -13,16 +13,15 @@ function Hope(props) {
 	const _isMounted = useRef(true);
 	const [showTitle,setShowTitle]=useState(false)
 
-	const feedConfig={
+	const [feedConfig,setFeedCOnfig]=useState({
 		term:'hope',
 		type: 'feed',
 		region: 'Hope',
 		stats:false
-	}
+	})
 
 	useState(()=>{
 		scrollToTop(false)
-
 	},[])
 
 	useEffect(()=>{
@@ -40,8 +39,8 @@ function Hope(props) {
 		if(!_isMounted.current)return;
 		if (document.documentElement.scrollTop>150 ){
 		   setShowTitle(true)
-	   }
-	   else{
+	   	}
+	   	else{
 		   setShowTitle(false)
 	   }
 	});

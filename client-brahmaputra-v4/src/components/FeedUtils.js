@@ -20,7 +20,6 @@ export const formatPageUrl = (pageNum,pageSize=1)=>{
 
 export const orderFeed = (rawFeed)=>{
 	let orderedFeed=[]
-	console.log(rawFeed)
 	function regOrder(reg){
 		var regionOrder={
 			'Global':2,
@@ -95,7 +94,7 @@ export const getData=(feedConfig,pageSize=2,lastPage=0)=>{
 			}
 		}).then(result => {
 			if(result.data.status==="OK"){
-				return {'result':orderFeed(result.data.result),'allOK':true}
+				return {'result':orderFeed(result.data.result),'status':true}
 			}else{
 				return {'result':[],'status':false}
 			}
