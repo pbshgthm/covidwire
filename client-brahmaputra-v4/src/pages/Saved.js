@@ -9,6 +9,7 @@ import {scrollToTop} from '../components/utils.js'
 import {feedFormat,orderFeed} from '../components/FeedUtils.js'
 import {getSaved} from '../components/utils.js'
 
+
 function Saved(props) {
 	let defaultLang=(localStorage.getItem("cwv3-lang1")==null)?'English':localStorage.getItem("cwv3-lang1");
 
@@ -18,7 +19,7 @@ function Saved(props) {
 	const [showFeedback,setShowFeedback]=useState(false);
 	const [feedbackData,setFeedbackData]=useState("");
 
-	const [feedData,setFeedData]=useState({})
+	const [feedData,setFeedData]=useState([])
 	const [readReady,setReadReady]=useState(false)
 
 	useState(()=>{
@@ -35,7 +36,6 @@ function Saved(props) {
 			}
 		});
 		setFeedData(orderFeed(dateDict))
-		console.log(orderFeed(dateDict))
 		setReadReady(true)
 
 	},[])
@@ -60,6 +60,9 @@ function Saved(props) {
 				<div className="NewsFeed">
 					{readReady&&feedFormat(feedData,langSel,setFeedbackData)}
 				</div>
+				{
+					(feedData.length===0)&&<img className="NoSave" src={require("../assets/no-save.png")} alt="No save"/>
+				}
 				<Navbar/>
 			</div>
 		</React.Fragment>

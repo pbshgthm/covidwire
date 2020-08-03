@@ -42,6 +42,7 @@ function Section(props) {
 			<div className="FeedPage">
 				<TitleBar title={section} showBack={true} backPath={'/sections'}/>
 				<LangSetting defaultLang={langSel} changeLang={setLangSel}/>
+				{<div className="FeaturedDesc">A handpicked collection of our favorite articles!</div>}
 				{ _isMounted.current && <SearchFeed langSel={langSel} pageSize={5} feedConfig={feedConfig}/>}
 			</div>
 			<Navbar/>

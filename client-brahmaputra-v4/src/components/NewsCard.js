@@ -26,7 +26,7 @@ function FormatShare(cardData,langSel){
 	msg=msg+"*"+cardData.digests[langSel]['headline'].trim()+'*  %0A%0A';
 	msg=msg+'_'+formatDate(cardData.time)+'  |  '+cardData.src+'_ %0A%0A';
 	msg=msg+cardData.digests[langSel]['digest']+'%0A%0A';;
-	msg=msg+"*Shared from https://covidwire.in* %0AAuthentic, verified and factful information about Covid-19 pandemic, in an easy to read and share format, in multiple regional languages.%0A%0A";
+	msg=msg+"*Shared from https://covidwire.in* %0AA volunteer-driven platform bringing you wide-ranging news snippets on Covid-19 from prominent media of India and the world in multiple languages.%0A%0A";
 	msg=msg+"Source : covidwire.in/s/"+cardData.hash;
 
 	return msg

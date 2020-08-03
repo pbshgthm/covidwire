@@ -40,6 +40,8 @@ function BlogListPage(props){
 			<div className="FeedPage">
 				<TitleBar title="CovidWire Speaks"/>
 				<div className="BlogListFeed">
+					<div className="BlogDesc">A collection of analysis and stories from our community</div>
+					<div className="BlogDisclaimer">*inclusive of the author's perspectives and biases.</div>
 					{blogList.map(x=>(
 						<Link key={x.order} to={"blog/csw"+x.order}>
 							<div  className="BlogListCard">

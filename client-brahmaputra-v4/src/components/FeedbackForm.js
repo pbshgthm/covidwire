@@ -8,17 +8,19 @@ import './css/FeedbackForm.css'
 function FeedbackForm(props){
 
 	const feedbackOpt=[
-		'Bad news selection',
-		'Inaccurate summary',
+		'Love this piece!',
 		'Translation error',
-		'No issues, well done!'
-	]
+		'Inaccurate summary',
+		'Curation could be better'
+	];
 
 	const [feedbackSel,setFeedbackSel]=useState("")
 
 	useEffect(()=>{
 		setFeedbackSel("")
 	},[props.showFeedback])
+
+
 
 	function sendFormData(){
 		if(feedbackSel==="")return;
@@ -39,13 +41,11 @@ function FeedbackForm(props){
 
   	return (
 		<React.Fragment>
-			{props.showFeedback&&<div className="ScreenBlock" onClick={()=>"props.setVisibility(false)"}></div>}
+			{props.showFeedback&&<div className="ScreenBlock" onClick={()=>props.setShowFeedback(false)}></div>}
 			<div className={classNames("FeedbackForm",{
 				"FeedbackFormSel":props.showFeedback
 			})}>
-				<div className="FeedbackDesc">Tell us what went wrong about
-					<div className="FeedbackHeadline">{'"'+props.cardData.headline+'"'}</div>
-				</div>
+				<div className="FeedbackDesc">Tell us your feedback</div>
 				<div className="FeedbackOptions">
 					{feedbackOpt.map(x=>(
 						<div key={x} className={classNames("FeedbackOpt",

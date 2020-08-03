@@ -9,7 +9,17 @@ function formatNum(num){
 	return num.replace(/(\d)(?=(\d\d)+\d$)/g, "$1,");
 }
 
+function statsShareText(statsRegion,statsData){
+	var total=statsData.total.recovered+statsData.total.active+statsData.total.deceased;
+	let msg="whatsapp://send?text=";
 
+	msg=msg+"*Covid19 Numbers - "+statsRegion+"* %0A%0A";
+	msg=msg+'_'+formatDate(statsData.date)+"_ %0A%0AConfirmed  : *%2B"+formatNum(statsData.today.confirmed)+"* %0ARecovered  : *%2B"+formatNum(statsData.today.recovered)+"* %0ADeceased   : *%2B"+formatNum(statsData.today.deceased)+"* %0A%0A*Total* %0ARecovered  : *"+formatNum(statsData.total.recovered)+"* %0AActive          : *"+formatNum(statsData.total.active)+"* %0ADeceased   : *"+formatNum(statsData.total.deceased)+"* %0A%0ARecovery Rate : *"
+
+	msg=msg+Math.round(100*statsData.total.recovered/total)+"%* %0A%0A*Shared from https://covidwire.in* %0AA volunteer-driven platform bringing you wide-ranging news snippets on Covid-19 from prominent media of India and the world in multiple languages.%0A%0ASource : covid19india.org"
+
+	return msg
+}
 
 function StatsChart(props){
 	var total=props.data.recovered+props.data.active+props.data.deceased;
@@ -93,7 +103,9 @@ function StatsCard(props){
 				<div className="StatsCardSource">
 					<a target="_blank" rel="noopener noreferrer" href="https://covid19india.org">https://covid19india.org</a>
 				</div>
-				<img className="StatsCardShare" src={require("../assets/whatsapp.png")} alt="Share"/>
+				<a href={statsShareText(statsRegion,statsData)}>
+					<img className="StatsCardShare" src={require("../assets/whatsapp.png")} alt="Share"/>
+				</a>
 			</div>
 		</div>
 	)

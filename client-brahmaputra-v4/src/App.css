@@ -53,7 +53,7 @@ body {
 	margin: auto;
 	margin-top: 2vw;
 	margin-bottom: 4vw;
-	font-weight: 700;
+	font-weight: 600;
 	text-align: center;
 	color: #7C7C7C;
 }
@@ -91,6 +91,17 @@ body {
 	background-color: #787878;
 	border-radius: 1.5vw;
 }
+
+.FeaturedDesc{
+	font-size: 5vw;
+	font-family: 'Crimson Text';
+	width: 70vw;
+	margin-left: 15vw;
+	text-align: center;
+	margin-top: 7vw;
+	color: #6F6F6F;
+}
+
 .BottomSpace{
 	height: 20vw;
 }
@@ -248,50 +259,62 @@ body {
 	margin-bottom: 4vw;
 	margin-top: 20vw;
 }
-.AboutSectionHead{
+.AboutShowMore{
+	color: #4D4D4D;
 	width: 90vw;
 	margin: 0 auto;
-	color : #3F3D56;
-	font-size: 4.5vw;
-	margin-bottom: 3vw;
-	font-weight: 600;
+	font-weight: 700;
+	font-size: 3.5vw;
+	color: #9A9A9A;
 }
-.AboutSectionBody{
+
+.AboutCollapsed{
+	max-height: 0;
+	overflow-y: hidden;
+	transition: 0.5s;
+}
+.AboutCollapsedSel{
+	max-height:200vh;
+
+}
+.AboutSubhead{
+	color: #4D4D4D;
+	width: 90vw;
+	margin: 0 auto;
+	font-weight: 700;
+	font-size: 4vw;
+}
+.AboutTextMore{
 	color: #4D4D4D;
 	width: 90vw;
 	margin: 0 auto;
 	font-size: 4vw;
-	max-height: 0vh;
-	overflow-y: hidden;
-	transition: 0.5s;
-}
-.AboutSectionBodyShow{
-	margin-bottom: 3vw;
-	max-height: 100vh;
-	transition: 0.5s;
-}
-.AboutShowBtn{
-	padding-top: 1vw;
-	vertical-align: top;
-	width: 3vw;
+	margin-bottom: 4vw;
+	margin-top: 3vw;
 }
 .AboutSayHi{
-	margin-top: 5vw;
-	margin-left: 5vw;
+	width: 80vw;
+	text-align: center;
+	margin-top: 10vw;
+	margin-left: 10vw;
 	font-size: 6vw;
 	color : #3F3D56;
-	font-family: 'Crimson Text'
+	font-family: 'Crimson Text';
 }
+
 .AboutEmail{
+	width: 80vw;
+	text-align: center;
 	margin-top: 2vw;
-	margin-left: 5vw;
+	margin-left: 10vw;
 	font-size: 4.5vw;
 	color: #4D4D4D;
 }
 .AboutContactPane{
-	margin-top: 3vw;
-	margin-left: 5vw;
 	width: 80vw;
+	text-align: center;
+	margin-top: 3vw;
+	margin-left: 10vw;
 	margin-bottom: 10vw;
 }
 .AboutSubHead{
@@ -357,7 +380,7 @@ body {
 
 /*-- BLOGLIST START----*/
 .BlogListFeed{
-	padding-top: 20vw;
+	padding-top: 17vw;
 }
 .BlogListCard{
 	background-color: #ffffff;
@@ -391,6 +414,23 @@ body {
 	color: #A6A6A6;
 	font-weight: 700;
 	margin-left: 5vw;
+}
+
+.BlogDesc{
+	width: 90vw;
+	font-family: 'Crimson Text';
+	font-size: 6vw;
+	margin: 0 auto;
+	text-align: center;
+	margin-bottom: 5vw;
+	color: #6F6F6F;
+}
+
+.BlogDisclaimer{
+	margin: auto;
+	text-align: center;
+	color: #8E8E8E;
+	margin-bottom: 4vw;
 }
 
 /*-- BLOGLIST END----*/
@@ -491,4 +531,10 @@ body {
 	  color: #888888;
 
   }
+}
+
+.NoSave{
+	width: 90vw;
+	margin-top: 10vw;
+	margin-left: 5vw;
 }

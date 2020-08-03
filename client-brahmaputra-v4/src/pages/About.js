@@ -10,9 +10,8 @@ function About(){
 
 	const isInitialMount = useRef(true);
 
-	const [showBody1,setShowBody1]=useState(false)
-	const [showBody2,setShowBody2]=useState(false)
-	const [showBody3,setShowBody3]=useState(false)
+	const [showMore,setShowMore]=useState(false)
+
 
 	useEffect(()=>{
 		if (isInitialMount.current) {
@@ -26,34 +25,21 @@ function About(){
 			<Navbar/>
 			<TitleBar title="About"/>
 			<div className="AboutText">
-				Hello! We are CovidWire. Our platform is built and powered by student volunteers from India to bring together authentic, verified, factful information about Covid-19 pandemic and provide it in an easy to read and share format, in multiple regional languages.
+				Hello!
+				We are CovidWire, a volunteer-driven platform bringing you wide-ranging news snippets on Covid-19 pandemic from prominent media of India and the world in multiple languages. It runs on the volunteer efforts of 100+ individuals – students, doctors, lawyers, engineers, researcher analysts, homemakers, designers, etc working in their free time.
 			</div>
-			<div className="AboutSectionHead" onClick={()=>setShowBody1(!showBody1)}>
-				<img className="AboutShowBtn" src={require("../assets/dropdown.png")} alt=""/> Why CovidWire</div>
-			<div className={classNames("AboutSectionBody",{
-				"AboutSectionBodyShow":showBody1
-			})}>Covid-19 pandemic is causing massive devastation to healthcare systems, employment, economies, and ultimately, lives. These are extraordinary times, where foundations of society as we know them, are going through a profound transformation. Especially in times like these, data and information becomes extremely powerful. It is both important to stay informed and avoid being misinformed or spreading misinformation.
-			<br/><br/>
-			There are lots of media platforms that cover the pandemic already, but in spite of all these in place, we felt that data and information remain in complex and inaccessible formats for a large section of Indian public, creating a gap between those who can access and consume this information and those who cannot. With CovidWire, we aim to bridge this gap.
+			<div className={classNames("AboutCollapsed",{"AboutCollapsedSel":showMore})}>
+				<div className="AboutSubhead">Why CovidWire</div>
+				<div className="AboutTextMore">
+					With human societies going through profound transformation, this is a unique moment in global history, one that will possibly be remembered as pre and post-covid times. In such a scenario, data and information becomes extremely powerful. There are lots of media platforms that cover the pandemic already, but in spite of all these in place, we felt that data and information remain in complex and inaccessible formats for a large section of the Indian public, creating a gap between those who can access and consume this information and those who cannot.The driving force behind CovidWire is to bridge India’s information gap and fight the misinformation epidemic on social media platforms surrounding COVID-19.
+				</div>
+				<div className="AboutSubhead">What We Do</div>
+				<div className="AboutTextMore">
+					At CovidWire, news gathered from 85+ global, national and local media platforms are curated into various domains like Society, Politics, Administration, Sports, Environment, Legal, etc. A pandemic is more than just the virus; we ensure our curation captures the impact of Covid-19 holistically, with a special focus on positive and hopeful news amid world-wide gloom. We believe there are pockets of hope - in individual stories of survival or in institutional/national stories of fighting back without losing a single life. It is important these are highlighted.<br/>
+					Once curated, each news article is then digested into short, easy-to-read and shareable snippets. This makes it easier for those who do no have the time or inclination to scour through lengthy articles on a daily basis. Each digest is then translated into various languages, making CovidWire inclusive of millions of non-English speaking Indian populations.
+				</div>
 			</div>
-			<div className="AboutSectionHead" onClick={()=>setShowBody2(!showBody2)}>
-				<img className="AboutShowBtn" src={require("../assets/dropdown.png")} alt=""/> What we do</div>
-			<div className={classNames("AboutSectionBody",{
-				"AboutSectionBodyShow":showBody2
-			})}>
-			At CovidWire, news gathered from a wide selection of media platforms, ranging from local to global are curated and organised into various domains like Social, Political, Environment, Legal, etc. Pandemic is more than just the virus, hence we ensure that our news curation reflects on the impact of Covid-19 pandemic comprehensively, with a special focus on positive and hopeful news.
-			<br/><br/>
-			Each news article is then digested into short, easy to read and share snippets. This makes it easier for those who do no have the time or inclination towards scouring through lengthy articles to update themselves.
-			<br/><br/>
-			Each digest is then translated into various Indian regional languages, making CovidWire inclusive of a large number of non-English speaking Indian population.
-			</div>
-			<div className="AboutSectionHead" onClick={()=>setShowBody3(!showBody3)}>
-				<img className="AboutShowBtn" src={require("../assets/dropdown.png")} alt=""/> Why CovidWire needs you</div>
-			<div className={classNames("AboutSectionBody",{
-				"AboutSectionBodyShow":showBody3
-			})}>
-			We are a student volunteer powered platform that fully relies on community for our betterment. The aim is to make this platform fully crowdsourced as we progress.
-			</div>
+			<div className="AboutShowMore" onClick={()=>setShowMore(!showMore)}>{showMore?"Hide":"Read more"}</div>
 			<div className="AboutSayHi">Say Hi!</div>
 			<div className="AboutEmail">hello@covidwire.in</div>
 			<div className="AboutContactPane">
@@ -67,14 +53,8 @@ function About(){
 				<a href="https://covidwire.in/s/facebook" target="_blank" rel="noopener noreferrer">
 					<img className="SupportShareIcons" src={require('../assets/facebook.png')} alt="CovidWire Facebook"/>
 				</a>
-				<a href="https://covidwire.in/s/linkedin" target="_blank" rel="noopener noreferrer">
-					<img className="SupportShareIcons" src={require('../assets/linkedin.png')} alt="CovidWire LinkedIn"/>
-				</a>
 				<a href="https://wa.me/917400401323" target="_blank" rel="noopener noreferrer">
-					<img className="SupportShareIcons" src={require('../assets/whatsapp-1.png')} alt="CovidWire Whatsapp"/>
-				</a>
-				<a href="https://wa.me/918985844755" target="_blank" rel="noopener noreferrer">
-					<img className="SupportShareIcons" src={require('../assets/whatsapp-2.png')} alt="CovidWire Whatsapp"/>
+					<img className="SupportShareIcons" src={require('../assets/whatsapp.png')} alt="CovidWire Whatsapp"/>
 				</a>
 			</div>
 			<div className="AboutSubHead">Our Team</div>
@@ -88,115 +68,131 @@ function About(){
 			<div className="AboutTeamHolder">
 				<div className="AboutTeamName">Product</div>
 				<div className="AboutTeamMembers">
-					Abhijith Krishna
+					Abhijith Krishna<br/>
+					Bhadri Narayanan
 				</div>
 			</div>
 			<div className="AboutTeamHolder">
 				<div className="AboutTeamName">Design</div>
 				<div className="AboutTeamMembers">
-					Aniruddh Ravipati<br/>
 					Karunya Baskar<br/>
-					Prakhar Raj
-				</div>
-			</div>
-			<div className="AboutTeamHolder">
-				<div className="AboutTeamName">Content Global</div>
-				<div className="AboutTeamMembers">
-					Roopal Dahiya<br/>
-					Gaurav Bindra<br/>
-					Himakar YV<br/>
-					Keerthanashree Anbarasan<br/>
-					Monil Gokani<br/>
-					Tejaswini Yeleswarapu<br/>
-					Vanalata Bulusu
-				</div>
-			</div>
-			<div className="AboutTeamHolder">
-				<div className="AboutTeamName">Content India</div>
-				<div className="AboutTeamMembers">
-					Saumya Prabodh Srivastava<br/>
-					Deeba Altaf<br/>
-					Giridhari Lal<br/>
-					Priyodarshani Debsharma<br/>
-					Sri Pravallika S<br/>
-					Suhailah Javid
-				</div>
-			</div>
-			<div className="AboutTeamHolder">
-				<div className="AboutTeamName">Content Andhra</div>
-				<div className="AboutTeamMembers">
-					Abdul Muqeeth<br/>
-					BVN Charan<br/>
-					Chaitanya Muvva<br/>
-					Lalitha<br/>
-					Sangeeth Reddy<br/>
-					Sanjay Srinivaas<br/>
-					Sripada Atreya<br/>
-					Vamsi Ram Mohan
-				</div>
-			</div>
-			<div className="AboutTeamHolder">
-				<div className="AboutTeamName">Content Delhi</div>
-				<div className="AboutTeamMembers">
-					Simran Kapoor<br/>
-					Adithya AP<br/>
-					Aishwary Khobragade <br/>
-					Annesha Mazumder<br/>
-					Deepika Gulati<br/>
-					Divya Manoj<br/>
-					Maria Rose Johnson<br/>
-					Mohammad Moizuddin<br/>
-					Pratibha Kumari<br/>
-					Shantanu Agrawal<br/>
-					Swetha Muthu
-				</div>
-			</div>
-			<div className="AboutTeamHolder">
-				<div className="AboutTeamName">Content Maharashtra</div>
-				<div className="AboutTeamMembers">
-					Rohan Jhunja<br/>
-					Anish Yande<br/>
-					Krishna Dharmadhikari<br/>
-					Muneeb Mohiuddin<br/>
-					Nandini B<br/>
-					Prajakta Dharmadhikari<br/>
-					Shilpha Narasimhan<br/>
-					Janhavi Borkar
+					Anubhav Nagpal<br/>
+					Ishani Kulkarni<br/>
+					Prakhar Raj Shakya<br/>
+					Rashi Gupta<br/>
+					Saumya Oberoi<br/>
+					Divya Padmanabhan<br/>
+					Nishita Sudhir
 				</div>
 			</div>
 			<div className="AboutTeamHolder">
 				<div className="AboutTeamName">Social Media</div>
 				<div className="AboutTeamMembers">
 					Priyodarshani Debsharma<br/>
-					Himakar YV<br/>
-					Gayathri Purigilla
+					Gayatri Purigilla<br/>
+					Nishant Sachdeva<br/>
+					Shantanu Agrawal<br/>
+					Sohaib<br/>
+					Sahithi Maley
 				</div>
 			</div>
 			<div className="AboutTeamHolder">
-				<div className="AboutTeamName">Team Flow</div>
+				<div className="AboutTeamName">Content Global</div>
 				<div className="AboutTeamMembers">
-					Shubhangi Gautham<br/>
-					Saina Karla
+					Gaurav Bindra<br/>
+					Monil Gokani<br/>
+					Tejaswini Yaleswarapu<br/>
+					Sandhya<br/>
+					Yaseen<br/>
 				</div>
 			</div>
-			<div className="AboutPartnersPane">
-				<div className="AboutPartnersHead">Our Friends</div>
-				<a href="https://factly.in/" target="_blank" rel="noopener noreferrer">
-					<img className="AboutPartnerLogo" src={require("../assets/factly.png")} alt="Factly"/>
-				</a>
-
-				<a href="https://getlokalapp.com/" target="_blank" rel="noopener noreferrer">
-					<img className="AboutPartnerLogo" src={require("../assets/lokal.png")} alt="Factly"/>
-				</a>
-
-				<a href="https://www.agrahyah.com/" target="_blank" rel="noopener noreferrer">
-					<img className="AboutPartnerLogo" src={require("../assets/agrahyah.png")} alt="Factly"/>
-				</a>
-
-				<a href="http://thesocialcorporate.com/" target="_blank" rel="noopener noreferrer">
-					<img className="AboutPartnerLogo" src={require("../assets/tsc.png")} alt="Factly"/>
-				</a>
+			<div className="AboutTeamHolder">
+				<div className="AboutTeamName">Content India</div>
+				<div className="AboutTeamMembers">
+					Deeba Altaf<br/>
+					Saumya Prabodh Srivastava<br/>
+					Abdul Muqeeth<br/>
+					Giridhari Lal Gupta<br/>
+					Lalitha Majeti<br/>
+					Sejal Mutha
+				</div>
 			</div>
+			<div className="AboutTeamHolder">
+				<div className="AboutTeamName">Content Andhra</div>
+				<div className="AboutTeamMembers">
+					V Vamsi Viraj<br/>
+					Eswar<br/>
+					Manasa Kirthana<br/>
+					Sai Charan Nivarthi<br/>
+					Sanjay Srinivaas<br/>
+					Sravya Pusapati<br/>
+					Chaitanya
+
+				</div>
+			</div>
+			<div className="AboutTeamHolder">
+				<div className="AboutTeamName">Content Delhi</div>
+				<div className="AboutTeamMembers">
+					Simran Kapoor<br/>
+					Aishwary Khobragade<br/>
+					Aniruddh Iyengar<br/>
+					Annesha Mazumder<br/>
+					Deepika Gulati<br/>
+					Gajendra Koli<br/>
+					Pratibha Kumari
+				</div>
+			</div>
+			<div className="AboutTeamHolder">
+				<div className="AboutTeamName">Content Kerala</div>
+				<div className="AboutTeamMembers">
+					Abhijith KS<br/>
+					Anagha Aneesh<br/>
+					Archita Sathish<br/>
+					Arjun Abhilash<br/>
+					Bhadra Suresh<br/>
+					Ishaan Nejeeb<br/>
+					Maria Rose Johnson<br/>
+					Ragini Kanani<br/>
+					Rohith T
+				</div>
+			</div>
+			<div className="AboutTeamHolder">
+				<div className="AboutTeamName">Content Maharashtra</div>
+				<div className="AboutTeamMembers">
+					Janhavi Borkar<br/>
+					Rohan Jhunja<br/><br/>
+					Devashree Juvekar<br/>
+					Muneeb Mohiuddin<br/>
+					Prajakta Dharmadhikari<br/>
+					Anish Yande<br/>
+					Nandini Bhosale<br/>
+					Krishna Dharmadhikari<br/>
+				</div>
+			</div>
+			<div className="AboutTeamHolder">
+				<div className="AboutTeamName">Content Tamil Nadu</div>
+				<div className="AboutTeamMembers">
+					Shilpha Narasimhan<br/>
+					Swetha Muthu<br/>
+					Adithya A P<br/>
+					Divya Manoj K<br/>
+					Jayanaveenaa P<br/>
+					Ohm Prakash R A<br/>
+					Suhailah Javid
+
+				</div>
+			</div>
+			<div className="AboutTeamHolder">
+				<div className="AboutTeamName">Content Telangana</div>
+				<div className="AboutTeamMembers">
+					Sahithi<br/>
+					Anoosha<br/>
+					Mukesh<br/>
+					Pranavi<br/>
+					Sangeeth
+				</div>
+			</div>
+			<div className="BottomSpace"></div>
 		</React.Fragment>
 	)
 }
