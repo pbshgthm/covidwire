@@ -15,8 +15,21 @@ function addStats(statsRegion,feedCards){
  		if(statsRegion){
  			final=final.concat([<StatsCard key="stats" region={statsRegion}/>])
  		}
- 		return final.concat(feedCards.slice(1))
+		let supportCards=[
+			<a href="https://api.whatsapp.com/send?text=*Have%20you%20checked%20out%20CovidWire* %0AA%20volunteer-driven%20platform%20bringing%20you%20wide-ranging%20news%20snippets%20on%20COVID-19%20from%20prominent%20media%20of%20India%20and%20the%20world%20in%20multiple%20languages.%0A%0AThis%20is%20a%20community%20driven%20platform%2C%20so%20you%20can%20be%20a%20part%20of%20it%20too!%0A%0AVisit%20and%20checkout%20this%20project%20at%20*https%3A%2F%2Fcovidwire.in*"><img key="supportCard" className="FeedSupportCards" src={require('../assets/share-card.png')} alt="Share Card"/></a>,
+
+			<a href="https://covidwire.in/s/joincovidwire" target="_blank" rel="noopener noreferrer"><img key="supportCard" className="FeedSupportCards" src={require('../assets/join-card.png')} alt="Share Card"/></a>,
+
+			<a href="https://covidwire.in/s/feedback" target="_blank" rel="noopener noreferrer"><img key="supportCard" className="FeedSupportCards" src={require('../assets/talk-card.png')} alt="Share Card"/></a>
+		]
+
+ 		final=final.concat(feedCards.slice(1))
+		let ind=Math.floor(Math.floor(Math.random() * 6)/2)
+		final.splice(4,0,supportCards[ind])
+		return final
+
 }
+
 
 function SearchFeed(props){
 
