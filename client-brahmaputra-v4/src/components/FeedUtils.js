@@ -6,13 +6,29 @@ import StatsCard from './StatsCard.js'
 import axios from 'axios';
 
 export const formatPageUrl = (pageNum,pageSize=1)=>{
-	let start=new Date(new Date().setDate(new Date().getDate()-
-	(pageSize*pageNum+pageSize))).toISOString().split('T')[0];
+
+	let start=new Date(new Date().setDate(new Date().getDate()-(pageSize*pageNum+pageSize))).toISOString().split('T')[0];
 
 	let end=new Date(new Date().setDate(new Date().getDate()-
 	(pageSize*pageNum+1))).toISOString().split('T')[0];
+
 	if(pageNum===0){end=new Date(new Date().setDate(new Date().getDate()-
 	0)).toISOString().split('T')[0];}
+
+  //after shutdown date
+  start=new Date(new Date('2020-08-31').setDate(new Date('2020-08-31').getDate()-(pageSize*pageNum+pageSize))).toISOString().split('T')[0];
+
+  end=new Date(new Date('2020-08-31').setDate(new Date('2020-08-31').getDate()-
+	(pageSize*pageNum+1))).toISOString().split('T')[0];
+
+	if(pageNum===0){
+    end=new Date(new Date('2020-08-31').setDate(new Date('2020-08-31').getDate()-
+	0)).toISOString().split('T')[0];
+  }
+
+  /////
+
+
 	if(start<'2020-03-01')return false;
 	return '?orderBy="$key"&startAt="'+start+'"&endAt="'+end+'"';
 }
@@ -59,7 +75,16 @@ export const feedFormat = (feedData,langSel,setFeedbackData,hope=false,mark=fals
 		feedList=feedList.concat(dayCards)
 
 	})
-	return feedList.slice(1)
+
+
+	var result = feedList.reduce((unique, o) => {
+	    if(!unique.some(obj => obj.key === o.key)) {
+	      unique.push(o);
+	    }
+	    return unique;
+	},[]);
+
+	return result.slice(1)
 }
 
 
@@ -90,11 +115,11 @@ export const getData=(feedConfig,pageSize=2,lastPage=0)=>{
 				"filter":{
 					"key":"region",
 					"value":region
-				}
+				},"page":lastPage
 			}
 		}).then(result => {
 			if(result.data.status==="OK"){
-				return {'result':orderFeed(result.data.result),'status':true}
+				return {'result':orderFeed(result.data.result),'status':true,'next':result.data.next}
 			}else{
 				return {'result':[],'status':true}
 			}

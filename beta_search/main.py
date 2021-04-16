@@ -14,7 +14,7 @@ def is_match(keywords,_filter,record):
 
 
 def v4_search(request):
-
+	pageVal=15
 	if request.method == 'OPTIONS':
 		headers = {
             'Access-Control-Allow-Origin': '*',
@@ -24,35 +24,44 @@ def v4_search(request):
         }
 		return ('', 204, headers)
 
+	keywords=request.json['keywords'].split(' ')
+	_filter=request.json['filter']
+	page=request.json['page']
 
 	url="https://covidwire.firebaseio.com/index.json"
 	data=requests.get(url).json()
 
 
-	keywords=request.json['keywords'].split(' ')
-	_filter=request.json['filter']
-
-	result={}
 	status="FAIL"
-	print('searching',keywords,filter)
-	count=0
+	print('searching',keywords,_filter)
+	match_list=[]
 	for hash in data:
 		if is_match(keywords,_filter,data[hash]):
-			date=data[hash]['time'].split('T')[0]
-			if date in result:
-				result[date][hash]=data[hash]
-			else:
-				result[date]={hash:data[hash]}
-			count+=1
-			status="OK"
-	print(count,"results")
+			match_list.append(data[hash])
 
+	result={}
+
+	match_list.sort(reverse=True,key = lambda i: i['time'])
+	print(len(match_list))
+	for record in match_list[page*pageVal:(page+1)*pageVal]:
+		date=record['time'].split('T')[0]
+		hash=record['hash']
+		if date in result:
+			result[date][hash]=record
+		else:
+			result[date]={hash:record}
+		status="OK"
+
+
+	is_next=len(match_list)>pageVal*(page+1)
 
 	headers = {
         'Access-Control-Allow-Origin': '*'
     }
 
-	return (jsonify({'status':status,'result':result}), 200, headers)
+	return (jsonify({'status':status,'result':result,'next':is_next}), 200, headers)
 
+
+#v4_search({'keywords':'Vaccine','filter':{'key':'region','value':'Global National Tamil Nadu'},'page':4})
 
 #gcloud functions deploy v4_search --runtime python37 --trigger-http --allow-unauthenticated

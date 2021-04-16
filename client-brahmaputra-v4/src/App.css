@@ -169,85 +169,6 @@ body {
 
 /*----------------- ---------------*/
 
-.SupportSection{
-	margin-bottom: 5vw;
-}
-.SupportSectionName{
-	display: inline-block;
-	font-size: 7vw;
-	font-family: 'Crimson Text';
-	font-weight: 600;
-	margin-left: 6vw;
-	color: #3F3D56;
-}
-.SupportSectionImg{
-	display: inline-block;
-	margin-left: 5vw;
-	width: 40vw;
-}
-
-.SupportSectionDesc{
-	margin-top: 3vw;
-	width: 80vw;
-	font-size: 4vw;
-	color: #626262;
-	margin-left: 6vw;
-	font-weight: 500;
-}
-.SupportButton{
-	margin-top: 3vw;
-	margin-left: 6vw;
-	font-size: 4vw;
-	width: 18vw;
-	text-align: center;
-	background-color: #3F3D56;
-	font-weight: 600;
-	color:#ffffff;
-	padding: 2vw;
-	border-radius: 5vw;
-}
-.SupportSectionImgFund{
-	padding-left: 12vw;
-}
-.SupportSectionImgFeedback{
-	padding-left: 8vw;
-}
-.SupportButtonRight{
-	margin-left: 68vw;
-	margin-top: 2vw;
-}
-
-.SupportSectionImgShare{
-	width: 35vw!important;
-}
-.SupportSectionBg1{
-	position: absolute;
-	width: 100vw;
-	z-index: -1;
-	margin-top: -14vw;
-}
-.SupportSectionBg2{
-	position: absolute;
-	width: 100vw;
-	z-index: -1;
-	margin-top: -18vw;
-}
-.SupportSectionNameShare{
-	margin-left: 4vw;
-}
-.TopSpace{
-	height: 5vw;
-}
-.SupportSharePanel{
-	margin-top: 4vw;
-	width: 60vw;
-	margin-left: 6vw;
-	margin-bottom: 4vw;
-}
-.SupportShareIcons{
-	width: 9vw;
-	margin-right: 3vw;
-}
 
 /*-- ABOUT START----*/
 
@@ -329,6 +250,11 @@ body {
 	border-top: 1px solid  #BDBDBD;
 	padding-top: 3vw;
 	margin-bottom: 4vw;
+}
+.AboutSocialIcons{
+	width: 10vw;
+	margin-left: 1.5vw;
+	margin-right: 1.5vw;
 }
 .AboutTeamHolder{
 	margin-bottom: 4vw;
@@ -538,3 +464,103 @@ body {
 	margin-top: 10vw;
 	margin-left: 5vw;
 }
+.DesktopPage{
+	display: none;
+}
+
+
+/*---- DESKTOP  ------*/
+@media only screen and (min-width: 600px){
+	.DesktopPage{
+		position: fixed;
+		display: block;
+		top: 0vw;
+		left: 0vw;
+		z-index: 30!important;
+		width: 100vw;
+		height: 100vh;
+		padding-bottom: 20vw;
+		background-color: #ffffff;
+	}
+	.DesktopTitle{
+		position: absolute;
+		font-size: 52px;
+		left: 10vw;
+		top: 29vh;
+		font-family: 'Crimson Text';
+		color: #EA7D00;
+	}
+	.DesktopDesc{
+		position: absolute;
+		left: 10vw;
+		width: 40vw;
+		color: #898989;
+		top: 40vh;
+		font-size: 24px
+	}
+	.DesktopNotif{
+		position: absolute;
+		left: 10vw;
+		width: 35vw;
+		color: #A9A9A9;
+		top: 60vh;
+		font-size: 18px;
+	}
+	.MobileHolder{
+		position: absolute;
+		right: 15vw;
+		padding: 10px;
+		top: 5vh;
+		height: 90vh;
+		width: 44.169vh;
+		background-color: #ffffff;
+	}
+	.Desktopiphone{
+		position: absolute;
+		height: 90vh;
+	}
+	.DesktopiphoneBottom{
+		position: absolute;
+		height: 6.53vh;
+		margin-top: 83.5vh;
+		z-index: 5;
+	}
+
+	.Mobileiframe{
+		margin-top: 7vh;
+		margin-left: 3.75vh;
+		outline: none;
+		border: none;
+		z-index: 1;
+		position: absolute;
+		height: 78vh!important;
+		width: 38.50vh!important;
+	}
+	.Mobileiframe::-webkit-scrollbar {
+		width: 0px;
+  		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.Mobileiframe {
+  		-ms-overflow-style: none;  /* IE and Edge */
+  		scrollbar-width: none;  /* Firefox */
+	}
+}
+
+::-webkit-scrollbar {
+	display: none;
+	width: 0px!important;
+	background: transparent; /* make scrollbar transparent */
+}
+.Mobileiframe {
+	overflow: -moz-scrollbars-none;
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+}
+.Mobileiframe::-webkit-scrollbar {
+	width: 0px!important;
+	display: none;
+}
+
+/*--------------------*/

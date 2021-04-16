@@ -16,14 +16,14 @@ function addStats(statsRegion,feedCards){
  			final=final.concat([<StatsCard key="stats" region={statsRegion}/>])
  		}
 		let supportCards=[
-			<a href="https://api.whatsapp.com/send?text=*Have%20you%20checked%20out%20CovidWire* %0AA%20volunteer-driven%20platform%20bringing%20you%20wide-ranging%20news%20snippets%20on%20COVID-19%20from%20prominent%20media%20of%20India%20and%20the%20world%20in%20multiple%20languages.%0A%0AThis%20is%20a%20community%20driven%20platform%2C%20so%20you%20can%20be%20a%20part%20of%20it%20too!%0A%0AVisit%20and%20checkout%20this%20project%20at%20*https%3A%2F%2Fcovidwire.in*"><img key="supportCard" className="FeedSupportCards" src={require('../assets/share-card.png')} alt="Share Card"/></a>,
+			<a key="supportCard"  href="https://api.whatsapp.com/send?text=*Have%20you%20checked%20out%20CovidWire* %0AA%20volunteer-driven%20platform%20bringing%20you%20wide-ranging%20news%20snippets%20on%20COVID-19%20from%20prominent%20media%20of%20India%20and%20the%20world%20in%20multiple%20languages.%0A%0AThis%20is%20a%20community%20driven%20platform%2C%20so%20you%20can%20be%20a%20part%20of%20it%20too!%0A%0AVisit%20and%20checkout%20this%20project%20at%20*https%3A%2F%2Fcovidwire.in*"><img className="FeedSupportCards" src={require('../assets/share-card.png')} alt="Share Card"/></a>,
 
-			<a href="https://covidwire.in/s/joincovidwire" target="_blank" rel="noopener noreferrer"><img key="supportCard" className="FeedSupportCards" src={require('../assets/join-card.png')} alt="Share Card"/></a>,
+			<a key="supportCard"  href="https://covidwire.in/s/joincovidwire" target="_blank" rel="noopener noreferrer"><img className="FeedSupportCards" src={require('../assets/join-card.png')} alt="Share Card"/></a>,
 
-			<a href="https://covidwire.in/s/feedback" target="_blank" rel="noopener noreferrer"><img key="supportCard" className="FeedSupportCards" src={require('../assets/talk-card.png')} alt="Share Card"/></a>
+			<a key="supportCard"  href="https://covidwire.in/s/feedback" target="_blank" rel="noopener noreferrer"><img className="FeedSupportCards" src={require('../assets/talk-card.png')} alt="Share Card"/></a>
 		]
 
- 		final=final.concat(feedCards.slice(1))
+		final=final.concat(feedCards.slice(1))
 		let ind=Math.floor(Math.floor(Math.random() * 6)/2)
 		final.splice(4,0,supportCards[ind])
 		return final
@@ -88,11 +88,10 @@ function SearchFeed(props){
 
 	window.onscroll = debounce(() => {
 		if(endFeed)return
-		if(feedConfig.type==='search')
 		if(!_isMounted.current)return;
 		if (window.innerHeight+document.documentElement.scrollTop+350> 		document.documentElement.offsetHeight
       	){
-		  	if(fetchReady){setFetchNow(true)}
+			if(fetchReady){setFetchNow(true)}
       	}
     }, 100);
 
@@ -100,8 +99,9 @@ function SearchFeed(props){
 	const fetchFeed = ()=>{
 		setEndFeed(false)
 		setNoResult(false)
+		setFetchReady(false)
 		if(feedConfig.type==="search"){
-			preventScroll(true)
+			//preventScroll(true)
 		}
 		getData(feedConfig,props.pageSize,lastPage).then(response => {
 				let result=response['result']
@@ -117,8 +117,12 @@ function SearchFeed(props){
 				setLastPage(lastPage+1)
 
 				if(feedConfig.type==='search'){
-					preventScroll(false)
-					setEndFeed(true)
+					//preventScroll(false)
+					console.log(response)
+					if(!response['next']){
+						setEndFeed(true)
+					}
+					//setEndFeed(true)
 				}
 
 				if(Object.keys(result).length===0){

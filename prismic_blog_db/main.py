@@ -99,5 +99,5 @@ def v4_pull_blog(req):
 
 
 
-#v4_pull_blog('pp')
+v4_pull_blog('pp')
 #gcloud functions deploy v4_pull_blog --runtime python37 --trigger-http --allow-unauthenticated

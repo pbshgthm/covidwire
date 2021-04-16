@@ -198,7 +198,7 @@ def pull_translation():
 			region=translation_fields['Region']
 
 			if not translation_fields["ID"] in hash_dict[region]:
-				print('Translation Record not found in Master ',lang,digestion_fields["ID"])
+				print('Translation Record not found in Master ',lang,translation_fields["ID"])
 				continue
 
 			master_fields={
@@ -254,7 +254,7 @@ def v4_airtable_control(request):
 
 
 
-#pull_data('sds')
+#v4_airtable_control('sds')
 
 
 #export GOOGLE_APPLICATION_CREDENTIALS="./translation_api_cred.json"

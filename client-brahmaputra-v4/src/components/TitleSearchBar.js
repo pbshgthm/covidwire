@@ -80,7 +80,7 @@ function TitleBar(props){
 			term:'feed/'+props.feedConfig.region,
 			type:'feed',
 			region:props.feedConfig.region,
-			stats:false
+			stats:true
 		})
 	},[showSearch])
 

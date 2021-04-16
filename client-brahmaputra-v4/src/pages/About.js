@@ -45,16 +45,16 @@ function About(){
 			<div className="AboutContactPane">
 
 				<a href="https://covidwire.in/s/instagram" target="_blank" rel="noopener noreferrer">
-					<img className="SupportShareIcons" src={require('../assets/instagram.png')} alt="CovidWire Instagram"/>
+					<img className="AboutSocialIcons" src={require('../assets/instagram.png')} alt="CovidWire Instagram"/>
 				</a>
 				<a href="https://covidwire.in/s/twitter" target="_blank" rel="noopener noreferrer">
-					<img className="SupportShareIcons" src={require('../assets/twitter.png')} alt="CovidWire Twitter"/>
+					<img className="AboutSocialIcons" src={require('../assets/twitter.png')} alt="CovidWire Twitter"/>
 				</a>
 				<a href="https://covidwire.in/s/facebook" target="_blank" rel="noopener noreferrer">
-					<img className="SupportShareIcons" src={require('../assets/facebook.png')} alt="CovidWire Facebook"/>
+					<img className="AboutSocialIcons" src={require('../assets/facebook.png')} alt="CovidWire Facebook"/>
 				</a>
 				<a href="https://wa.me/917400401323" target="_blank" rel="noopener noreferrer">
-					<img className="SupportShareIcons" src={require('../assets/whatsapp.png')} alt="CovidWire Whatsapp"/>
+					<img className="AboutSocialIcons" src={require('../assets/whatsapp.png')} alt="CovidWire Whatsapp"/>
 				</a>
 			</div>
 			<div className="AboutSubHead">Our Team</div>
