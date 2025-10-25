@@ -21,7 +21,7 @@ function addStats(statsRegion,feedCards){
 		const siteOrigin = getSiteOrigin().replace(/\/$/, '');
 		const encodedOrigin = encodeURIComponent(siteOrigin);
 		let supportCards=[
-			<a key="supportCard"  href={`https://api.whatsapp.com/send?text=*Have%20you%20checked%20out%20CovidWire* %0AA%20volunteer-driven%20platform%20bringing%20you%20wide-ranging%20news%20snippets%20on%20COVID-19%20from%20prominent%20media%20of%20India%20and%20the%20world%20in%20multiple%20languages.%0A%0AThis%20is%20a%20community%20driven%20platform%2C%20so%20you%20can%20be%20a%20part%20of%20it%20too!%0A%0AVisit%20and%20checkout%20this%20project%20at%20*${encodedOrigin}*`}><img className="FeedSupportCards" src="/assets/share-card.png" alt="Share Card"/></a>,
+			<a key="supportCard" href={`https://api.whatsapp.com/send?text=*Have%20you%20checked%20out%20CovidWire*%0A%0AA%20volunteer-driven%20platform%20bringing%20you%20wide-ranging%20news%20snippets%20on%20COVID-19%20from%20prominent%20media%20of%20India%20and%20the%20world%20in%20multiple%20languages.%0A%0AThis%20is%20a%20community%20driven%20platform%2C%20so%20you%20can%20be%20a%20part%20of%20it%20too!%0A%0AVisit%20and%20checkout%20this%20project%20at%20*${encodedOrigin}*`} target="_blank" rel="noopener noreferrer"><img className="FeedSupportCards" src="/assets/share-card.png" alt="Share Card"/></a>,
 
 			<a key="supportCard"  href={`${siteOrigin}/s/joincovidwire`} target="_blank" rel="noopener noreferrer"><img className="FeedSupportCards" src="/assets/join-card.png" alt="Share Card"/></a>,
 

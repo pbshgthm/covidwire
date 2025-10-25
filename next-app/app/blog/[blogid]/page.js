@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useState} from 'react';
+import {use, useEffect, useState} from 'react';
 
 import TitleBar from '@/components/TitleBar.js';
 import Navbar from '@/components/Navbar.js';
@@ -10,7 +10,7 @@ import {loadStaticJson} from '@/lib/staticData';
 const BLOG_CONTENT_PATH = '/data/blog/content.json';
 
 export default function BlogPostPage({params}) {
-	const blogId = params.blogid;
+	const {blogid: blogId} = use(params);
 	const [blogData, setBlogData] = useState(null);
 
 	useEffect(() => {

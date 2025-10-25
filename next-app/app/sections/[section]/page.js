@@ -1,6 +1,6 @@
 'use client';
 
-import {useEffect, useMemo, useState} from 'react';
+import {use, useEffect, useMemo, useState} from 'react';
 
 import TitleBar from '@/components/TitleBar.js';
 import LangSetting from '@/components/LangSetting.js';
@@ -30,7 +30,7 @@ const writeLang = (value) => {
 };
 
 export default function SectionPage({params}) {
-	const sectionParam = params.section || '';
+	const {section: sectionParam = ''} = use(params);
 	const sectionName = urlDecode(sectionParam);
 	const [langSel, setLangSel] = useState(DEFAULT_LANG);
 

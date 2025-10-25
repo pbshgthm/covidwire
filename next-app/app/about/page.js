@@ -43,13 +43,13 @@ export default function AboutPage() {
 			<div className="AboutSayHi">Say Hi!</div>
 			<div className="AboutEmail">hello@covidwire.in</div>
 			<div className="AboutContactPane">
-				<a href={`${siteOrigin}/s/instagram`} target="_blank" rel="noopener noreferrer">
+				<a href="https://www.instagram.com/covidwire_in/" target="_blank" rel="noopener noreferrer">
 					<img className="AboutSocialIcons" src="/assets/instagram.png" alt="CovidWire Instagram"/>
 				</a>
-				<a href={`${siteOrigin}/s/twitter`} target="_blank" rel="noopener noreferrer">
+				<a href="https://twitter.com/covidwire_in/" target="_blank" rel="noopener noreferrer">
 					<img className="AboutSocialIcons" src="/assets/twitter.png" alt="CovidWire Twitter"/>
 				</a>
-				<a href={`${siteOrigin}/s/facebook`} target="_blank" rel="noopener noreferrer">
+				<a href="https://www.facebook.com/covidwire" target="_blank" rel="noopener noreferrer">
 					<img className="AboutSocialIcons" src="/assets/facebook.png" alt="CovidWire Facebook"/>
 				</a>
 				<a href="https://wa.me/917400401323" target="_blank" rel="noopener noreferrer">
