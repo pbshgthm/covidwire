@@ -1,0 +1,117 @@
+/*--- START NAVBAR  ----*/
+
+.Navbar{
+	z-index: 2;
+	width: 100vw;
+	background: #FFFFFF;
+	box-shadow: 0px -3px 5px rgba(186, 186, 186, 0.25);
+	position: fixed;
+	bottom: 0vh;
+	padding-bottom: 0vw;
+}
+.NavbarIcons{
+	padding-left: 4.5vw;
+	padding-right: 4.5vw;
+	padding-top: 1vw;
+	width: 11vw;
+	opacity: 0.5;
+}
+
+.NavbarButtons{
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+}
+
+.NavbarIcons-Sel{
+	opacity: 1;
+}
+
+/*--- END NAVBAR ----*/
+
+
+
+/*--- START FEED ---*/
+
+.NewsFeed{
+	text-align: center;
+	padding: 3vw;
+	padding-top: 8vw;
+	transition: 1s;
+}
+/* this is a checkpoint --*/
+
+.SearchingImg{
+	position: absolute;
+	width: 40vw;
+	opacity: 0;
+	transition: opacity 2s;
+	left: 30vw;
+	margin-top: 25vw;
+}
+
+.SearchingImgSel{
+	transition: opacity 2s;
+	opacity: 1;
+	index:3;
+}
+.FeedDesc{
+	font-size: 5vw;
+	margin-top: -3vw;
+	margin-bottom: 5vw;
+	color: #767676;
+	font-weight: 600;
+}
+.SkeletonHolder{
+	margin-bottom: 9vw;
+	overflow-x: hidden;
+	width: 100vw;
+	position: static;
+	padding: 0vw;
+	height: 120vw;
+	margin-top: -3vw;
+}
+.SkeletonOverlay{
+	position: absolute;
+	width: 94vw;
+	margin-left: 3vw;
+	height: 60vw;
+	margin-top: 60vw;
+	background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 30%, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+	animation: load 1s ease-out infinite;
+	background-repeat: no-repeat;
+	background-position: -20vw 0vw;
+}
+
+@keyframes load {
+	from {background-position: -20vw 0vw;}
+    to{background-position: 94vw 0vw;}
+}
+
+.NewsCardSkeleton{
+	position: absolute;
+	opacity: 1;
+	width: 94vw;
+	margin-left: 3vw;
+	border-radius: 1.5vw;
+	box-shadow: 0px 0px 10px rgba(136, 136, 136, 0.2);
+}
+
+.FeedSupportCards{
+	width: 94vw;
+	background-color: #ffffff;
+	box-shadow: 0px 0px 7px rgba(136, 136, 136, 0.3);
+	border-radius: 2vw;
+	margin-bottom: 9vw;
+	transition: 0.3s;
+	display: block;
+	text-align: left;
+	box-shadow: inset 0px 0px 10px 0px rgba(136, 136, 136, 0.15), 0px 0px 7px rgba(136, 136, 136, 0.3);
+}
+
+.NoResult{
+	width: 94vw;
+}
+/*--- END FEED ---*/

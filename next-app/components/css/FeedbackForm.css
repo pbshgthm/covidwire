@@ -1,0 +1,107 @@
+.ScreenBlock{
+	width: 100vw;
+	height: 100vh;
+	background-color: #000000;
+	opacity: 0.6;
+	position: fixed;
+	top: 0vh;
+	z-index: 5;
+	transition: 0.5s;
+}
+.FeedbackForm{
+	border-radius: 5vw 5vw 0vw 0vw;
+	width: 100vw;
+	background-color: white;
+	position: fixed;
+	bottom: -150vh;
+	z-index: 6;
+	padding-bottom: 8vw;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+	transition: 1s;
+}
+.FeedbackFormSel{
+	bottom: 0vw;
+	transition: 0.3s;
+}
+.FeedbackHeadline{
+	font-weight: 500;
+	width: 80vw;
+	display: block;
+  	white-space: nowrap;
+  	overflow: hidden;
+  	text-overflow: ellipsis;
+	color: #A4A4A4;
+	padding-top: 3vw;
+	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2','Baloo Thambi 2';
+	line-height: 125%;
+	font-size: 5vw;
+}
+.FeedbackDesc{
+	font-size: 3.7vw;
+	font-weight: 700;
+	color: #DF8E2F;
+	padding-top: 5vw;
+	padding-bottom: 4vw;
+	padding-left: 8vw;
+	border-bottom: 1.5px solid #FFD099;
+}
+.FeedbackOpt{
+	padding-left: 8vw;
+	padding-right: 8vw;
+	font-size: 4.5vw;
+	padding-top: 4.5vw;
+	padding-bottom: 3.5vw;
+	color: #707070;
+	height: 6vw;
+}
+.FeedbackOpt-Sel{
+	background-color: #FFF2D8;
+}
+
+.FeedbackOpt-Sel .FeedbackOptText{
+	color: #DF8E2F;
+}
+
+.FeedbackOptText{
+	vertical-align: top;
+	display: inline-block;
+	height: 5vw;
+	line-height: 6vw;
+}
+.FeedbackCancel{
+	display: inline-block;
+	border-radius: 2vw;
+	font-size: 4vw;
+	width: 40vw;
+	height: 10vw;
+	line-height: 10.5vw;
+	text-align: center;
+	background-color: #EAEAEA;
+	color: #9A9A9A;
+	margin-left: 7vw;
+	margin-top: 5vw;
+	margin-bottom: 1vw;
+}
+.FeedbackSubmit{
+	display: inline-block;
+	border-radius: 2vw;
+	font-size: 4vw;
+	width: 40vw;
+	height: 10vw;
+	line-height: 10.5vw;
+	text-align: center;
+	background-color: #EAEAEA;
+	color: #9A9A9A;
+	margin-left: 6vw;
+	margin-top: 5vw;
+	margin-bottom: 1vw;
+}
+.FeedbackSubmitSel{
+	color: white;
+	font-weight: bold;
+	background: linear-gradient(45deg, #FFAF50, #FFC450);
+}

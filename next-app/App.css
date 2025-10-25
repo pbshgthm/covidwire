@@ -1,0 +1,566 @@
+body {
+	margin: 0;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-size:16px;
+	background-color: #FAFAFA;
+	font-family: 'Nunito Sans',  'Baloo 2', 'Baloo Tammudu 2', 'Baloo Thambi 2','Baloo Chettan 2';
+	background-image: url('assets/bg.png');
+	background-size: 100vw;
+	background-attachment: fixed;
+}
+
+
+/*--- START HOME PAGE ----*/
+.MainLogo{
+	width: 70vw;
+	margin: 0 auto;
+	display: block;
+	margin-top: 3vw;
+}
+
+.TitleLogo{
+	margin-top: 1vw;
+	margin-left: 33vw;
+	width: 34vw;
+}
+.FeedPage{
+	padding-bottom: 20vw;
+}
+
+/*--- END HOME PAGE ----*/
+
+/* START SECTION PAGE --*/
+
+.PageTitle{
+	margin-top: 5vw;
+	margin-bottom: 5vw;
+	font-family: 'Crimson Text';
+	font-size:10vw;
+	text-align: center;
+	color: #3F3D56;
+}
+.SectionBack{
+	position: absolute;
+	top: 8.2vw;
+	left: 4vw;
+	width: 3vw;
+}
+
+.SectionCategory{
+	width: 90vw;
+	font-size: 5.5vw;
+	margin: auto;
+	margin-top: 2vw;
+	margin-bottom: 4vw;
+	font-weight: 600;
+	text-align: center;
+	color: #7C7C7C;
+}
+.SectionHolder{
+	padding-top: 20vw;
+}
+
+.SectionImageHolder{
+	padding: 3vw;
+}
+
+.SectionCard{
+	display: inline-block;
+	width: 43vw;
+	height: 43vw;
+	margin-left: 2vw;
+	margin-right: 2vw;
+	margin-bottom: 3vw;
+	border-radius: 1.5vw;
+}
+.SectionName{
+	position: absolute;
+	font-weight: 600;
+	color: #ffffff;
+	font-size: 5vw;
+	padding-left: 2vw;
+	padding-top: 1vw;
+	opacity: 0.9;
+}
+.SectionImage{
+	display: block;
+	position: absolute;
+	width: 43vw;
+	height: 43vw;
+	background-color: #787878;
+	border-radius: 1.5vw;
+}
+
+.FeaturedDesc{
+	font-size: 5vw;
+	font-family: 'Crimson Text';
+	width: 70vw;
+	margin-left: 15vw;
+	text-align: center;
+	margin-top: 7vw;
+	color: #6F6F6F;
+}
+
+.BottomSpace{
+	height: 20vw;
+}
+
+/*---- HOPE ---*/
+.HopeBg{
+	z-index: -1;
+	top: 0vw;
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	background-image: url('assets/bg-hope.png');
+	background-size: 100vw;
+}
+
+
+.HopeHeader{
+	margin-left: 20vw;
+	margin-top: 5vw;
+	width: 60vw;
+	left: 20vw;
+	margin-bottom: -17vw;
+}
+
+.HopeTitlebar{
+	z-index: 5;
+	position: fixed;
+	top: -20vw;
+	width: 100vw;
+	background-color: #ffffff;
+	box-shadow: 0px 1px 2px rgba(198, 198, 198, 0.3);
+	display: block;
+	color: #565656;
+	padding-top: 1.5vw;
+	padding-bottom: 1.5vw;
+	transition: 0.5s;
+	height: 10vw;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	-webkit-tap-highlight-color: transparent;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+}
+.HopeTitlebarSel{
+	top: 0vw;
+}
+.HopeTitlebarImg{
+	margin-left: 40vw;
+	width: 20vw;
+}
+.HopeDesc{
+	font-family: 'Crimson Text';
+	margin-top: 6vw;
+	width: 70vw;
+	font-size: 5.5vw;
+	color: #3F3D56;
+	font-weight: 500;
+	padding-left: 15vw;
+	padding-right: 15vw;
+	margin-bottom: 0vw;
+	text-align: center;
+	background-color: rgba(255,255,255,0.6);
+}
+
+
+/*----------------- ---------------*/
+
+
+/*-- ABOUT START----*/
+
+.AboutText{
+	color: #4D4D4D;
+	width: 90vw;
+	margin: 0 auto;
+	font-size: 4vw;
+	margin-bottom: 4vw;
+	margin-top: 20vw;
+}
+.AboutShowMore{
+	color: #4D4D4D;
+	width: 90vw;
+	margin: 0 auto;
+	font-weight: 700;
+	font-size: 3.5vw;
+	color: #9A9A9A;
+}
+
+.AboutCollapsed{
+	max-height: 0;
+	overflow-y: hidden;
+	transition: 0.5s;
+}
+.AboutCollapsedSel{
+	max-height:200vh;
+
+}
+.AboutSubhead{
+	color: #4D4D4D;
+	width: 90vw;
+	margin: 0 auto;
+	font-weight: 700;
+	font-size: 4vw;
+}
+.AboutTextMore{
+	color: #4D4D4D;
+	width: 90vw;
+	margin: 0 auto;
+	font-size: 4vw;
+	margin-bottom: 4vw;
+	margin-top: 3vw;
+}
+.AboutSayHi{
+	width: 80vw;
+	text-align: center;
+	margin-top: 10vw;
+	margin-left: 10vw;
+	font-size: 6vw;
+	color : #3F3D56;
+	font-family: 'Crimson Text';
+}
+
+.AboutEmail{
+	width: 80vw;
+	text-align: center;
+	margin-top: 2vw;
+	margin-left: 10vw;
+	font-size: 4.5vw;
+	color: #4D4D4D;
+}
+.AboutContactPane{
+	width: 80vw;
+	text-align: center;
+	margin-top: 3vw;
+	margin-left: 10vw;
+	margin-bottom: 10vw;
+}
+.AboutSubHead{
+	width: 70vw;
+	margin: 0 auto;
+	text-align: center;
+	font-weight: 500;
+	font-size: 6vw;
+	color : #3F3D56;
+	font-family: 'Crimson Text';
+	margin-top: 6vw;
+	border-top: 1px solid  #BDBDBD;
+	padding-top: 3vw;
+	margin-bottom: 4vw;
+}
+.AboutSocialIcons{
+	width: 10vw;
+	margin-left: 1.5vw;
+	margin-right: 1.5vw;
+}
+.AboutTeamHolder{
+	margin-bottom: 4vw;
+}
+.AboutTeamName{
+	vertical-align: top;
+	display: inline-block;
+	width: 39vw;
+	font-weight: 700;
+	color: #DA9000;
+	text-align: right;
+	padding-right: 3vw;
+}
+.AboutTeamMembers{
+	font-weight: 500;
+	display: inline-block;
+	line-height: 6vw;
+	font-size: 4vw;
+	color: #4D4D4D;
+}
+.AboutPartnersPane{
+	width: 86vw;
+	background-color: #ffffff;
+	padding-top: 5vw;
+	padding-bottom: 20vw;
+	padding-left: 7vw;
+	padding-right: 7vw;
+	margin-top: 10vw;
+}
+.AboutPartnersHead{
+	width: 86vw;
+	text-align: center;
+	font-weight: 500;
+	font-size: 6vw;
+	color : #3F3D56;
+	font-family: 'Crimson Text';
+	margin-bottom: 5vw;
+}
+.AboutPartnerLogo{
+	display: inline-block;
+	height: 15vw;
+}
+
+.DesktopBlock {
+	display: none;
+}
+/*-- ABOUT END----*/
+
+
+/*-- BLOGLIST START----*/
+.BlogListFeed{
+	padding-top: 17vw;
+}
+.BlogListCard{
+	background-color: #ffffff;
+	box-shadow: 0px 0px 5px rgba(136, 136, 136, 0.3);
+	margin-bottom: 8vw;
+	display: block;
+	padding-top: 5vw;
+	padding-bottom: 4vw;
+}
+
+.BlogListImg{
+	width: 90vw;
+	border-radius: 2vw;
+	margin-left: 5vw;
+}
+
+.BlogListTitle{
+	padding-left: 5vw;
+	padding-right: 5vw;
+	color: #5E5E5E;
+	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2', 'Baloo Thambi 2','Baloo Chettan 2';
+	line-height: 125%;
+	font-size: 5.65vw;
+	margin-top: 2vw;
+	margin-bottom: 2vw;
+	word-wrap: break-word;
+	font-weight: 500;
+}
+
+.BlogListAuthors{
+	color: #A6A6A6;
+	font-weight: 700;
+	margin-left: 5vw;
+}
+
+.BlogDesc{
+	width: 90vw;
+	font-family: 'Crimson Text';
+	font-size: 6vw;
+	margin: 0 auto;
+	text-align: center;
+	margin-bottom: 5vw;
+	color: #6F6F6F;
+}
+
+.BlogDisclaimer{
+	margin: auto;
+	text-align: center;
+	color: #8E8E8E;
+	margin-bottom: 4vw;
+}
+
+/*-- BLOGLIST END----*/
+
+/*-- BLOGPOST START----*/
+.BlogPostPage{
+	padding-top: 18vw;
+	width: 100vw;
+	background-color: #ffffff;
+	padding-bottom: 25vw;
+	margin-bottom: -20vw;
+}
+.BlogPostTitle{
+	padding-left: 5vw;
+	padding-right: 5vw;
+	color: #5E5E5E;
+	font-family: 'Crimson Text', 'Baloo 2', 'Baloo Tammudu 2', 'Baloo Thambi 2','Baloo Chettan 2';
+	line-height: 125%;
+	font-size: 6vw;
+	margin-bottom: 3vw;
+	word-wrap: break-word;
+	font-weight: 500;
+}
+.BlogPostImg{
+	width: 100vw;
+}
+.BlogPostAuthors{
+	color: #5E5E5E;
+	font-weight: 700;
+	margin-left: 5vw;
+	margin-bottom: 1vw;
+}
+.BlogPostDate{
+	color: #A6A6A6;
+	margin-left: 5vw;
+	margin-bottom: 5vw;
+}
+.BlogPostBody{
+	margin-top: 4vw;
+	padding-left: 5vw;
+	padding-right: 5vw;
+	font-size: 4vw;
+	color: #3A3A3A;
+}
+
+.BlogPostBody h3{
+	font-size: 5.5vw;
+	color: #A6A6A6;
+	margin-top: -0.5vw;
+	margin-bottom: 3vw;
+}
+
+.BlogPostLinks::before{
+	content: 'Reference\A';
+	white-space: pre;
+	color: #A6A6A6;
+	font-weight: 500;
+}
+.BlogPostLinks{
+	word-break: break-all;
+	word-wrap: break-word;
+	width: 90vw;
+	font-size: 3.5;
+	line-height: 6vw;
+	margin-top: 8vw;
+	margin-left: 5vw;
+}
+.BlogPostLinks a{
+	text-decoration: underline;
+	color: #6585A3;
+}
+
+.BlogPostBio{
+	font-style: italic;
+	color: #6D757C;
+	width: 90vw;
+	font-size: 3.5;
+	line-height: 6vw;
+	margin-top: 8vw;
+	margin-left: 5vw;
+}
+/*-- BLOGLIST END----*/
+
+@media only screen and (min-width: 600px) {
+  .DesktopBlock {
+	  position: fixed;
+	  top: 0vw;
+	  left: 0vw;
+	  display: block;
+	  width: 40vw;
+	  height: 70vh;
+	  background-color: #ffffff;
+	  font-size: 1.7vw;
+	  z-index: 15;
+	  padding-top: 30vh;
+	  padding-left: 30vw;
+	  padding-right: 30vw;
+	  color: #888888;
+
+  }
+}
+
+.NoSave{
+	width: 90vw;
+	margin-top: 10vw;
+	margin-left: 5vw;
+}
+.DesktopPage{
+	display: none;
+}
+
+
+/*---- DESKTOP  ------*/
+@media only screen and (min-width: 600px){
+	.DesktopPage{
+		position: fixed;
+		display: block;
+		top: 0vw;
+		left: 0vw;
+		z-index: 30!important;
+		width: 100vw;
+		height: 100vh;
+		padding-bottom: 20vw;
+		background-color: #ffffff;
+	}
+	.DesktopTitle{
+		position: absolute;
+		font-size: 52px;
+		left: 10vw;
+		top: 29vh;
+		font-family: 'Crimson Text';
+		color: #EA7D00;
+	}
+	.DesktopDesc{
+		position: absolute;
+		left: 10vw;
+		width: 40vw;
+		color: #898989;
+		top: 40vh;
+		font-size: 24px
+	}
+	.DesktopNotif{
+		position: absolute;
+		left: 10vw;
+		width: 35vw;
+		color: #A9A9A9;
+		top: 60vh;
+		font-size: 18px;
+	}
+	.MobileHolder{
+		position: absolute;
+		right: 15vw;
+		padding: 10px;
+		top: 5vh;
+		height: 90vh;
+		width: 44.169vh;
+		background-color: #ffffff;
+	}
+	.Desktopiphone{
+		position: absolute;
+		height: 90vh;
+	}
+	.DesktopiphoneBottom{
+		position: absolute;
+		height: 6.53vh;
+		margin-top: 83.5vh;
+		z-index: 5;
+	}
+
+	.Mobileiframe{
+		margin-top: 7vh;
+		margin-left: 3.75vh;
+		outline: none;
+		border: none;
+		z-index: 1;
+		position: absolute;
+		height: 78vh!important;
+		width: 38.50vh!important;
+	}
+	.Mobileiframe::-webkit-scrollbar {
+		width: 0px;
+  		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.Mobileiframe {
+  		-ms-overflow-style: none;  /* IE and Edge */
+  		scrollbar-width: none;  /* Firefox */
+	}
+}
+
+::-webkit-scrollbar {
+	display: none;
+	width: 0px!important;
+	background: transparent; /* make scrollbar transparent */
+}
+.Mobileiframe {
+	overflow: -moz-scrollbars-none;
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+}
+.Mobileiframe::-webkit-scrollbar {
+	width: 0px!important;
+	display: none;
+}
+
+/*--------------------*/

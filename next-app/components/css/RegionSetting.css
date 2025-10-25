@@ -1,0 +1,109 @@
+.RegionSettingHolder{
+	margin: auto;
+	width: 50vw;
+	align-content: center;
+	text-align: center;
+	margin-top: 6vw;
+}
+.RegionSettingBtn{
+	display: inline-block;
+	line-height: 11.5vw;
+	text-align: center;
+	color: #888888;
+	font-weight: 600;
+	padding-left: 5vw;
+	padding-right: 5vw;
+	height: 10.7vw;
+	border-radius: 6vw;
+	background: #ffffff;
+	font-size: 4vw;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+	box-shadow: 0px 0px 10px rgba(136, 136, 136, 0.3);
+}
+
+.RegionSettingLocationIcon{
+	width: 2vw;
+	margin-right: 2vw;
+}
+
+.ScreenBlock{
+	width: 100vw;
+	height: 100vh;
+	background-color: #000000;
+	opacity: 0.6;
+	position: fixed;
+	top: 0vh;
+	z-index: 5;
+	transition: 0.5s;
+}
+
+.PopupMenu{
+	position: fixed;
+	bottom: -150vh;
+	z-index: 6;
+	width: 100vw;
+	background-color: #ffffff;
+	border-radius: 5vw 5vw 0vw 0vw;
+	padding-bottom: 5vw;
+	-moz-user-select: none;
+   	-khtml-user-select: none;
+   	-webkit-user-select: none;
+	transition: 1s;
+}
+.PopupMenu-Sel{
+	bottom: 0vw;
+	transition: 0.3s;
+}
+.MenuDesc{
+	font-size: 3.7vw;
+	font-weight: 700;
+	color: #DF8E2F;
+	padding-top: 5vw;
+	padding-bottom: 4vw;
+	padding-left: 8vw;
+	border-bottom: 1.5px solid #FFD099;
+}
+.MenuOption{
+	padding-left: 8vw;
+	padding-right: 8vw;
+	font-size: 4.5vw;
+	padding-top: 4.5vw;
+	padding-bottom: 3.5vw;
+	color: #707070;
+	height: 6vw;
+}
+.MenuOption-Sel{
+	background-color: #FFF2D8;
+}
+.MenuOption-Sel .MenuOptionVal{
+	color: #DF832F;
+}
+.MenuOptionVal{
+	display: inline-block;
+	width: 40vw;
+}
+
+.MenuOptValInfoIcon{
+	width: 3vw;
+	margin-right: 1vw;
+}
+
+.MenuOptionDesc{
+	display: inline-block;
+	width: 40vw;
+	font-size: 4vw;
+	text-align: right;
+	color: #B1B1B1;
+	word-spacing: 3vw;
+	float: right;
+}
+
+.MenuOptFallback{
+	padding-top: 4.5vw;
+	padding-bottom: 3.5vw;
+	font-size: 4vw;
+	color: #707070;
+	padding-left: 8vw;
+}

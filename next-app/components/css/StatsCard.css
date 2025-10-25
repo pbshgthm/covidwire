@@ -1,0 +1,159 @@
+.StatsCard{
+	background-color: #ffffff;
+	border-radius: 2vw;
+	margin-bottom: 9vw;
+	transition: 0.3s;
+	display: block;
+	padding-top: 3vw;
+	padding-bottom: 2vw;
+	text-align: left;
+	box-shadow: inset 0px 0px 10px 0px rgba(136, 136, 136, 0.15), 0px 0px 7px rgba(136, 136, 136, 0.3);
+}
+
+.StatsCardName{
+	font-family: 'Crimson Text';
+	color: #5E5E5E;
+	font-size: 5.5vw;
+	text-align: center;
+	margin: auto;
+	font-weight: 500;
+	margin-top: 0.5vw;
+	margin-bottom: -0.5vw;
+}
+.StatsCardLabel{
+	color: #707070;
+	text-align: center;
+	margin: auto;
+	margin-top: 3vw;
+	margin-bottom: 2vw;
+}
+.StatsCardContainer{
+	background-color: #F6F6F6;
+	width: 87vw;
+	margin: auto;
+	border-radius: 2vw;
+	padding-top: 2vw;
+}
+.StatsCardTotalCol{
+	display: inline-block;
+}
+.StatsCardTodayCol{
+	width: 29vw;
+	display: inline-block;
+	text-align: center;
+	padding-bottom: 2vw;
+}
+.StatsCardTodayLabel{
+	color: #707070;
+	font-size: 4.5vw;
+	font-weight: 600;
+	margin-top: 1vw;
+	margin-bottom: 2vw;
+}
+.StatsCardTodayCon{
+	color: #CC7A7A;
+	font-size: 4.5vw;
+	font-weight: 600;
+}
+.StatsCardTodayRec{
+	color: #5CB760;
+	font-size: 4.5vw;
+	font-weight: 600;
+}
+.StatsCardTodayDec{
+	color: #8D9297;
+	font-size: 4.5vw;
+	font-weight: 600;
+}
+.StatsCardTotalRow{
+	width: 52vw;
+}
+.StatsCardTotalLabel{
+	color: #707070;
+	font-size: 4.5vw;
+	font-weight: 600;
+	margin-bottom: 2vw;
+	display: inline-block;
+	margin-left: 4vw;
+}
+.StatsCardTotalCon{
+	float: right;
+	display: inline-block;
+	color: #CC7A7A;
+	font-size: 4.5vw;
+	font-weight: 600;
+}
+.StatsCardTotalRec{
+	float: right;
+	display: inline-block;
+	color: #5CB760;
+	font-size: 4.5vw;
+	font-weight: 600;
+}
+.StatsCardTotalDec{
+	float: right;
+	display: inline-block;
+	color: #8D9297;
+	font-size: 4.5vw;
+	font-weight: 600;
+}
+.StatsCardSource::before{
+	vertical-align: top;
+	color: #DEDEDE;
+	content:'Data source:\A';
+	white-space: pre;
+}
+.StatsCardSource{
+	display: inline-block;
+	font-weight: 700;
+	font-size: 3.5vw;
+	margin-left: 6vw;
+	margin-top: 3vw;
+}
+.StatsCardSource a{
+	color: #6585A3;
+}
+.StatsCardFooter{
+	width: 90vw;
+}
+.StatsCardShare{
+	margin-top: 3.5vw;
+	float: right;
+	display: inline-block;
+	width: 8vw;
+}
+.StatsCardChart{
+	width: 20vw;
+	height: 20vw;
+	margin-left: 8vw;
+	margin-bottom: -0.5vw;
+}
+.StatsCardChartCanvas{
+	width: 20vw;
+	display: block;
+}
+
+.StatsCardPie{
+    display: block;
+    position: absolute;
+    width: 20vw;
+    height: 20vw;
+    border-radius: 50%;
+
+}
+.StatsCardPieCenter{
+	display: block;
+	position: absolute;
+	width: 15vw;
+	height: 16vw;
+	background-color: #F6F6F6;
+	margin-left: 2vw;
+	margin-top: 2vw;
+	border-radius: 8vw;
+	color: #5CB760;
+	font-size: 4.7vw;
+	font-weight: 700;
+	text-align: center;
+	line-height: 16.6vw;
+	padding-left: 1vw;
+}
