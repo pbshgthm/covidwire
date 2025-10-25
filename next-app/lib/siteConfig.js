@@ -1,4 +1,16 @@
-const rawOrigin = process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000';
+const normalizeOrigin = (value) => {
+	if (!value) return null;
+	const trimmed = value.trim();
+	if (trimmed === '') return null;
+	if (/^https?:\/\//i.test(trimmed)) {
+		return trimmed.replace(/\/$/, '');
+	}
+	return `https://${trimmed.replace(/\/$/, '')}`;
+};
+
+const rawOrigin =
+	normalizeOrigin(process.env.VERCEL_PROJECT_PRODUCTION_URL) ||
+	'http://localhost:3000';
 
 const envOrigin = rawOrigin.replace(/\/$/, '');
 

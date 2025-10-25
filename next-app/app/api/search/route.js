@@ -35,7 +35,7 @@ const resolveRegions = (region) => {
 
 export async function POST(request) {
 	try {
-		await delay(1000);
+		await delay(500);
 		const payload = await request.json();
 		const term = payload.term || '';
 		const page = Number(payload.page || 0);

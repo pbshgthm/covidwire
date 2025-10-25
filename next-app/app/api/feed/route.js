@@ -85,7 +85,7 @@ export const revalidate = 0;
 
 export async function POST(request) {
 	try {
-		await delay(1000);
+		await delay(500);
 		const body = await request.json();
 		const term = body.term || '';
 		const type = body.type || 'feed';
