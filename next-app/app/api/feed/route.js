@@ -6,8 +6,6 @@ const dataCache = new Map();
 
 const SEARCH_PAGE_SIZE = 2;
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
 const loadJson = async (fileName) => {
 	if (dataCache.has(fileName)) {
 		return dataCache.get(fileName);
@@ -85,7 +83,6 @@ export const revalidate = 0;
 
 export async function POST(request) {
 	try {
-		await delay(500);
 		const body = await request.json();
 		const term = body.term || '';
 		const type = body.type || 'feed';
@@ -100,6 +97,10 @@ export async function POST(request) {
 			status: true,
 			result: ordered,
 			next: totalDates > end
+		}, {
+			headers: {
+				'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
+			}
 		});
 	} catch (error) {
 		console.error('Feed API error', error);

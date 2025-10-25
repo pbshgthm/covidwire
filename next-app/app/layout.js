@@ -47,8 +47,9 @@ export const viewport = {
 	themeColor: "#ffffff"
 };
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Disabled for performance - these settings prevent Next.js optimizations
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
 
 export default function RootLayout({ children }) {
 	return (

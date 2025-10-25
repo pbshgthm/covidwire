@@ -419,7 +419,7 @@ body {
 	word-break: break-all;
 	word-wrap: break-word;
 	width: 90vw;
-	font-size: 3.5;
+	font-size: 3.5vw;
 	line-height: 6vw;
 	margin-top: 8vw;
 	margin-left: 5vw;
@@ -433,7 +433,7 @@ body {
 	font-style: italic;
 	color: #6D757C;
 	width: 90vw;
-	font-size: 3.5;
+	font-size: 3.5vw;
 	line-height: 6vw;
 	margin-top: 8vw;
 	margin-left: 5vw;

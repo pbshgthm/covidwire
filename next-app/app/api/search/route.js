@@ -2,10 +2,9 @@ import {NextResponse} from 'next/server';
 import path from 'path';
 import {promises as fs} from 'fs';
 
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+// Disabled for performance
+// export const dynamic = 'force-dynamic';
+// export const revalidate = 0;
 
 const SEARCH_PAGE_SIZE = 15;
 let indexCache = null;
@@ -35,7 +34,6 @@ const resolveRegions = (region) => {
 
 export async function POST(request) {
 	try {
-		await delay(500);
 		const payload = await request.json();
 		const term = payload.term || '';
 		const page = Number(payload.page || 0);
@@ -80,6 +78,10 @@ export async function POST(request) {
 			status: true,
 			result: grouped,
 			next: matches.length > end
+		}, {
+			headers: {
+				'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400'
+			}
 		});
 	} catch (error) {
 		console.error('Search API error', error);

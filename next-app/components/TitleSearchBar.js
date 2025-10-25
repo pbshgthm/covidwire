@@ -2,7 +2,7 @@
 
 import React, {useState,useEffect,useRef} from 'react';
 import './css/TitleBar.css';
-import {useRouter} from 'next/navigation';
+import {useNavigate} from 'react-router-dom';
 import {scrollToTop} from './utils.js';
 
 
@@ -60,7 +60,7 @@ function TitleBar(props){
 
 	const [showSearch,setShowSearch]=useState(false)
 	const [searchKey,setSearchKey]=useState('')
-	const router = useRouter();
+	const navigate = useNavigate();
 
 
 	useEffect(()=>{
@@ -93,7 +93,7 @@ function TitleBar(props){
 	return(
 		<React.Fragment>
 			<div onClick={()=>{if(!showSearch)scrollToTop()}} className="TitleBar">
-			{props.showBack&&<img onClick={()=>{router.back()}} src="/assets/back.png" alt="back" className="TitleBack"/>}
+			{props.showBack&&<img onClick={()=>{navigate(-1)}} src="/assets/back.png" alt="back" className="TitleBack"/>}
 				<div className="TitleBarText">{props.title}</div>
 				{props.search&&<img onClick={(e)=>{e.stopPropagation();setShowSearch(true)}} className={"TitleBarIcon"} src="/assets/search.png" alt="Search"/>}
 				{showSearch&&<SearchInterface setNavHide={props.setNavHide} setShowSearch={setShowSearch} setSearchKey={setSearchKey}/>}

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect} from 'react';
 import classNames from 'classnames';
-import Link from 'next/link';
+import {Link} from 'react-router-dom';
 
 import config from '@/config.js';
 import {getSiteOrigin} from '@/lib/siteConfig';
@@ -74,7 +74,7 @@ function NewsCard(props){
 			{/*Header*/}
 			<div className="NewsCardRow">
 				{/*Region*/}
-				{<Link href={props.cardData.region!=="Hope"?("/sections/"+regCorr(props.cardData.region)):"/hope"}>
+				{<Link to={props.cardData.region!=="Hope"?("/sections/"+regCorr(props.cardData.region)):"/hope"}>
 					<div className={classNames("NewsCardRegion",{
 						"NewsCardRegionGlobal":props.cardData.region==="Global",
 						"NewsCardRegionNational":props.cardData.region==="National",

@@ -27,7 +27,6 @@ export default function HomePage() {
 	const [stateSel, setStateSel] = useState(DEFAULT_STATE);
 	const [langSel, setLangSel] = useState(DEFAULT_LANG);
 	const [navHide, setNavHide] = useState(false);
-	const [hydrated, setHydrated] = useState(false);
 	const router = useRouter();
 
 	const [feedConfig, setFeedConfig] = useState({
@@ -44,10 +43,8 @@ export default function HomePage() {
 			const width = window.innerWidth || document.documentElement.clientWidth || 0;
 			if (width >= 1024) {
 				router.replace('/desktop');
-				return;
 			}
 		}
-		setHydrated(true);
 	}, [router]);
 
 	useEffect(() => {
@@ -72,8 +69,6 @@ export default function HomePage() {
 			};
 		});
 	}, [stateSel]);
-
-	if (!hydrated) return null;
 
 	return (
 		<div className="FeedPage">
